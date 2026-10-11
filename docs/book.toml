@@ -1,0 +1,7 @@
+[book]
+title = "EtkinlikCepte"
+authors = ["EtkinlikCepte ekibi"]
+language = "tr"
+
+[build]
+build-dir = "book"

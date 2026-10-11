@@ -1,0 +1,5 @@
+# Tek doğruluk kaynağı (§4.7). Buradaki sürümler bilgi amaçlı değil, bağlayıcıdır.
+# `development.md` §3'teki sürümlerle çelişirse bu dosya kazanır.
+[tools]
+node = "24"
+python = "3.13"

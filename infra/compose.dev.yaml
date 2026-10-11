@@ -1,0 +1,18 @@
+# Yerel geliştirme farkları. `just dev` bunu compose.yaml ile yükler.
+# DB ve servis portları yalnızca localhost'a açılır.
+services:
+  postgres:
+    ports:
+      - "127.0.0.1:5432:5432"
+  valkey:
+    ports:
+      - "127.0.0.1:6379:6379"
+  martin:
+    ports:
+      - "127.0.0.1:3000:3000"
+  livekit:
+    ports:
+      - "127.0.0.1:7880:7880"
+      - "127.0.0.1:7881:7881"
+      - "127.0.0.1:7882:7882/udp"
+      - "127.0.0.1:50000-50100:50000-50100/udp"

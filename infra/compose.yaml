@@ -1,0 +1,66 @@
+# postgres+postgis, valkey, caddy, martin, livekit, nominatim (§2, H1.4).
+# Yerel portlar compose.dev.yaml'da açılır; burada yalnızca servisler arası
+# portlar ve Caddy'nin 80/443'ü var.
+name: etkinlikcepte
+
+services:
+  postgres:
+    image: postgis/postgis:17-3.5
+    environment:
+      POSTGRES_USER: projectx
+      POSTGRES_PASSWORD: projectx
+      POSTGRES_DB: projectx
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U projectx"]
+      interval: 5s
+      retries: 20
+
+  valkey:
+    image: valkey/valkey:9
+    healthcheck:
+      test: ["CMD", "valkey-cli", "ping"]
+      interval: 5s
+      retries: 20
+
+  martin:
+    # Sürüm kilidi H1.4'te netleşir; paketler PostGIS'ten üretilir (§4.3).
+    image: ghcr.io/maplibre/martin:latest
+    volumes:
+      - ./martin/martin.yaml:/config.yaml:ro
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+  caddy:
+    image: caddy:2
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./caddy/Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy-data:/data
+    environment:
+      SITE_ADDRESS: ${SITE_ADDRESS:-localhost}
+
+  livekit:
+    image: livekit/livekit-server:v1.13
+    volumes:
+      - ./livekit/livekit.yaml:/etc/livekit.yaml:ro
+    command: ["--config", "/etc/livekit.yaml", "--dev"]
+
+  nominatim:
+    # Veri içe aktarma bir kez çalışır (H1.17, P4). Ağır sorgular buradan (§4.3).
+    image: mediagis/nominatim:5.3
+    environment:
+      PBF_URL: https://download.geofabrik.de/europe/turkey-latest.osm.pbf
+      REPLICATION_URL: https://planet.openstreetmap.org/replication/minute/
+      NOMINATIM_PASSWORD: nominatim
+    volumes:
+      - nominatim-data:/var/lib/postgresql/16/main
+
+volumes:
+  pgdata:
+  caddy-data:
+  nominatim-data:

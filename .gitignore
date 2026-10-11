@@ -218,3 +218,32 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# Node
+node_modules/
+.svelte-kit/
+.vite/
+*.tsbuildinfo
+
+# Tauri
+src-tauri/target/
+src-tauri/gen/
+*.apk
+*.aab
+
+# Mise local overrides
+.mise.local.toml
+
+# Misc
+.DS_Store
+
+# IDE (paylaşılan ayar yok; herkesin yereli)
+.vscode/
+.idea/
+
+# Yerel veritabanları ve anahtarlar (depoya girmez, §13.2)
+*.sqlite*
+*.pem
+*.key
+.env.*
+!.env.example

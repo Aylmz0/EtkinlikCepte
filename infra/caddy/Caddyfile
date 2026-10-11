@@ -1,0 +1,5 @@
+# §13.2: Caddy otomatik Let's Encrypt. Yerelde SITE_ADDRESS=localhost
+# (TLS kendiliğinden kapanır); sürümde gerçek adres (H5.15, H6.4).
+{$SITE_ADDRESS} {
+	respond "EtkinlikCepte edge" 200
+}

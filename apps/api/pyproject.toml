@@ -1,0 +1,30 @@
+[project]
+name = "etkinlikcepte-api"
+version = "0.1.0"
+description = "EtkinlikCepte FastAPI backend (§3.2, §5)"
+requires-python = ">=3.13"
+dependencies = [
+  "fastapi==0.142",
+  "uvicorn[standard]",
+  "pydantic==2.13",
+  "sqlalchemy>=2.0",
+  "psycopg[binary,pool]>=3.2",
+  "alembic",
+  "argon2-cffi",
+  "pyjwt",
+  "structlog",
+  "limits",
+  "livekit-api",
+  "segno",
+]
+
+[dependency-groups]
+dev = [
+  "pytest",
+  "pytest-asyncio",
+  "httpx",
+  "ruff",
+]
+
+[tool.alembic]
+script_location = "alembic"

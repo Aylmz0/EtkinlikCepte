@@ -1,0 +1,14 @@
+# Yasaklı bağımlılıklar (ADR-0003, §3.5). CI `deny` adımı PR'ı bu listeye
+# karşı kontrol eder. Listeye eklemek ADR yazmayı gerektirir.
+tauri-plugin-shell
+keyring
+htmx
+selectolax
+beautifulsoup4
+passlib
+bcrypt
+shiki
+minio
+unocss
+# Not: "tarayıcıda grafik kütüphanesi" genel kuraldır (ADR-0003) —
+# grafikler sunucuda üretilir, paket adı olmadığı için burada satır yok.

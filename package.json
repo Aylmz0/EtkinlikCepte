@@ -1,0 +1,8 @@
+{
+  "name": "etkinlikcepte",
+  "private": true,
+  "workspaces": [
+    "apps/mobile",
+    "packages/*"
+  ]
+}

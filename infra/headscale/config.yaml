@@ -1,0 +1,8 @@
+# Headscale: deneme/demo sunucularına port açmadan erişim (§13.2).
+# Kurulum H5.15'te; anahtar üretilir, depoya girmez.
+server_url: https://headscale.projectx.app
+listen_addr: 127.0.0.1:8080
+noise:
+  private_key_path: ./noise_private.key
+db_path: ./db.sqlite
+log_level: info

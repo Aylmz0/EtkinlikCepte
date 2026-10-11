@@ -1,0 +1,11 @@
+# §4.3: paketler kendi sunucumuzdan, PostGIS'ten üretilir. Hazır paket yok.
+postgres:
+  connection_string: "postgres://projectx:projectx@postgres:5432/projectx"
+  pool_size: 20
+
+table_sources:
+  venues:
+    schema: public
+    table: venues
+    geometry_column: geom
+    srid: 4326
