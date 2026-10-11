@@ -3,3 +3,7 @@
 [tools]
 node = "24"
 python = "3.13"
+# Podman stays system-managed (no stable mise backend to verify); the
+# compose stack assumes a working podman + compose provider (§3.4).
+uv = "0.11"
+just = "1.57"
