@@ -1241,10 +1241,10 @@ Bu dokümanı okuyan ve kapsam kararlarını (§4) kabul eden 7 kişi:
 
 | Rol | İsim | Tarih | İmza |
 |---|---|---|---|
-| P1 Teknik lider | | | |
-| P2 Kulüp, etkinlik, bilet | | | |
-| P3 Veri toplama | | | |
-| P4 Keşif ve öneri | | | |
-| P5 Sohbet ve medya | | | |
-| P6 Uygulama çekirdeği | | | |
-| P7 Ekranlar ve kalite | | | |
+| P1 Teknik lider | Abdullah Yılmaz | | |
+| P2 Kulüp, etkinlik, bilet | Eren Yığmatepe | | |
+| P3 Veri toplama | İsmail Can Kocaman | | |
+| P4 Keşif ve öneri | Umut Can Kuş | | |
+| P5 Sohbet ve medya | Can | | |
+| P6 Uygulama çekirdeği | Abdullah Hilal | | |
+| P7 Ekranlar ve kalite | Adar Bilmez | | |

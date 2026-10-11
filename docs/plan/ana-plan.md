@@ -52,12 +52,12 @@ D1 Öneri ML 3. aşama (Faz 2'ydi) · D2 Gönderi fotoğrafı (metin çalışır
 
 ## 5. Haftalar (hedef + çıkış + doğrulama)
 
-- **H1 Temeller (P1):** İskeletler + `/v1` donar + ekran listesi kilitlenir. Çıkış: imzasız APK (`just android-apk`), `just dev` tüm servisler, `/openapi.json` 200.
-- **H2 Çekirdek (P2):** Auth, kulüp/etkinlik/bilet API'leri, kabuk + giriş ekranları, `api-client` v1. Çıkış: giriş → kulüp → etkinlik → bilet al (gerçek API).
-- **H3 Veri + harita (P3):** 4 kaynak canlı, pano, harita/detay/atfı ekranları, takipçilik, Hurl %60, H3-sonu değerlendirme. Çıkış: gerçek harita + 100+ temiz kayıt.
-- **H4 Sohbet + medya (P4):** WS, presence, LiveKit, DM, bildirim/deep-link, 5 ekran. Çıkış: 2 kişi yazışır + 3. katılır + ses; DM + arama (cuma provası).
-- **H5 Topluluk (P5):** Davetiye/QR, check-in, cüzdan, gönderi/akış, beğeni, moderasyon, online akış, staging HTTPS. Çıkış: gönderi → beğeni; QR davet kabul; cüzdan açılır.
-- **H6 Sıkılaştırma (P6):** Eşitleme/çakışma, 8 E2E, perf, imza, güvenlik, yük+maliyet, docs finali. Çıkış: imzalı APK, 8 E2E yeşil, §11 tuttu (`just ci` + `just perf-apk`).
+- **H1 Temeller (P1):** İskeletler + `/v1` donar + ekran listesi kilitlenir. Çıkış: imzasız APK (`just android-apk`), `just dev` tüm servisler, `/openapi.json` 200. Sıra: P1 iskelet (H1.1/H1.2/H1.4) + P6 denemesi (H1.12) → P2/P3/P4/P5 işleri → H1.15 doğrulama.
+- **H2 Çekirdek (P2):** Auth, kulüp/etkinlik/bilet API'leri, kabuk + giriş ekranları, `api-client` v1. Çıkış: giriş → kulüp → etkinlik → bilet al (gerçek API). Sıra: P1 auth (H2.1) + P2 uçlar (H2.3–H2.5) → ekranlar (H2.9/H2.11) + H2.12 üretim.
+- **H3 Veri + harita (P3):** 4 kaynak canlı, pano, harita/detay/atfı ekranları, takipçilik, Hurl %60, H3-sonu değerlendirme. Çıkış: gerçek harita + 100+ temiz kayıt. Sıra: P3 canlı veri (H3.1) → P7 ekranları (mock'la başlar). H3.8/H3.9 en sonda.
+- **H4 Sohbet + medya (P4):** WS, presence, LiveKit, DM, bildirim/deep-link, 5 ekran. Çıkış: 2 kişi yazışır + 3. katılır + ses; DM + arama (cuma provası). Sıra: P5 içi H4.1 → H4.2/H4.4 → H4.6; H4.5/H4.7/H4.9/H4.10–H4.13 bağımsız paralel, kişiler arası bekleme yok.
+- **H5 Topluluk (P5):** Davetiye/QR, check-in, cüzdan, gönderi/akış, beğeni, moderasyon, online akış, staging HTTPS. Çıkış: gönderi → beğeni; QR davet kabul; cüzdan açılır. Sıra: P2 davetiye API (H5.1) → H5.2/H5.12; gerisi paralel.
+- **H6 Sıkılaştırma (P6):** Eşitleme/çakışma, 8 E2E, perf, imza, güvenlik, yük+maliyet, docs finali. Çıkış: imzalı APK, 8 E2E yeşil, §11 tuttu (`just ci` + `just perf-apk`). Sıra: H6.1 → H6.3; H6.2 sürecinde; H6.4 en sonda (H6.2 sonrası). H6.5–H6.17 paralel.
 - **H7 Demo (P7):** Prova + kayıt + README + §16/§18 kapanış. Çıkış: baştan sona demo + imzalı APK + güncel doküman (R12: kayıt hazır).
 
 ## 6. Görev endeksi (ana kayıt: 103 ID)
@@ -80,7 +80,7 @@ D1 Öneri ML 3. aşama (Faz 2'ydi) · D2 Gönderi fotoğrafı (metin çalışır
 | H1.12 | Node + SvelteKit + Tauri → APK denemesi + iskelet (Vite 8 + TS 7, `svelte.config.js`, `vite.config.ts`) | P6 |
 | H1.13 | Tailwind + shadcn + IntelliSense + `tokens.css` | P6 |
 | H1.14 | 23 ekran listesi kilidi | P6, P7 |
-| H1.15 | E2E iskeleti + APK doğrulama + 8+3 akış listesi | P7 |
+| H1.15 | E2E iskeleti + 8+3 akış listesi | P7 |
 | H1.16 | `source_configs` şeması + `/admin/sources` iskeleti | P3 |
 | H1.17 | Nominatim self-host kurulumu | P4 |
 
@@ -206,7 +206,7 @@ H1 P1 (kurulum + tebliğ + imzalar) · H2 P2 (sözleşme donması) · H3 P3 (ver
 
 ## 8. Kişisel dosyalar
 
-`p1-teknik-lider-altyapi.md` · `p2-kulup-etkinlik-bilet.md` · `p3-veri-toplama.md` · `p4-kesif-oneri.md` · `p5-sohbet-medya.md` · `p6-uygulama-cekirdegi.md` · `p7-ekranlar-kalite.md`
+`p1-abdullah-yilmaz-teknik-lider-altyapi.md` (Abdullah Yılmaz) · `p2-eren-yigmatepe-kulup-etkinlik-bilet.md` (Eren Yığmatepe) · `p3-ismail-can-kocaman-veri-toplama.md` (İsmail Can Kocaman) · `p4-umut-can-kus-kesif-oneri.md` (Umut Can Kuş) · `p5-can-sohbet-medya.md` (Can) · `p6-abdullah-hilal-uygulama-cekirdegi.md` (Abdullah Hilal) · `p7-adar-bilmez-ekranlar-kalite.md` (Adar Bilmez)
 
 ## 9. Teknoloji × repo × sahip × hafta (`development.md` §3 + §5 tam kapsama)
 
@@ -260,3 +260,11 @@ H1 P1 (kurulum + tebliğ + imzalar) · H2 P2 (sözleşme donması) · H3 P3 (ver
 | mdBook (`book.toml` + SUMMARY) | `docs/` derlemesi | P7 (H7.2), Tümü (H6.7) | H6, H7 |
 | `data-sources.md`, `runbook.md`, ADR'ler | `docs/` | P3, P1, Tümü | H1–H7 |
 | schemathesis, ML Aşama 3 | Faz 2 — kapsam dışı (3. bölüm) | — | — |
+
+## 10. Paralellik protokolü (kimse boş beklemez)
+
+Bağımlılık var, boş bekleme yok. Üç kural:
+
+1. **Tüketici mock'la başlar.** Ekran ve istemci işleri haftaya sözleşme + örnek veriyle girer; hafta çıkışında gerçeğe kilitlenir (H2.12 üretim, H3.15 prova, H4/H5 provaları, H6.2). "API bitmedi" cümlesi mazeret değildir — sözleşme H1.2/H1.8'de dondu.
+2. **Tıkandın mı buddy'ye, çözülmezse lidere.** Lider seni sıradaki bağımsız işine kaydırır — her dosyada her hafta en az iki bağımsız iş vardır. Tıkanıklık devir notuna yazılır.
+3. **Hafta çıkışı kilitleme.** Mock'la başlanan iş hafta bitmeden gerçeğe bağlanır ve provada kanıtlanır; bağlanmazsa devir notuna ID + sahip yazılır.
