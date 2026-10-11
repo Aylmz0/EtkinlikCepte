@@ -1,7 +1,7 @@
 # ADR-0001: Uygulama kabuğu — Tauri + SvelteKit + Deno
 
 **Tarih:** 2026-10-06
-**Durum:** Kabul edildi
+**Durum:** Superseded by ADR-0011
 **Kapsam:** §3.1, §4.4
 
 ## Karar
