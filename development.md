@@ -222,7 +222,7 @@ Hafta 1'de P6 ve P7 birlikte çıkarır. 23 ekran:
 
 ```
 ┌──────────────────────────────────────────────────────────────────┐
-│  MOBİL — Tauri 2.12 + SvelteKit 3 / Deno 2.9                    │
+│  MOBİL — Tauri 2.12 + SvelteKit 3 / Node 24 LTS                 │
 │  ├─ Webview: SvelteKit SPA (TypeScript, ssr=false)               │
 │  │   Tailwind v4 · bits-ui (davranış) · shadcn-svelte (görsel)  │
 │  ├─ src-tauri: Rust — yalnızca kabuk, ~200 satır                 │
@@ -280,7 +280,7 @@ Buradaki sürümler o an kullanılan sürümleri gösterir, bilgi amaçlıdır. 
 |---|---|
 | Uygulama kabuğu, APK üretimi | Tauri 2.12 |
 | Sayfalar, bileşenler | SvelteKit 3 + Svelte 5 |
-| JavaScript runtime, paket yönetimi | Deno 2.9 |
+| JavaScript runtime, paket yönetimi | Node 24 LTS + npm |
 | Derleme | Vite 8 + TypeScript 7 |
 | Stil | Tailwind CSS 4 |
 | Erişilebilir bileşen mantığı (focus trap, klavye, ARIA) | bits-ui 2.19 |
@@ -353,7 +353,7 @@ Bu ayrım sayesinde tasarım değişince erişilebilirlik bozulmaz, davranış d
 | RSS ve yapılandırılmış veri | feedparser + extruct |
 | Tekrarlı kayıtları eleme | rapidfuzz |
 | Coğrafi doğrulama | shapely |
-| Tablo işleme | pandas + numpy |
+| Tablo işleme | polars 2 (Rust çekirdekli; pandas yerine — hafiflik) |
 | Test verisi | faker |
 
 ### 3.4 Sunucu tarafı donanım ve araçlar
@@ -459,7 +459,7 @@ Organizatör kulüp panelinden `pending_payment` kayıtlarını listeler, tek do
 
 ### 4.5 Backend dili: Python
 
-Sunucu Python ile yazılıyor. Pydantic OpenAPI 3.1'i otomatik üretir, sözleşme elle yazılmaz. Veri katmanı ihtiyaçları (`pandas`, `lxml`, `parsel`, Playwright, geokodlama) Python'da hazır.
+Sunucu Python ile yazılıyor. Pydantic OpenAPI 3.1'i otomatik üretir, sözleşme elle yazılmaz. Veri katmanı ihtiyaçları (`polars`, `lxml`, `parsel`, Playwright, geokodlama) Python'da hazır.
 
 ### 4.6 Derleme zincirinde Java ve Kotlin
 
@@ -537,8 +537,7 @@ Android'de her zaman çalışır. Web sürümünde `geo:` desteklenmiyorsa harit
 
 | Araç | Hangi dosyalar |
 |---|---|
-| `deno fmt` | `.ts` `.js` `.json` `.md` |
-| Prettier | `.svelte` |
+| Prettier | `.ts` `.js` `.json` `.md` `.svelte` |
 | `ruff format` + `ruff check` | `.py` |
 
 Her araç yalnızca kendi dosyalarına dokunur.
@@ -574,13 +573,13 @@ Video barındırma kapsam dışı — bkz. `docs/adr/0008-no-video-upload.md`.
 │   │   │   │   ├── realtime/        # WebSocket istemcisi + çevrimiçi durumu
 │   │   │   │   ├── offline/         # SQLite okuma modeli + eşitleme kuyruğu
 │   │   │   │   └── platform/        # Tauri eklenti sarmalayıcıları
-│   │   │   └── locales/tr.json      # Türkçe metinler
+│   │   │   └── locales/tr.json + en.json  # arayüz metinleri (TR birincil, EN ikinci)
 │   │   ├── static/
 │   │   ├── src-tauri/               # ⚠️ SADECE P6
 │   │   │   ├── capabilities/        # android.json / desktop.json
 │   │   │   ├── tauri.conf.json
 │   │   │   └── src/
-│   │   ├── deno.json
+│   │   ├── package.json
 │   │   ├── svelte.config.js
 │   │   ├── vite.config.ts
 │   │   └── tailwind.config.ts       # SADECE IntelliSense için
@@ -632,7 +631,7 @@ Video barındırma kapsam dışı — bkz. `docs/adr/0008-no-video-upload.md`.
 │   └── docs/ports.md
 │
 ├── docs/
-│   ├── development.md               # BU DOSYA
+│   ├── plan/                        # 7 haftalık yürütme planı (ana-plan + p1-p7)
 │   ├── book.toml + SUMMARY.md
 │   ├── adr/                         # karar kayıtları + README.md dizini
 │   ├── data-sources.md
@@ -640,7 +639,10 @@ Video barındırma kapsam dışı — bkz. `docs/adr/0008-no-video-upload.md`.
 │
 ├── deny.txt                         # CI'ın okuduğu yasaklı bağımlılık listesi (ADR-0003)
 │
-├── deno.json                        # Deno workspace kökü
+├── development.md                   # ANA KARAR DOKÜMANI (kökte; §4.7'deki gibi sürümler hariç her şey)
+├── AGENTS.md                        # çalışma anlaşması (felsefe + kurallar)
+│
+├── package.json                     # npm çalışma alanı kökü
 ├── mise.toml                        # araç sürüm sabitleme
 ├── justfile                         # ortak komutlar
 └── .editorconfig / .prettierrc / ruff.toml
@@ -693,7 +695,7 @@ Takipçilik, kulüp gönderileri (metin), sohbet, özel mesaj, bilet ve QR düş
 - **Doğrudan `main`'e gönderim yok** (`main` ve `release/*` korumalı).
 - **CODEOWNERS** alan sahipliğini otomatik reviewer atar.
 - **Ritüel:** Haftalık 30 dakika senkron, aylık 1 saat değerlendirme. Eşleşme çiftleri: P1-P3, P2-P5, P4-P6.
-- **Dil:** Kod, commit, doküman ve PR açıklamaları İngilizce. Kullanıcıya görünen Türkçe metinler `locales/tr.json` içinde.
+- **Dil:** Kod, commit, doküman ve PR açıklamaları İngilizce. Arayüz dili Türkçe birincil, İngilizce ikincil; görünen tüm metinler `locales/tr.json` + `locales/en.json` içinde.
 - **Sürüm:** Tam sürüm yalnızca `mise.toml` içinde sabitlenir.
 - **`just` her şeyi çalıştırır.** Herkes kendi kabuğunda geçici komut yazmaz.
 
@@ -950,7 +952,7 @@ Hafta 2'de imzasız APK, hafta 14'te imzalı APK, hafta 15'te demo akışı. Her
 | # | İş | Sahip |
 |---|---|---|
 | 0.1 | Depo, `mise.toml`, `justfile`, Podman kurulumu | P1 |
-| 0.2 | **Deneme: Deno + SvelteKit + Tauri → APK** | P6 |
+| 0.2 | **Deneme: Node + SvelteKit + Tauri → APK** | P6 |
 | 0.3 | **Deneme: LiveKit + Valkey** | P5 |
 | 0.4 | **Deneme: Tailwind + shadcn-svelte + IntelliSense** | P6 |
 | 0.5 | FastAPI iskeleti + OpenAPI üretimi | P1 |
@@ -960,7 +962,7 @@ Hafta 2'de imzasız APK, hafta 14'te imzalı APK, hafta 15'te demo akışı. Her
 | 0.9 | Hurl ile ilk 5 endpoint sözleşme testi | P1, P2 |
 | 0.10 | PostGIS iki günlük ekip eğitimi | P4 |
 
-**Çıkış ölçütü:** `just android:apk` imzasız APK üretir. `just dev` tüm servisleri ayağa kaldırır. IntelliSense doğrulanmıştır.
+**Çıkış ölçütü:** `just android-apk` imzasız APK üretir. `just dev` tüm servisleri ayağa kaldırır. IntelliSense doğrulanmıştır.
 
 ### Sprint 1 — Çekirdek alan (Hafta 3-5)
 
@@ -1064,7 +1066,7 @@ Demo akışı baştan sona prova edilir, ekran kaydı alınır, `README` ve dok�
 - WebSocket 30 saniyede bir ping; kopunca 1/2/4/8 saniye artan aralıkla yeniden bağlanır
 - Sohbet mesajları 200 mesajlık pencere ile tutulur, geri kalanı sayfalanır
 - Ses ve görüntü izleri katmandan çıkarken kapatılır
-- `just perf:apk` her sürümde çalışır; hedefi aşan PR CI'da durdurulur
+- `just perf-apk` her sürümde çalışır; hedefi aşan PR CI'da durdurulur
 
 **Sunucu:** Uvicorn + uvloop + orjson + hiredis + psycopg bağlantı havuzu. İlk fazda PgBouncer yok.
 
@@ -1085,7 +1087,7 @@ Demo akışı baştan sona prova edilir, ekran kaydı alınır, `README` ve dok�
 | Yük | k6 | 500 eşzamanlı okuma |
 | Özellik tabanlı | schemathesis (faz 2) | OpenAPI'den otomatik fuzz |
 | Güvenlik | pip-audit, bandit, Trivy, gizli anahtar taraması | CI |
-| Kod kalitesi | ruff + svelte-check + deno lint | CI |
+| Kod kalitesi | ruff + svelte-check + eslint | CI |
 
 Playwright tarayıcıda çalışır, Android'un WebView katmanında değil. İzin akışları ve QR gibi telefon tarafı sınırlar cihaz testiyle doğrulanır; P7 üç akışla sınırlar.
 
@@ -1096,7 +1098,7 @@ Playwright tarayıcıda çalışır, Android'un WebView katmanında değil. İzi
 ### 13.1 Otomatik doğrulama (her PR)
 
 ```
-lint      → ruff check + ruff format --check + svelte-check + deno lint
+lint      → ruff check + ruff format --check + svelte-check + eslint
 test      → pytest + vitest
 contract  → openapi.json yeniden üret → git diff boş olmalı
 hurl      → API çalışırken .http dosyaları koştur
@@ -1144,7 +1146,7 @@ build-apk → yalnızca main/release/*: tauri android build --apk
 | R11 | Veri toplama tek kişide kalır | Yüksek | Yüksek | Sprint 0'da P1 ortak; her adaptörün testi; P4 destek verir | P1, P3 |
 | R12 | Demo günü medya çöker | Düşük | Yüksek | Video canlı gösterilmez, kayıt önceden hazırlanır | P5 |
 | R13 | Harita bellek hedefini aşar | Düşük | Orta | Sprint 0'da erken ölçüm; gerekirse düşük çözünürlük | P6 |
-| R14 | Deno + Vite + SvelteKit uyumsuzluğu | Orta | Orta | Sprint 0'da iki ayrı deneme; Node'a dönüş hazır | P6 |
+| R14 | JS runtime uyumsuzluğu (Vite + SvelteKit) | Düşük | Orta | ADR-0011 ile Node'a geçildi; Sprint 0'da tek deneme | P6 |
 | R15 | Format araçları birbirine giriyor | Orta | Düşük | §4.12'deki sorumluluk paylaşımı | P6 |
 | R16 | Kayıt engellenir (okul e-postası zorunlu olur) | Düşük | Düşük | Okul e-postası hiçbir koşul değil; istenirse isteğe bağlı doğrulama | P1 |
 | R17 | Harici depoya taşımak gerekirse seçenek azalır | Düşük | Düşük | §4.9'da veritabanı içinde; RustFS/Garage/SeaweedFS/Ceph hazır | P1 |
@@ -1157,18 +1159,18 @@ build-apk → yalnızca main/release/*: tauri android build --apk
 ```bash
 just setup            # mise trust + kurulum + örnek veri
 just dev              # podman compose up + sıcak yenileme (masaüstü)
-just dev:mobile       # deno task tauri android dev
-just android:apk      # imzasız deneme APK'ı
-just android:release  # imzalı sürüm APK'sı
+just dev-mobile       # npm run tauri android dev
+just android-apk      # imzasız deneme APK'ı
+just android-release  # imzalı sürüm APK'sı
 just api-types        # openapi.json -> tipler + doğrulama şemaları
 just migrate          # alembic upgrade head
 just seed             # örnek veri (Türkiye, 3 şehir)
 just hurl             # API sözleşme testleri
-just perf:apk         # paket + APK boyutu raporu
+just perf-apk         # paket + APK boyutu raporu
 just test             # tüm testler
 just ci               # CI ile aynı lokal komutlar
-just fmt              # ruff format + prettier + deno fmt
-just lint             # ruff check + svelte-check + deno lint
+just fmt              # ruff format + prettier
+just lint             # ruff check + svelte-check + eslint
 just services         # oxker ile konteyner izleme
 just vpn              # headscale ile sunucuya bağlan
 ```
@@ -1185,7 +1187,7 @@ gh pr create --fill
 
 ## 16. "Bitti" tanımı
 
-- [ ] Derleniyor; `ruff`, `svelte-check`, `deno lint` temiz (uyarı yok)
+- [ ] Derleniyor; `ruff`, `svelte-check`, `eslint` temiz (uyarı yok)
 - [ ] Birim testi var
 - [ ] OpenAPI yeniden üretildi, CI fark kontrolü yeşil
 - [ ] Veritabanı göçü değiştiyse P1 onayı alındı
@@ -1193,7 +1195,7 @@ gh pr create --fill
 - [ ] Yükleme göstergesi + iskelet ekran var
 - [ ] Boşta bellek ölçüldü, hedefi aşmadı
 - [ ] Erişilebilirlik: ekran okuyucu etiketi, 44px dokunma hedefi, koyu mod
-- [ ] Türkçe metin `locales/tr.json` içinde, sabit yazılmış metin yok
+- [ ] Arayüz metni `locales/tr.json` + `locales/en.json` içinde (TR birincil), sabit yazılmış metin yok
 - [ ] PR açık, bir kişi onayladı
 - [ ] Karar gerektiriyorsa `docs/adr/` yazıldı
 - [ ] Yeni veri kaynağı eklendiyse `docs/data-sources.md` güncellendi
@@ -1201,16 +1203,16 @@ gh pr create --fill
 - [ ] Format kuralı uygulandı (§4.12)
 - [ ] Yeni bağımlılık açık kaynak ve lisansla uyumlu
 - [ ] Yeni endpoint eklendiyse Hurl testi ve OpenAPI yeniden üretimi yapıldı
-- [ ] `just perf:apk` hedefi aşmadı
+- [ ] `just perf-apk` hedefi aşmadı
 
 ---
 
 ## 17. Ek kaynaklar
 
 - Tauri v2: https://v2.tauri.app/
-- Tauri + SvelteKit (Deno): https://v2.tauri.app/start/frontend/sveltekit/
+- Tauri + SvelteKit: https://v2.tauri.app/start/frontend/sveltekit/
 - Tauri eklenti kataloğu: https://v2.tauri.app/plugin/
-- Deno: https://docs.deno.com/
+- Node: https://nodejs.org/en/docs
 - SvelteKit static adapter: https://svelte.dev/docs/kit/adapter-static
 - Tailwind CSS v4: https://tailwindcss.com/docs
 - shadcn-svelte: https://www.shadcn-svelte.com/docs
