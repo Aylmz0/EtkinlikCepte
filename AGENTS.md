@@ -199,6 +199,26 @@ files carry the how. IDs match on both sides. Leadership rotates weekly
 (H1 P1 → H7 P7); P1's technical authority (contract, schema, migrations) is
 permanent. Buddy pairs: P1-P3, P2-P5, P4-P6.
 
+### Area boundaries
+
+Areas are frozen (§6, `docs/plan/`). You work inside your own; another area's
+code gets a question, never a commit — not even a "trivial" fix. The reasons
+compound: the owner holds context you do not, parallel branches collide, and
+a drive-by edit quietly becomes your responsibility when it breaks.
+
+- **Read anywhere, write in your area.** Exploring another area to understand
+  an interface is expected. Changing it is not.
+- **Blocked by another area?** Ask the owner — buddy pairs first. If they are
+  unavailable, record it in the handover note and take your next independent
+  task. Do not route around them.
+- **Shared seams have owners too.** The contract (`/v1`), the schema, and
+  `packages/api-client` belong to P1; `packages/ui` to P6. Propose changes to
+  shared code by PR with the owner reviewing (CODEOWNERS assigns them); do not
+  widen a shared helper to fit one caller.
+- **No drive-by refactors.** A wrong name or a duplicated block in someone
+  else's area is their call to schedule, not yours to fix in passing. Leave it
+  as a review comment and move on.
+
 ### Commits
 
 Locked standard, set by week-1 lead decision.
