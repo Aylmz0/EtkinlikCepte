@@ -19,6 +19,7 @@ dependencies = [
   "orjson>=3.13.0",
   "hiredis>=3.4.2",
   "valkey>=6.1.1",
+  "geoalchemy2>=0.20.0",
 ]
 
 [dependency-groups]

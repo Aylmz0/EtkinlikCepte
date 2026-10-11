@@ -735,7 +735,9 @@ Takipçilik, kulüp gönderileri (metin), sohbet, özel mesaj, bilet ve QR düş
 -- Görsel referansları media tablosunu gösterir; dosya içeriği BYTEA'da durur (§4.9)
 users(id UUID PK, email CITEXT UNIQUE, password_hash TEXT, display_name TEXT,
       avatar_media_id UUID FK → media, bio TEXT, city TEXT,
-      interests TEXT[], created_at TIMESTAMPTZ)
+      interests TEXT[], locale TEXT DEFAULT 'tr',
+      budget_minor INT, budget_currency CHAR(3) DEFAULT 'TRY',
+      created_at TIMESTAMPTZ)
 refresh_tokens(id UUID PK, user_id UUID FK, token_hash TEXT UNIQUE,
                expires_at TIMESTAMPTZ, revoked_at TIMESTAMPTZ, device_id TEXT)
 -- Cihaz kaydı yalnızca çevrimiçi durumu ve sürüm bilgisi için (bkz. §4.8)
