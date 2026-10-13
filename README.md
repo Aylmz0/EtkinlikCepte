@@ -33,7 +33,7 @@ Daily: `just fmt && just lint && just test`. Full local gate: `just ci`.
 | `apps/pipeline/` | ETL (Scrapy → dedup → publish) | P3 |
 | `packages/ui/` | Design system (shadcn copies + ours) | P6 |
 | `packages/api-client/` | Generated from `openapi.json` (`just api-types`), never by hand | P1 |
-| `infra/` | Compose + Caddy/Martin/LiveKit/Headscale configs, `docs/ports.md` | P1 |
+| `infra/` | Compose + Caddy/Martin/LiveKit/Headscale configs, `infra/docs/ports.md` | P1 |
 | `docs/plan/` | `ana-plan.md` (master index) + `p1–p7.md` (same IDs) | all |
 | `docs/adr/` | Why expensive decisions went their way | author |
 

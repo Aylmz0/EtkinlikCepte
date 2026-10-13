@@ -667,13 +667,13 @@ Video barındırma kapsam dışı — bkz. `docs/adr/0008-no-video-upload.md`.
 
 | # | Rol | Alan | Ana çıktı |
 |---|---|---|---|
-| **P1** | Teknik lider + altyapı | Sözleşme, veritabanı şeması, kimlik doğrulama, sunucu kurulumu | API sözleşmesi, veritabanı şeması, göçler, kimlik doğrulama, Podman/Caddy, `mise`/`just` |
-| **P2** | Kulüpler, etkinlikler, biletler | Kulüp/üyelik, etkinlik, kayıt, bilet + QR, davetiye, **kulüp sosyal medyası** | Kulüp yönetimi, bilet durum makinesi, QR üretim/doğrulama, davetiye, takipçilik, kulüp gönderileri |
-| **P3** | Veri toplama | Kaynak adaptörleri, temizleme, tekrar eleme, veri kalitesi | 4-6 kaynak, veri kalitesi panosu, `data-sources.md` |
-| **P4** | Keşif ve öneri | Mekan/etkinlik arama, coğrafi sorgu, sıralama | Keşif akışı, mesafe sorguları, şeffaf skor |
-| **P5** | Sohbet ve medya | Sohbet, özel mesaj, çevrimiçi durumu, bildirim, ses/görüntü | WebSocket sohbet, kulüp kanalları, özel mesaj, LiveKit odaları |
-| **P6** | Uygulama çekirdeği | Tauri kabuğu, yönlendirme, giriş ekranları, çevrimdışı önbellek, tasarım sistemi | Uygulama iskeleti, giriş/kayıt, navigasyon, eşitleme kuyruğu, `packages/ui` |
-| **P7** | Ekranlar ve kalite | Keşif/harita, etkinlik detayı, bilet cüzdanı, E2E testleri, sürüm | Harita + filtre, etkinlik detayı, bilet cüzdanı, E2E paketi, imzalı APK |
+| **P1** | Tech Lead — Backend & Infrastructure | Sözleşme, veritabanı şeması, kimlik doğrulama, sunucu kurulumu | API sözleşmesi, veritabanı şeması, göçler, kimlik doğrulama, Podman/Caddy, `mise`/`just` |
+| **P2** | Backend Engineer — Ticketing & Social | Kulüp/üyelik, etkinlik, kayıt, bilet + QR, davetiye, **kulüp sosyal medyası** | Kulüp yönetimi, bilet durum makinesi, QR üretim/doğrulama, davetiye, takipçilik, kulüp gönderileri |
+| **P3** | Data Engineer (Miner) | Kaynak adaptörleri, temizleme, tekrar eleme, veri kalitesi | 4-6 kaynak, veri kalitesi panosu, `data-sources.md` |
+| **P4** | Backend Engineer — Discovery & Ranking | Mekan/etkinlik arama, coğrafi sorgu, sıralama | Keşif akışı, mesafe sorguları, şeffaf skor |
+| **P5** | Backend Engineer — Realtime & Media | Sohbet, özel mesaj, çevrimiçi durumu, bildirim, ses/görüntü | WebSocket sohbet, kulüp kanalları, özel mesaj, LiveKit odaları |
+| **P6** | Mobile Engineer — Core & Design System | Tauri kabuğu, yönlendirme, giriş ekranları, çevrimdışı önbellek, tasarım sistemi | Uygulama iskeleti, giriş/kayıt, navigasyon, eşitleme kuyruğu, `packages/ui` |
+| **P7** | Mobile UI Engineer & QA | Keşif/harita, etkinlik detayı, bilet cüzdanı, E2E testleri, sürüm | Harita + filtre, etkinlik detayı, bilet cüzdanı, E2E paketi, imzalı APK |
 
 P1 sözleşme ve şema sahibi. P3'ün veri toplama işi Sprint 0'da P1 ile başlar. P4'e Sprint 0'da iki gün PostGIS eğitimi verilir. P5 medya katmanını tek elinde tutar. P6 ve P7 ekranları birlikte yazar. P2'nin alanı kulüp merkezli olduğu için sosyal medya kısmı da ona ait.
 
@@ -1243,10 +1243,10 @@ Bu dokümanı okuyan ve kapsam kararlarını (§4) kabul eden 7 kişi:
 
 | Rol | İsim | Tarih | İmza |
 |---|---|---|---|
-| P1 Teknik lider | Abdullah Yılmaz | | |
-| P2 Kulüp, etkinlik, bilet | Eren Yığmatepe | | |
-| P3 Veri toplama | İsmail Can Kocaman | | |
-| P4 Keşif ve öneri | Umut Can Kuş | | |
-| P5 Sohbet ve medya | Can | | |
-| P6 Uygulama çekirdeği | Abdullah Hilal | | |
-| P7 Ekranlar ve kalite | Adar Bilmez | | |
+| P1 Tech Lead | Abdullah Yılmaz | | |
+| P2 Backend Engineer | Eren Yığmatepe | | |
+| P3 Data Engineer | İsmail Can Kocaman | | |
+| P4 Backend Engineer | Umut Can Kuş | | |
+| P5 Backend Engineer | Cevat | | |
+| P6 Mobile Engineer | Abdullah Hilal | | |
+| P7 Mobile UI Engineer & QA | Adar Bilmez | | |

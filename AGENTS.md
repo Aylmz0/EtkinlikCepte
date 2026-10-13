@@ -6,7 +6,7 @@ does not belong here. Versions, inventories, screens, endpoints, and schedules
 live in `development.md` and `docs/plan/`, both linked at the bottom.
 
 Read this before your first change. For what the product is, read `development.md`
-§1–§2 first.
+§1–§2 (Product and Architecture) first.
 
 ---
 
@@ -17,7 +17,7 @@ contract drift, not to typing.**
 
 Everything else here is downstream of that sentence. The API contract (`/v1`)
 and the database schema are locked; they change by PR, never by handshake
-(§2.1, §8.1). When two designs disagree about where a rule lives, the contract
+(§2.1 Principles, §8.1 Contract rules). When two designs disagree about where a rule lives, the contract
 wins. When a shortcut would move faster this week by bending the schema, it
 loses — the six other people pay for it next week.
 
@@ -39,7 +39,7 @@ doubt, take the boring option.
 | Prefer | Over |
 |--------|------|
 | A plain query in `repos/` | A clever abstraction over queries nobody asked for |
-| One router per §8 group | A generic CRUD machine with configuration |
+| One router per §8 API contract group | A generic CRUD machine with configuration |
 | A named constant | An inline literal with a comment beside it |
 | Direct access and a plain `if` | A builder, a DSL, or a macro layer |
 | Log it and continue | A deep error hierarchy for a condition you can survive |
@@ -76,7 +76,7 @@ not reimplement. The stack choices went through ADRs, and refusals live in
 `deny.txt` (ADR-0003) — a dependency on that list needs an ADR to come back,
 and CI enforces it.
 
-The exception is a real one: a dependency whose cost shows up in the §11
+The exception is a real one: a dependency whose cost shows up in the §11 Performance targets
 budget (memory, APK size, response time) is a reason to write your own. Measure
 first.
 
@@ -142,7 +142,7 @@ bare `except: pass` is never acceptable.
 Code, commits, documents, and PR text are English. Always. The app UI is
 Turkish first, English second: every user-facing string lives in
 `locales/tr.json` (primary) with a complete `locales/en.json` beside it — no
-hardcoded UI text, no Turkish or English in identifiers (§6.2, §16). A screen
+hardcoded UI text, no Turkish or English in identifiers (§6.2 Working rules, §16 Definition of done). A screen
 is not done until it renders in both locales.
 
 ---
@@ -152,18 +152,18 @@ is not done until it renders in both locales.
 Hard invariants. A change that breaks one needs a reason written down next to it.
 
 - **`/v1` is stable.** A backward-incompatible change is a major version and
-  needs P1 approval (§8.1).
+  needs P1 approval (§8.1 Contract rules).
 - **Money is integer minor units + `TRY`, never float. Time is UTC ISO-8601.
   Errors are RFC 9457. Write paths for tickets and messages carry
-  `Idempotency-Key` (§8.1).**
+  `Idempotency-Key` (§8.1 Contract rules).**
 - **Offline first.** The discovery list and owned tickets open without a
-  network. A ticket QR is always readable (§1.5).
-- **`src-tauri/` belongs to P6 alone; Rust stays under 200 lines** (§4.4).
+  network. A ticket QR is always readable (§1.5 User view).
+- **`src-tauri/` belongs to P6 alone; Rust stays under 200 lines** (§4.4 Rust surface).
 - **Media lives in the database (BYTEA), referenced by `*_media_id`, never by
-  path or URL** (§4.9).
+  path or URL** (§4.9 Media storage).
 - **Scope holds for the seven weeks:** no real payments (manual approval), no
-  closed-app notifications, no phone screen-share, no video upload (§1.3).
-- **Versions live in `mise.toml` only** (§4.7). Never repeat one in a Dockerfile,
+  closed-app notifications, no phone screen-share, no video upload (§1.3 Non-goals).
+- **Versions live in `mise.toml` only** (§4.7 Version pinning). Never repeat one in a Dockerfile,
   a README, or a commit subject.
 
 ---
@@ -173,21 +173,21 @@ Hard invariants. A change that breaks one needs a reason written down next to it
 ### The loop
 
 1. **Understand** — read `development.md`, your `docs/plan/pN-*.md` week, and
-   the surrounding code. Match what is there; areas are frozen (§6).
+   the surrounding code. Match what is there; areas are frozen (§6 Team).
 2. **Implement** — inside your own area. Another area's code gets a question,
    not a commit.
 3. **Document** — the doc comment and, if a decision moved, the ADR. Same commit.
 4. **Test** — new behaviour has a test, or is verified by hand with the reason
-   stated (§12, §16).
+   stated (§12 Test strategy, §16 Definition of done).
 5. **Verify** — `just fmt && just lint && just test`, and the OpenAPI
-   regenerate-diff is empty (§13.1, §16).
+   regenerate-diff is empty (§13.1 CI gates, §16 Definition of done).
 6. **Commit** — English, trunk-based, to the rules below.
 
 ### Which document owns what
 
 | Layer | What it is | Who maintains it |
 |---|---|---|
-| `development.md` | What the product is + scope decisions (§4) | The team, Sprint 0 signature (§18) |
+| `development.md` | What the product is + scope decisions (§4 Scope decisions) | The team, Sprint 0 signature (§18 Sign-off) |
 | `docs/plan/ana-plan.md` | General orchestration + master task index (`H<week>.<n>`) | Week-1 lead sets it; weekly leads amend by handover note |
 | `docs/plan/p1–p7.md` | Step-by-step per person, same IDs as the index | Each owner, in their frozen area |
 | `docs/adr/` | Why an expensive-to-reverse decision went its way | The author, with the deciding PR |
@@ -201,7 +201,7 @@ permanent. Buddy pairs: P1-P3, P2-P5, P4-P6.
 
 ### Area boundaries
 
-Areas are frozen (§6, `docs/plan/`). You work inside your own; another area's
+Areas are frozen (§6 Team, `docs/plan/`). You work inside your own; another area's
 code gets a question, never a commit — not even a "trivial" fix. The reasons
 compound: the owner holds context you do not, parallel branches collide, and
 a drive-by edit quietly becomes your responsibility when it breaks.
@@ -231,12 +231,15 @@ Type required, scope optional, summary imperative, lowercase. Types: `feat`,
 `fix`, `refactor`, `docs`, `test`, `build`, `ci`, `chore`, and `perf` only
 with a measurement. The body is for the *why*, when the diff does not make it
 obvious. **No authorship trailers, from anyone** — no co-author lines, no tool
-names. Trunk-based: branch life ≤ 3 days, PR single-topic ≤ 400 lines, CI
-green, one approval; schema/migration changes need P1 (§6.2).
+names. Trunk-based: every change starts on a fresh branch cut from `main` —
+never commit straight to `main`. Nothing lands without a PR: CI green plus one
+approval from the area reviewer; `main` and `release/*` are protected, so an
+unreviewed merge is impossible, not just discouraged. Branch life ≤ 3 days, PR
+single-topic ≤ 400 lines; schema/migration changes need P1 (§6.2 Working rules).
 
 ### Definition of done
 
-The §16 checklist — all of it, on every change. It is referenced here, not
+The §16 Definition of done checklist — all of it, on every change. It is referenced here, not
 copied, so it cannot drift from the source.
 
 ---
@@ -248,12 +251,12 @@ and lives elsewhere.
 
 | For | Read |
 |---|---|
-| What the product does and does not do | `development.md` §1 |
-| Stack, versions, repo layout | `development.md` §3, §5 (`mise.toml` wins ties) |
+| What the product does and does not do | `development.md` §1 Product |
+| Stack, versions, repo layout | `development.md` §3 Stack, §5 Repo layout (`mise.toml` wins ties) |
 | Who does what, when | `docs/plan/ana-plan.md` + your `docs/plan/pN-*.md` |
 | Why a hard decision went its way | `docs/adr/` |
 | What any function promises | Its doc comment |
-| Tables, endpoints, error rules | `development.md` §7, §8, §8.1 |
-| Targets and how they are measured | `development.md` §11, §12 |
-| CI gates and deploy | `development.md` §13, or `justfile` |
+| Tables, endpoints, error rules | `development.md` §7 Data model, §8 API contract, §8.1 Contract rules |
+| Targets and how they are measured | `development.md` §11 Performance targets, §12 Test strategy |
+| CI gates and deploy | `development.md` §13 Server and CI, or `justfile` |
 | What a past change was and why | The commit log |
