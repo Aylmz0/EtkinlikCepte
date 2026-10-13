@@ -1,55 +1,63 @@
-# P2 — Eren Yığmatepe — Kulüpler, etkinlikler, biletler
+# P2 — Eren Yığmatepe — Backend Engineer, Ticketing & Social
 
-**Alan (sabit, §6):** Kulüp/üyelik, etkinlik, kayıt, bilet + QR, davetiye, **kulüp sosyal medyası (metin)**. Fotoğraf (D2), yorum (D3) yok. 7 hafta bu kavramdasın.
-**Buddy:** P5 (§6.2). **Lider haftan:** H2.
+**Alan (sabit, §6 Ekip):** Kulüp/üyelik, etkinlik, kayıt, bilet + QR, davetiye, **kulüp sosyal medyası (metin)**. Fotoğraf (D2) ve yorum (D3) kapsam dışı; bunlara dokunmazsın. 7 hafta bu kavramdasın.
+**Buddy:** P5 (§6.2 Çalışma kuralları eşleşmesi). **Lider haftan:** H2.
 
 ## Envanterin
 
-- **Tablolar (§7):** `clubs`, `club_members` (owner/admin/moderator/member), `club_invitations`, `events` + `event_sources`, `event_tickets`, `registrations` (§4.2 makinesi), `event_invitations`, `club_followers`, `club_posts` (public/followers/members), `club_post_likes`, `reports`.
-- **Uçlar (§8):** Kulüp, Takipçilik, Gönderiler (+beğeni), Akış (`GET /feed?cursor=`), Etkinlik, Kaynaklar (`GET /events/{id}/sources`), Bilet, Davetiye, Şikâyet.
-- **Bileşenlerin (§3.1):** `ClubBadge`, `PostCard`, `PostComposer`, `FollowButton`, `TicketRow`, `QRDisplay`.
-- **Ekranların (§1.6):** `/invite/[code]`, `/settings/following`, `/clubs/[id]/followers`, `/clubs/[id]/new-post`; ortak: `/clubs/[id]` (P6), `/(tabs)/feed` (P7), `/scanner` (P7).
-- **Dizinlerin (§5):** `apps/api/app/{routers,schemas,services,domain}/` (kulüp/etkinlik/bilet/davetiye/akış), `apps/api/tests/`.
-- **Kuralların:** Kapasite `quantity`/`sold_count`tan düşer (§7, §8.1 md.7); `sold_count` yalnızca `paid`+`free_granted`; yazmalarda `Idempotency-Key` (md.6).
+Bu dosyadaki işler şu tablo, uç, bileşen, ekran ve dizinlerle yapılır. Hepsi `development.md`'de tanımlı; burası sadece senin listen:
+
+- **Tablolar (§7 Veri modeli):** `clubs`, `club_members` (roller: owner/admin/moderator/member), `club_invitations`, `events` + `event_sources`, `event_tickets`, `registrations` (§4.2 Ödeme'deki durum makinesi), `event_invitations`, `club_followers`, `club_posts` (görünürlük: public/followers/members), `club_post_likes`, `reports`.
+- **Uçlar (§8 API sözleşmesi):** Kulüp, Takipçilik, Gönderiler (+beğeni), Akış (`GET /feed?cursor=`), Etkinlik, Kaynaklar (`GET /events/{id}/sources`), Bilet, Davetiye, Şikâyet.
+- **Bileşenlerin (§3.1 Mobil yığın):** `ClubBadge`, `PostCard`, `PostComposer`, `FollowButton`, `TicketRow`, `QRDisplay`. Bunları P6 paketler, sen tüketirsin; görünümüne karışmazsın.
+- **Ekranların (§1.6 Ekran listesi):** `/invite/[code]`, `/settings/following`, `/clubs/[id]/followers`, `/clubs/[id]/new-post`; ortak: `/clubs/[id]` (P6 ile), `/(tabs)/feed` (P7 ile), `/scanner` (P7 ile).
+- **Dizinlerin (§5 Depo yapısı):** `apps/api/app/{routers,schemas,services,domain}/` içinde kulüp/etkinlik/bilet/davetiye/akış dosyaların + `apps/api/tests/` altında testlerin.
+- **Kuralların:** Kapasite `quantity`/`sold_count` üzerinden düşer, kayıt sayısından değil (§7 Veri modeli, §8.1 Sözleşme kuralları md.7); `sold_count` yalnızca `paid` + `free_granted` durumlarından artar; bilet alma gibi yazma işlerinde `Idempotency-Key` başlığı zorunlu (md.6).
 
 ## H1 — Karar haftan
 
-- **H1.5 Hurl ilk 5 (yazar sensin).** Sözleşmeden yazılır (§8 uçları, kod çalışmadan); koşması H3.8'de (H1.2 önceki haftadan). P1 doğrular. Kabul: 5 test dosyası yazıldı. Çıktı: H3.8'e girdi.
-- **H1.7 Bilet makinesi + QR kararı.** `reserved(15 dk) → pending_payment → paid → used`, `free_granted`, `cancelled/expired/refunded` (§4.2); organizatör tek dokunuşla `paid`. Adımlar: 1. Geçiş tablosu + otomatik iptal. 2. QR = `qr_token` UNIQUE + segno. 3. Kararı PR açıklamasına yaz (§4.2'deki tablo esas alınır, kod beklenmez). Kabul: karar + geçiş matrisi yazılı, pytest iskeleti hazır (koşması H2.4'te, H1.2 önceki haftadan). Çıktı: H2.5, H5.1.
-- **H1.8 Router taslakları.** Kulüp/etkinlik uçları (boş gövde + Pydantic), iskeletten bağımsız yazılır. Kabul: taslak PR açık (sözleşme diff'i temiz); merge H2.3/H2.4 başında (H1.2 önceki haftadan). Çıktı: H2.3/H2.4.
+Bu hafta koddan çok karar üretiyorsun: biletin durum makinesi, QR biçimi ve ilk testler kâğıt üstünde netleşir, çalışan koda H2'de dönüşür.
+
+- **H1.5 Hurl ilk 5 (yazar sensin).** Hurl, sunucuya gerçek istek atıp cevabı denetleyen sözleşme test aracıdır (§12 Test stratejisi). **Hedef:** kimlik + kulüp uçlarının ilk 5 happy-path testi dosyada dursun. Sözleşmeden (§8 API sözleşmesi uçları) yazılır, çalışan kod beklenmez; koşması H3.8 toplu test haftasında (H1.2 önceki haftadan). P1 doğrular. **Kabul:** 5 test dosyası yazıldı. **Çıktı:** H3.8'e girdi olarak girer.
+- **H1.7 Bilet makinesi + QR kararı.** Biletin hayat hikâyesi: `reserved` (15 dk) → `pending_payment` → `paid` → `used`, ayrıca `free_granted` (ücretsiz), `cancelled`/`expired`/`refunded` (§4.2 Ödeme); organizatör bekleyen ödemeyi tek dokunuşla `paid` yapar. **Adımlar:** 1. Geçiş tablosu + süresi dolanın otomatik iptali. 2. QR içeriği = `qr_token` benzersiz alanı + segno üretim kütüphanesi. 3. Kararı PR açıklamasına yaz (§4.2'deki tablo esas alınır, kod beklenmez). **Kabul:** karar + geçiş matrisi yazılı, pytest iskeleti hazır (koşması H2.4'te, H1.2 önceki haftadan). **Çıktı:** H2.5 bilet üretimi ile H5.1 davetiye işi bu karara dayanır.
+- **H1.8 Router taslakları.** FastAPI'de her uç grubunun dosyası (router) ayrı durur; taslak = boş gövde + Pydantic doğrulama şeması. Kulüp/etkinlik uçlarını iskeletten bağımsız yazarsın. **Kabul:** taslak PR açık (sözleşme diff'i temiz); birleştirme H2.3/H2.4 işlerinin başında yapılır (H1.2 önceki haftadan). **Çıktı:** H2.3/H2.4 implementasyonları bu taslaklardan büyür.
 
 ## H2 — Çekirdek (lider sensin)
 
-- **H2.3 Kulüp/üyelik/roller.** `GET/POST /clubs`, `GET/PATCH /clubs/{id}`, üyelik uçları, `POST /clubs/{id}/invitations` + `POST /invitations/{code}/redeem`. Kabul: rol testi (üye kapalı içeriği göremez §1.2) + pytest payın (hedef: `services/`+`domain/` %90, §12). Çıktı: P6 (H2.11).
-- **H2.4 Etkinlik + kayıt.** `GET/POST /events`, `GET/PATCH`, `/cancel`, `/publish`; `status` draft/published/cancelled/completed. Kabul: kapasite kuralı testi. Çıktı: P7 (H3.4).
-- **H2.5 Bilet + QR üretim.** `GET /events/{id}/tickets`, `POST …/register`, `DELETE /registrations/{id}`, `GET …/qr`; grup bileti `quantity > 1` (§7). Kabul: QR okunur, sayım kuralı testli. Çıktı: H5.1, P7 (H5.3).
-- **H2.11-destek.** `/clubs/[id]` ekranında P6'ya alan bilgisi verirsin (rol/görünürlük kuralları); kod yazmazsın.
-- **Liderlik:** Cuma provası: giriş→bilet al çalışır; P3'e devir notu yazarsın.
+Bu hafta ürünün para eden çekirdeğini yazıyorsun: kulüp, etkinlik, bilet. Cuma provası senin sorumluluğunda.
+
+- **H2.3 Kulüp/üyelik/roller.** `GET/POST /clubs`, `GET/PATCH /clubs/{id}`, üyelik uçları, `POST /clubs/{id}/invitations` + `POST /invitations/{code}/redeem`. **Kabul:** rol testi yeşil (üye, kapalı kulüp içeriğini göremez §1.2 Uygulama) + pytest payın (hedef: `services/`+`domain/` %90, §12 Test stratejisi). **Çıktı:** P6'nın H2.11 kulüp ekranları bu uçlara dayanır.
+- **H2.4 Etkinlik + kayıt.** `GET/POST /events`, `GET/PATCH`, `/cancel`, `/publish`; `status` alanı draft/published/cancelled/completed değerlerini alır. **Kabul:** kapasite kuralı testi yeşil. **Çıktı:** P7'nin H3.4 detay ekranı buradan beslenir.
+- **H2.5 Bilet + QR üretim.** `GET /events/{id}/tickets`, `POST …/register`, `DELETE /registrations/{id}`, `GET …/qr`; grup bileti demek `quantity > 1` demek (§7 Veri modeli). **Kabul:** QR okunur, sayım kuralı testli. **Çıktı:** H5.1 davetiye işi ile P7'nin H5.3 cüzdanı buraya dayanır.
+- **H2.11-destek.** `/clubs/[id]` ekranında P6'ya alan bilgisi verirsin (rol/görünürlük kuralları); kod yazmazsın, danışılan konumundasın.
+- **Liderlik:** Cuma provası: giriş→bilet al zinciri çalışır; P3'e devir notu yazarsın.
 
 ## H3 — Takipçilik + kapsam
 
-- **H3.7 Takipçilik.** `POST/DELETE /clubs/{id}/follow`, listeler, `GET /users/me/following`. Üyelikten ayrı tablo (20 üye/2000 takipçi §1.2). Kabul: sayaç testi + `(user_id, created_at DESC)` indeksi. Çıktı: H5.4 + P4'ün H4.8 w6 kalibrasyonu.
-- **H3.8-pay.** Uçların tam Hurl kapsamlı. Kabul: kulüp/etkinlik/bilet/davetiye yeşil.
-- **H3.9-katılım.** Kulüp/bilet ayağının durumu (§6.1 P2 satırı). Kabul: tablon hazır.
+- **H3.7 Takipçilik.** `POST/DELETE /clubs/{id}/follow`, takipçi/takip listeleri, `GET /users/me/following`. Üyelikten ayrı tabloda tutulur — bir kulübün 20 üyesi, 2000 takipçisi olabilir (§1.2 Uygulama). **Kabul:** sayaç testi + `(user_id, created_at DESC)` indeksi yeşil. **Çıktı:** H5.4 takip akışı + P4'ün H4.8 w6 kalibrasyonu buradan beslenir.
+- **H3.8-pay.** Kendi uçlarının (kulüp/etkinlik/bilet/davetiye) Hurl kapsamı sende; başkasını beklemezsin. **Kabul:** dört grup yeşil.
+- **H3.9-katılım.** Kulüp/bilet ayağının durumu (§6.1 Değerlendirme'deki P2 satırı). **Kabul:** tablon hazır.
 
 ## H4 — Yarış haftan
 
-- **H4.11 Kayıt/kapasite yarış testleri.** Hedef: aynı anda iki kayıt `UNIQUE(event_id, user_id)`'yi ve `sold_count`'u bozmasın. Adımlar: 1. pytest'te eşzamanlı register senaryosu (H2.5 endpoint'lerine karşı). 2. `reserved`/`pending_payment`'in saymaması iddiası. 3. Hurl'a ekle. Kabul: yarış testi yeşil. Çıktı: H2.5 regresyon koruması (H5.1 üstüne kurulur).
-- Ayrıca: P5'in H4.6 kulüp bağlamı soruları (C/danışılan konumun) — bekletmeden yanıtla.
+- **H4.11 Kayıt/kapasite yarış testleri.** **Hedef:** aynı anda gelen iki kayıt isteği `UNIQUE(event_id, user_id)` kısıtını ve `sold_count` sayacını bozmasın. **Adımlar:** 1. pytest'te eşzamanlı register senaryosu yaz (H2.5 endpoint'lerine karşı). 2. `reserved`/`pending_payment` durumlarının sayaca katılmadığı iddiasını ekle. 3. Hurl'a ekle. **Kabul:** yarış testi yeşil. **Çıktı:** H2.5 regresyon koruması (H5.1 üstüne kurulur).
+- Ayrıca: P5'in H4.6 kulüp ekranlarındaki kulüp bağlamı sorularında C/danışılan konumundasın — bekletmeden yanıtla.
 
 ## H5 — Topluluk (en yoğun haftan)
 
-- **H5.1 Davetiye + QR okutma.** Kulüp/etkinlik aynı yol (§8); `GET /invitations/{code}` tür döndürür; `max_uses/uses`. Kabul: kabul akışı testli. Çıktı: H5.2, H5.12.
-- **H5.2 `/scanner` (P7 ile).** `POST …/checkin` → `used` + `checked_in_at`; QR çevrimdışı okunur (§1.5). H5.1 gelene kadar mock QR yüküyle başlar. Kabul: mock QR akışı yeşil; gerçek cihaz provası H6.16'da (H5.1 önceki haftadan).
-- **H5.4 Gönderi + akış (P7 ile; backend senin).** `POST /clubs/{id}/posts` (yalnızca yönetici/mod. §1.2), liste `?before=`, `PATCH/DELETE`, `GET /feed?cursor=`; `link_url` dış bağlantı (§4.13); soft-delete. Kabul: üç görünürlük kademesi testli.
-- **H5.5 Beğeni.** `POST/DELETE /posts/{id}/like`, idempotent. Kabul: çift beğeni tek kayıt.
-- **H5.6 Moderasyon.** `POST /reports`, `/admin/reports*` (open→reviewed→actioned). Kabul: üye silemez testi.
-- **H5.12 Ekranların.** `/invite/[code]`, `/settings/following`, `/clubs/[id]/followers`, `/clubs/[id]/new-post` (`PostComposer` + formsnap/superforms/Zod doğrulama §3.1). Kabul: §16'nın ekran kutuları (Türkçe metin, 44px, koyu mod, yükleme göstergesi).
+Bu hafta kulübün sosyal yüzünü bitiriyorsun: davetiye, kapı doğrulama, gönderi, beğeni, moderasyon + kendi ekranların.
+
+- **H5.1 Davetiye + QR okutma.** Kulüp ve etkinlik davetiyesi aynı yolu kullanır (§8 API sözleşmesi); `GET /invitations/{code}` davetiyenin türünü döndürür, kullanıcı neye katılacağını önceden bilir; `max_uses`/`uses` sayaçları kaç kişide kullanıldığını gösterir. **Kabul:** kabul akışı testli. **Çıktı:** H5.2 scanner ile H5.12 ekranların buraya dayanır.
+- **H5.2 `/scanner` (P7 ile).** Kapı görevlisinin QR okuttuğu ekran; `POST …/checkin` kaydı `used` yapar + `checked_in_at` damgası vurur; QR çevrimdışıyken de okunur (§1.5 Kullanıcı görünümü). H5.1 gelene kadar mock QR yüküyle başlar. **Kabul:** mock QR akışı yeşil; gerçek cihaz provası H6.16'da (H5.1 önceki haftadan).
+- **H5.4 Gönderi + akış (P7 ile; backend senin).** `POST /clubs/{id}/posts` yalnızca yönetici/mod. açabilir (§1.2 Uygulama), liste `?before=` ile sayfalanır, `PATCH/DELETE` ile düzenlenir/silinir, `GET /feed?cursor=` takip edilenlerin akışını verir; `link_url` dış video/bağlantı (§4.13 Gönderiler); silinen kayıtlar saklanır (`deleted_at` §7 Veri modeli). **Kabul:** üç görünürlük kademesi (public/followers/members) testli.
+- **H5.5 Beğeni.** `POST/DELETE /posts/{id}/like`, idempotent (iki kez basınca tek kayıt). **Kabul:** çift beğeni tek kayıt.
+- **H5.6 Moderasyon.** `POST /reports` şikâyeti + `/admin/reports*` kuyruğu (open→reviewed→actioned §7 Veri modeli). **Kabul:** üye silemez testi yeşil (yalnızca yönetici siler).
+- **H5.12 Ekranların.** `/invite/[code]`, `/settings/following`, `/clubs/[id]/followers`, `/clubs/[id]/new-post` (`PostComposer` + formsnap/superforms/Zod doğrulama §3.1 Mobil yığın). **Kabul:** §16 Bitti tanımının ekran kutuları (Türkçe metin, 44px dokunma hedefi, koyu mod, yükleme göstergesi).
 
 ## H6 — Regresyon haftan
 
-- **H6.16 QR/check-in regresyonu (P7 ile).** Hedef: H6.2'nin 8 akışındaki bilet ayağı cihazda. Adımlar: 1. Üret→cüzdan→çevrimdışı aç→okut→`used` zinciri. 2. Bozuk/tekrar QR red senaryoları. Kabul: zincir yeşil (P7 ile eşzamanlı koşar). Çıktı: H6 çıkış ölçütüne kanıt.
-- **H6.7-pay.** Kulüp-bilet sözleşme/ADR payın.
+- **H6.16 QR/check-in regresyonu (P7 ile).** **Hedef:** H6.2'nin 8 akışındaki bilet ayağı gerçek cihazda kanıtlansın. **Adımlar:** 1. Üret→cüzdan→çevrimdışı aç→okut→`used` zincirini koş. 2. Bozuk/tekrar QR red senaryoları. **Kabul:** zincir yeşil (P7 ile eşzamanlı koşar). **Çıktı:** H6 çıkış ölçütüne kanıt.
+- **H6.7-pay.** Kulüp-bilet alanının sözleşme/ADR payını yazarsın.
 
 ## H7 — Demo
 
@@ -57,4 +65,4 @@ Kulüp→bilet→QR ayağı provada sende (H7.1). Bozulursa ilk müdahale sende.
 
 ## Risklerin
 
-R5: API'yi H1.8 taslağıyla erken dondur; P6/P7 beklemez. §6.1: H3 işlerin yarından azı biterse kesinti gündeme gelir — H3.9'a tablon hazır.
+R5 (ekran işi yetişmez): API'yi H1.8 taslağıyla erken dondur; P6/P7 beklemez. §6.1 Değerlendirme: H3 işlerin yarısından azı biterse kesinti gündeme gelir — H3.9'a tablon hazır.

@@ -1,51 +1,53 @@
 # EtkinlikCepte — Ana Plan (7 hafta, v3)
 
-**Kaynak:** `development.md` + ADR-0001/0011. Kapsam kararları `development.md` §4'tedir; çelişmede o geçerlidir.
-**Kural:** Herkes §6 alanıyla başlar, 7 hafta boyunca aynı kavramda ilerler. Alan değişimi yok.
-**Süre notu:** `development.md` §10 (15 hafta) 7 haftaya sıkıştırıldı; düşenler 3. bölümde.
+**Kaynak:** `development.md` + ADR-0001/0011. Kapsam kararları `development.md` §4 Kapsam kararları'tedir; çelişmede o geçerlidir.
+**Kural:** Herkes §6 Ekip alanıyla başlar, 7 hafta boyunca aynı kavramda ilerler. Alan değişimi yok.
+**Süre notu:** `development.md` §10 Takvim (15 hafta) 7 haftaya sıkıştırıldı; düşenler 3. bölümde.
 **Bitirme disiplini:** Proje H7'de biter. H6 kapısı eksiksiz geçilmeden H7'ye geçilmez; H7'ye kalan iş yalnızca H7.1 listesidir. Faz 2'ye devredenler H7 kapanış notunda yazılır, sessizce sarkmaz.
 
 ## Nasıl okunur
 
 Bu dosya **genel orkestrasyondur**: hiyerarşi, ritüel, kavram haritası, kesinti listesi, kritik yol, haftalık hedef/çıkış ve lider rotası. **Görev detayı (adım, dosya, komut, kabul) kişisel dosyalardadır.** ID'ler (`H<hafta>.<sıra>`) her iki tarafta aynıdır; aşağıdaki endeks ana kayıttır.
 
+**Referanslar nasıl okunur:** `§4.8 Bildirim` demek, `development.md` 4.8. bölümdeki bildirim kuralları demek. `H3.1` planın 3. hafta 1. görevi, `R9` 14. bölümdeki 9. risk, `D4` 3. bölümdeki düşen 4. iş demek. Hepsi parantez içinde yazar; numara tek başına durmaz.
+
 ## 1. Hiyerarşi
 
 | Katman | Kim | Yetki |
 |---|---|---|
-| Teknik lider (kalıcı) | P1 | `/v1` bozma, şema ve göç onayı (§6.2, §8.1). Teknik konularda son söz. |
+| Teknik lider (kalıcı) | P1 | `/v1` bozma, şema ve göç onayı (§6.2 Çalışma kuralları, §8.1 Sözleşme kuralları). Teknik konularda son söz. |
 | Hafta lideri (dönüşümlü) | H1 P1 → H2 P2 → H3 P3 → H4 P4 → H5 P5 → H6 P6 → H7 P7 | Süreç: 30' senkron, tıkanıklık takibi, cuma çıkış kontrolü, devir notu. Teknik karara karışmaz. |
-| Alan sahibi | Herkes kendi §6 alanında | İşinin `A/R`'si (§6.3). Başkasının alanına kod yazmaz. |
+| Alan sahibi | Herkes kendi §6 Ekip alanında | İşinin `A/R`'si (§6.3 Sorumluluk matrisi). Başkasının alanına kod yazmaz. |
 
-**Eşleşme çiftleri (§6.2):** P1-P3, P2-P5, P4-P6. P7 ekran hattında P6 ile çalışır.
-**Ritüeller (§6.2):** Haftalık 30' senkron (pazartesi) · H3 sonu değerlendirme + H4 sonu ara bakış + H7 demo · trunk-based, branch ≤ 3 gün · PR tek konu ≤ 400 satır, CI yeşil, bir onay · şemada P1 onayı şart · `src-tauri/` yalnızca P6 · dil: kod İngilizce, kullanıcı metni `tr.json` · sürüm: `mise.toml` · her şey `just` ile · bitti tanımı §16.
+**Eşleşme çiftleri (§6.2 Çalışma kuralları):** P1-P3, P2-P5, P4-P6. P7 ekran hattında P6 ile çalışır.
+**Ritüeller (§6.2 Çalışma kuralları):** Haftalık 30' senkron (pazartesi) · H3 sonu değerlendirme + H4 sonu ara bakış + H7 demo · trunk-based, branch ≤ 3 gün · PR tek konu ≤ 400 satır, CI yeşil, bir onay · şemada P1 onayı şart · `src-tauri/` yalnızca P6 · dil: kod İngilizce, kullanıcı metni `tr.json` · sürüm: `mise.toml` · her şey `just` ile · bitti tanımı §16 Bitti tanımı.
 **Devir notu (cuma, ≤10 satır):** çıkış tuttu mu + eksik; devreden ID + sahip; tıkanıklık + çözücü; sonraki lidere tek öneri.
 
 ## 2. Kavram haritası
 
-| Kişi | Kavram (§6) | Çekirdek envanter |
+| Kişi | Kavram (§6 Ekip) | Çekirdek envanter |
 |---|---|---|
-| P1 | Sözleşme, şema, auth, sunucu | `users`, `refresh_tokens`, `devices`, `audit_log`, göçler; Kimlik/Sistem uçları; `api-client` üretimi; CI; imzalama |
-| P2 | Kulüp, etkinlik, bilet, QR, metin-sosyal | `clubs`, `club_members`, `events`, `event_tickets`, `registrations`, davetiyeler, takipçilik, gönderiler, beğeni, raporlar; Kulüp/Etkinlik/Bilet/Davetiye/Akış uçları; `ClubBadge`, `PostCard`, `PostComposer`, `FollowButton`, `TicketRow`, `QRDisplay` |
-| P3 | Veri toplama | `source_events`, `event_sources`, `source_configs`, `venues`; Dramatiq/APScheduler, Scrapy/parsel, Playwright, feedparser/extruct, rapidfuzz, shapely; `data-sources.md`, pano |
-| P4 | Keşif ve öneri | `venues`, `ranking_weights`; `/discover/*`; şeffaf skor w1–w6; Nominatim self-host; Martin/PMTiles doğrulama |
-| P5 | Sohbet ve medya | `chat_channels/members/messages`, `media_rooms`, `notifications`, `devices`; Sohbet/DM/Oda/Bildirim uçları, `/ws`; 5 ekran + 4 bileşen; LiveKit |
-| P6 | Uygulama çekirdeği | `apps/mobile` iskelet/nav/cache, `packages/ui`, `src-tauri` (200 satır tavan), deep-link/`geo:`, `ssr=false`, plugin-updater |
-| P7 | Ekranlar ve kalite | discover/detay/cüzdan/`about` + ortak ekranlar; E2E (8 web + 3 cihaz); paket bütçesi; imzalı APK |
+| P1 · Tech Lead (Abdullah Yılmaz) | Sözleşme, şema, auth, sunucu | `users`, `refresh_tokens`, `devices`, `audit_log`, göçler; Kimlik/Sistem uçları; `api-client` üretimi; CI; imzalama |
+| P2 · Backend, Ticketing & Social (Eren Yığmatepe) | Kulüp, etkinlik, bilet, QR, metin-sosyal | `clubs`, `club_members`, `events`, `event_tickets`, `registrations`, davetiyeler, takipçilik, gönderiler, beğeni, raporlar; Kulüp/Etkinlik/Bilet/Davetiye/Akış uçları; `ClubBadge`, `PostCard`, `PostComposer`, `FollowButton`, `TicketRow`, `QRDisplay` |
+| P3 · Data Engineer, Miner (İsmail Can Kocaman) | Veri toplama | `source_events`, `event_sources`, `source_configs`, `venues`; Dramatiq/APScheduler, Scrapy/parsel, Playwright, feedparser/extruct, rapidfuzz, shapely; `data-sources.md`, pano |
+| P4 · Backend, Discovery & Ranking (Umut Can Kuş) | Keşif ve öneri | `venues`, `ranking_weights`; `/discover/*`; şeffaf skor w1–w6; Nominatim self-host; Martin/PMTiles doğrulama |
+| P5 · Backend, Realtime & Media (Cevat) | Sohbet ve medya | `chat_channels/members/messages`, `media_rooms`, `notifications`, `devices`; Sohbet/DM/Oda/Bildirim uçları, `/ws`; 5 ekran + 4 bileşen; LiveKit |
+| P6 · Mobile, Core & Design System (Abdullah Hilal) | Uygulama çekirdeği | `apps/mobile` iskelet/nav/cache, `packages/ui`, `src-tauri` (200 satır tavan), deep-link/`geo:`, `ssr=false`, plugin-updater |
+| P7 · Mobile UI & QA (Adar Bilmez) | Ekranlar ve kalite | discover/detay/cüzdan/`about` + ortak ekranlar; E2E (8 web + 3 cihaz); paket bütçesi; imzalı APK |
 
-Kurallar: para kuruş + `TRY`, zaman UTC ISO-8601, hata RFC 9457, bilet/mesaj yazmalarında `Idempotency-Key` (§8.1).
+Kurallar: para kuruş + `TRY`, zaman UTC ISO-8601, hata RFC 9457, bilet/mesaj yazmalarında `Idempotency-Key` (§8.1 Sözleşme kuralları).
 
-## 3. Kapsam: düşenler (§6.1 sırası + ek)
+## 3. Kapsam: düşenler (§6.1 Değerlendirme sırası + ek)
 
-D1 Öneri ML 3. aşama (Faz 2'ydi) · D2 Gönderi fotoğrafı (metin çalışır) · D3 Yorumlar (beğeni çalışır) · D4 Ekran paylaşımı web · D5 Ekran-paylaşımı bağlamında belge/bağlantı (kapsamda kalan: sohbet dosya eki H5.11 + oda dosya paylaşımı §1.2) · D6 `POST /recommendations/feedback` (model yok).
+D1 Öneri ML 3. aşama (Faz 2'ydi) · D2 Gönderi fotoğrafı (metin çalışır) · D3 Yorumlar (beğeni çalışır) · D4 Ekran paylaşımı web · D5 Ekran-paylaşımı bağlamında belge/bağlantı (kapsamda kalan: sohbet dosya eki H5.11 + oda dosya paylaşımı §1.2 Uygulama) · D6 `POST /recommendations/feedback` (model yok).
 **Korunan çekirdek:** takipçilik, metin gönderi, sohbet, DM, bilet/QR.
 **H3-sonu gerideyse ikinci dalga:** online akış → moderasyon (sade) → takvime ekleme → pano v2.
-**Faz 2'ye kalanlar (7 haftada yok):** ML Aşama 3 (D1), `POST /recommendations/feedback` (D6), schemathesis fuzz (§12).
+**Faz 2'ye kalanlar (7 haftada yok):** ML Aşama 3 (D1), `POST /recommendations/feedback` (D6), schemathesis fuzz (§12 Test stratejisi).
 
 ## 4. Kritik yol
 
 1. **Şema → API → istemci:** H1.3 → H2 backend'leri → H2.12 → H3 ekranları.
-2. **Veri → harita:** H1.9 → H2.8/H2.14/H2.15 → H3.1 → H3.3–H3.6. ToS'suz kaynak yayına girmez (§4.3).
+2. **Veri → harita:** H1.9 → H2.8/H2.14/H2.15 → H3.1 → H3.3–H3.6. ToS'suz kaynak yayına girmez (§4.3 Veri kaynakları).
 3. **Medya:** H1.11 → H4.1–H4.4 → H5.7. Port işi H4'te kapanır (R9).
 4. **Kabuk:** H1.12 → H2.9 → H4.5/H4.9 → H6.1. Rust 200 tavan.
 5. **Kalite:** H1.6 → H1.15 → H3.8 → H6.2 → H6.4.
@@ -57,8 +59,8 @@ D1 Öneri ML 3. aşama (Faz 2'ydi) · D2 Gönderi fotoğrafı (metin çalışır
 - **H3 Veri + harita (P3):** 4 kaynak canlı, pano, harita/detay/atfı ekranları, takipçilik, Hurl %60, H3-sonu değerlendirme. Çıkış: gerçek harita + 100+ temiz kayıt. Sıra: P3 canlı veri (H3.1) → P7 ekranları (mock'la başlar). H3.8/H3.9 en sonda.
 - **H4 Sohbet + medya (P4):** WS, presence, LiveKit, DM, bildirim/deep-link, 5 ekran. Çıkış: 2 kişi yazışır + 3. katılır + ses; DM + arama (cuma provası). Sıra: P5 içi H4.1 → H4.2/H4.4 → H4.6; H4.5/H4.7/H4.9/H4.10–H4.13 bağımsız paralel, kişiler arası bekleme yok.
 - **H5 Topluluk (P5):** Davetiye/QR, check-in, cüzdan, gönderi/akış, beğeni, moderasyon, online akış, staging HTTPS. Çıkış: gönderi → beğeni; QR davet kabul; cüzdan açılır. Sıra: P2 davetiye API (H5.1) → H5.2/H5.12; gerisi paralel.
-- **H6 Sıkılaştırma (P6):** Eşitleme/çakışma, 8 E2E, perf, imza, güvenlik, yük+maliyet, docs finali. Çıkış: imzalı APK, 8 E2E yeşil, §11 tuttu (`just ci` + `just perf-apk`). Sıra: H6.1 → H6.3; H6.2 sürecinde; H6.4 en sonda (H6.2 sonrası). H6.5–H6.17 paralel.
-- **H7 Demo (P7):** Prova + kayıt + README + §16/§18 kapanış. Çıkış: baştan sona demo + imzalı APK + güncel doküman (R12: kayıt hazır).
+- **H6 Sıkılaştırma (P6):** Eşitleme/çakışma, 8 E2E, perf, imza, güvenlik, yük+maliyet, docs finali. Çıkış: imzalı APK, 8 E2E yeşil, §11 Performans hedefleri tuttu (`just ci` + `just perf-apk`). Sıra: H6.1 → H6.3; H6.2 sürecinde; H6.4 en sonda (H6.2 sonrası). H6.5–H6.17 paralel.
+- **H7 Demo (P7):** Prova + kayıt + README + §16/§18 Onay tablosu kapanış. Çıkış: baştan sona demo + imzalı APK + güncel doküman (R12: kayıt hazır).
 
 ## 6. Görev endeksi (ana kayıt: 103 ID)
 
@@ -121,7 +123,7 @@ D1 Öneri ML 3. aşama (Faz 2'ydi) · D2 Gönderi fotoğrafı (metin çalışır
 | H3.5 | Konum izni + yakınımdakiler | P7 |
 | H3.6 | Kaynak atfı `/about` | P7 |
 | H3.7 | Takipçilik API | P2 |
-| H3.8 | Hurl %60 kapsam (pytest `services/`+`domain/` %90 §12) | P1, P2, P3, P4, P5 |
+| H3.8 | Hurl %60 kapsam (pytest `services/`+`domain/` %90 §12 Test stratejisi) | P1, P2, P3, P4, P5 |
 | H3.9 | H3-sonu değerlendirme | Tümü |
 | H3.10 | Normalize + dedup kuralları | P3 |
 | H3.11 | OSM/Overpass mekan çekme (osm2pgsql) | P3, P4 |
@@ -197,7 +199,7 @@ D1 Öneri ML 3. aşama (Faz 2'ydi) · D2 Gönderi fotoğrafı (metin çalışır
 |---|---|---|
 | H7.1 | Demo provası + eksik kapatma | Tümü |
 | H7.2 | Ekran kaydı + README finali | P7 |
-| H7.3 | §16 kutuları + §18 imzalar | P1 |
+| H7.3 | §16 Bitti tanımı kutuları + §18 Onay tablosu imzalar | P1 |
 | H7.4 | Seed + demo veri seti | P3 |
 
 ## 7. Lider rotası
@@ -206,13 +208,13 @@ H1 P1 (kurulum + tebliğ + imzalar) · H2 P2 (sözleşme donması) · H3 P3 (ver
 
 ## 8. Kişisel dosyalar
 
-`p1-abdullah-yilmaz-teknik-lider-altyapi.md` (Abdullah Yılmaz) · `p2-eren-yigmatepe-kulup-etkinlik-bilet.md` (Eren Yığmatepe) · `p3-ismail-can-kocaman-veri-toplama.md` (İsmail Can Kocaman) · `p4-umut-can-kus-kesif-oneri.md` (Umut Can Kuş) · `p5-can-sohbet-medya.md` (Can) · `p6-abdullah-hilal-uygulama-cekirdegi.md` (Abdullah Hilal) · `p7-adar-bilmez-ekranlar-kalite.md` (Adar Bilmez)
+`p1-abdullah-yilmaz-teknik-lider-altyapi.md` (Abdullah Yılmaz) · `p2-eren-yigmatepe-kulup-etkinlik-bilet.md` (Eren Yığmatepe) · `p3-ismail-can-kocaman-veri-toplama.md` (İsmail Can Kocaman) · `p4-umut-can-kus-kesif-oneri.md` (Umut Can Kuş) · `p5-cevat-sohbet-medya.md` (Cevat) · `p6-abdullah-hilal-uygulama-cekirdegi.md` (Abdullah Hilal) · `p7-adar-bilmez-ekranlar-kalite.md` (Adar Bilmez)
 
-## 9. Teknoloji × repo × sahip × hafta (`development.md` §3 + §5 tam kapsama)
+## 9. Teknoloji × repo × sahip × hafta (`development.md` §3 Teknolojiler + §5 Depo yapısı tam kapsama)
 
 `development.md`'deki her teknoloji/teknik unsur aşağıdaki satırlardan birindedir; boşta teknoloji yoktur.
 
-| Teknoloji (§3) | Repo yolu (§5) | Sahip | Hafta |
+| Teknoloji (§3 Teknolojiler) | Repo yolu (§5 Depo yapısı) | Sahip | Hafta |
 |---|---|---|---|
 | Tauri 2.12, Rust (~200 satır) | `apps/mobile/src-tauri/` | P6 | H1–H7 |
 | SvelteKit 3 + Svelte 5, Vite 8 + TS 7 | `apps/mobile/` (`svelte.config.js`, `vite.config.ts`) | P6 | H1, H2 |
@@ -253,7 +255,7 @@ H1 P1 (kurulum + tebliğ + imzalar) · H2 P2 (sözleşme donması) · H3 P3 (ver
 | shapely, osm2pgsql, Overpass/OSM | `.../geo/` + `venues` | P3, P4 | H3 |
 | faker (test verisi) | `apps/pipeline/tests/fixtures/` | P3 | H4 |
 | Nominatim 5.3.2 self-host, Martin + Protomaps basemap | `infra/compose*.yaml`, `martin/martin.yaml` | P4 (P1 destek) | H1, H3 |
-| livekit.yaml, Caddyfile, Headscale, `docs/ports.md` | `infra/` | P1 (kurulum), P5 (port) | H1, H5 |
+| livekit.yaml, Caddyfile, Headscale, `infra/docs/ports.md` | `infra/` | P1 (kurulum), P5 (port) | H1, H5 |
 | Podman, `mise.toml`, `justfile`, oxker (`just services`) | kök | P1 | H1 |
 | adb + UI Automator (3 akış) | cihaz testleri | P7 | H6 |
 | Grafana + Loki, GlitchTip | izleme + hata takibi | P1 | H6 |
