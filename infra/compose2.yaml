@@ -1,0 +1,19 @@
+version: '3.8'
+
+services:
+  nominatim:
+    container_name: nominatim_server
+    image: mediagis/nominatim:5.3.2
+    ports:
+      - "8080:8080"
+    environment:
+      # Sadece Türkiye'nin harita verisini çeker
+      - PBF_URL=https://download.geofabrik.de/europe/turkey-latest.osm.pbf
+      - REPLICATION_URL=https://download.geofabrik.de/europe/turkey-updates/
+      - NOMINATIM_PASSWORD=projectx_guvenli_sifre
+    volumes:
+      - nominatim-data:/var/lib/postgresql/14/main
+    shm_size: 1g # PostGIS arama performansını artırmak için RAM takviyesi
+
+volumes:
+  nominatim-data:
