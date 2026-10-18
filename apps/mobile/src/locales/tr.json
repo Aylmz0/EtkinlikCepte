@@ -1,0 +1,32 @@
+{
+  "app": {
+    "name": "EtkinlikCepte",
+    "tagline": "Üniversite ve Şehir Etkinlikleri Cebinde"
+  },
+  "nav": {
+    "discover": "Keşfet",
+    "feed": "Akış",
+    "clubs": "Kulüpler",
+    "tickets": "Biletler",
+    "profile": "Profil",
+    "messages": "Mesajlar",
+    "notifications": "Bildirimler"
+  },
+  "common": {
+    "loading": "Yükleniyor...",
+    "error": "Bir hata oluştu",
+    "retry": "Yeniden Dene",
+    "save": "Kaydet",
+    "cancel": "İptal",
+    "back": "Geri",
+    "search": "Ara...",
+    "offline_badge": "Çevrimdışı Mod"
+  },
+  "auth": {
+    "login": "Giriş Yap",
+    "register": "Kayıt Ol",
+    "email": "E-posta",
+    "password": "Şifre",
+    "submit": "Devam Et"
+  }
+}

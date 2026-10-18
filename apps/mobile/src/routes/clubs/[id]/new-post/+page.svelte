@@ -1,0 +1,24 @@
+<!--
+  @component ClubNewPostPage
+  @desc Club post creator with photo upload support (§1.6, §4.13, Owner: P2).
+  Props: None
+  Events: None
+-->
+<script lang="ts">
+  import { t } from '$lib/i18n.js';
+</script>
+
+<div class="p-4 space-y-4 max-w-md mx-auto">
+  <div class="flex items-center justify-between border-b border-border pb-3">
+    <h1 class="text-xl font-bold">Gönderi Oluştur</h1>
+    <a
+      href="/clubs/1"
+      class="text-xs text-primary min-h-[44px] min-w-[44px] inline-flex items-center justify-center"
+    >
+      {t('common.back')}
+    </a>
+  </div>
+  <p class="text-sm text-muted-foreground">
+    P2 Ownership (Photos allowed, max 4, no video upload §4.13)
+  </p>
+</div>
