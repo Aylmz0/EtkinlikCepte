@@ -1,6 +1,6 @@
 <!--
   @component RootLayout
-  @desc Root layout component providing base styling and dark mode initialization.
+  @desc Root layout component providing base styling, warm canvas backdrop, and dark mode initialization.
   Props:
     - children: Snippet - Rendered child route
   Events: None
@@ -20,7 +20,7 @@
 </script>
 
 <div
-  class="min-h-screen bg-background text-foreground antialiased selection:bg-primary selection:text-primary-foreground font-sans"
+  class="min-h-screen bg-gradient-to-b from-[#fbf7f2] via-[#f8f2eb] to-[#fbf7f2] dark:from-[#121214] dark:to-[#18181b] text-foreground antialiased selection:bg-primary selection:text-primary-foreground font-sans"
 >
   {@render children()}
 </div>
