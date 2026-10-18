@@ -30,7 +30,7 @@
   <!-- P6 Quick Action Cards -->
   <section class="space-y-4 my-auto py-6">
     <a
-      href="/(tabs)/discover"
+      href="/discover"
       class="group flex items-center justify-between p-4 rounded-2xl border border-border/80 bg-white dark:bg-card shadow-xs hover:border-primary/50 hover:shadow-sm transition-all"
     >
       <div class="space-y-0.5">
@@ -46,7 +46,7 @@
 
     <div class="grid grid-cols-2 gap-3 pt-1">
       <a
-        href="/(tabs)/profile"
+        href="/profile"
         class="flex flex-col p-4 rounded-2xl border border-border/80 bg-white dark:bg-card shadow-xs hover:border-primary/40 transition-colors"
       >
         <div

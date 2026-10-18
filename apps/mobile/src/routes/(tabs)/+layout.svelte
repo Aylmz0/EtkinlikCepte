@@ -21,11 +21,11 @@
   let { children } = $props();
 
   const tabs = [
-    { href: '/(tabs)/discover', label: 'Keşfet', icon: CalendarDays },
-    { href: '/(tabs)/feed', label: 'Ara', icon: Search },
-    { href: '/(tabs)/clubs', label: 'Mekanlar', icon: Building2 },
-    { href: '/(tabs)/tickets', label: 'Kaydedilenler', icon: Heart },
-    { href: '/(tabs)/profile', label: 'Ayarlar', icon: Settings },
+    { href: '/discover', label: 'Keşfet', icon: CalendarDays },
+    { href: '/feed', label: 'Ara', icon: Search },
+    { href: '/clubs', label: 'Mekanlar', icon: Building2 },
+    { href: '/tickets', label: 'Kaydedilenler', icon: Heart },
+    { href: '/profile', label: 'Profil', icon: Settings },
   ];
 
   function isActive(href: string): boolean {
@@ -46,7 +46,7 @@
     </a>
     <div class="flex items-center gap-2">
       <a
-        href="/(tabs)/messages"
+        href="/messages"
         aria-label={t('nav.messages')}
         class="w-10 h-10 rounded-full bg-white dark:bg-card border border-border/60 flex items-center justify-center text-muted-foreground hover:text-foreground shadow-xs transition-colors"
       >
