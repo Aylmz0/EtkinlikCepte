@@ -5,3 +5,4 @@
 - [Karar kayıtları](adr/README.md)
 - [Veri kaynakları](data-sources.md)
 - [Operasyon](runbook.md)
+- [Realtime protocol](realtime.md)
