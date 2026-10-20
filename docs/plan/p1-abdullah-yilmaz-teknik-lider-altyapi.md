@@ -38,6 +38,8 @@ Bu hafta kimlik katmanını bitiriyor ve telefon tarafının beklediği tip pake
 Bu hafta kodtan çok kapı nöbeti tutuyorsun: sözleşme test kapsamı ve hafta sonu değerlendirmesinin teknik masası sende.
 
 - **H3.8-pay.** Kendi uçlarının (kimlik/sistem/yönetim) Hurl testleri — başkasını beklemezsin — + kapsam raporu iskeleti + sözleşme dondurma denetimi (H2'de açılan uçları `/v1`'e karşı tek tek karşılaştır); birleştirme H3.9 değerlendirme ritüelinde yapılır. **Kabul:** kendi payın yeşil + denetim notu PR'da.
+- **H3.11-sunucu.** **Hedef:** OSM/Overpass ağır sorguları kendi sunucumuzdan koşar, dış servise yük binmez (§4.3 Veri kaynakları). **Adımlar:** 1. Overpass ortamını sunucuda ayağa kaldır (kaynak limitleriyle). 2. osm2pgsql ile `venues` yükleme hattını sunucu tarafında kur. 3. İstek hızı/kota sınırlarını yazılı hale getir (R4). **Kabul:** sunucudan koşan örnek Overpass sorgusu döner + kota notu PR'da. **Çıktı:** P3'ün H3.11 veri çekme ve P4'ün kategori eşleme işleri bu ortama dayanır.
+- **H3.12-sunucu.** **Hedef:** harita paketleri kendi sunucumuzdan üretilir, dışarıdan hazır paket kullanılmaz (§4.3 Veri kaynakları). **Adımlar:** 1. Martin servisini sunucuda yapılandır (`infra/martin/martin.yaml`). 2. `venues` tablosundan PMTiles paket üretimini çalıştır. 3. Üretim komutunu `runbook.md`'ye yaz. **Kabul:** sunucuda üretilen paket URL'i istemcide açılır. **Çıktı:** P4'ün H3.12 doğrulaması ve P7'nin harita tüketimi bu üretime dayanır.
 - **H3.9-değerlendirme.** Çıkan/çıkmayan işlerin teknik tablosunu hazırlarsın (ana plan 3. bölümdeki ikinci dalga kesinti önerisiyle); toplantıyı P3 yönetir, kararı ekip verir. **Kabul:** karar yazılı durur.
 
 ## H4 — Denetim haftan
@@ -56,11 +58,11 @@ Bu hafta kodtan çok kapı nöbeti tutuyorsun: sözleşme test kapsamı ve hafta
 - **H6.5 Güvenlik.** Rol denetimi, `limits` hız sınırı, gizli anahtar taraması (+ `GET /admin/audit` ucu, `audit_log` §7 Veri modeli) + H4.10 bulgularının canlı doğrulaması. **Kabul:** CI `audit` adımı yeşil.
 - **H6.6 Yük + maliyet.** k6 ile 500 eşzamanlı okuma; hedef p95 okuma < 200 ms, yazma < 350 ms (§11 Performans hedefleri). **Kabul:** rapor hazır + §11 sunucu hedefleri tuttu.
 - **H6.17 İzleme + hata takibi.** **Hedef:** Grafana + Loki ile sunucu izleme, GlitchTip ile hata takibi (§3.4 Araçlar). **Adımlar:** 1. Compose'a log toplama + gösterge paneli kur (k6 yükü altında dene). 2. GlitchTip'e istemci + sunucu hata akışını bağla. **Kabul:** panel açılır, deneme hatası panele düşer. **Çıktı:** H7 provası bu gözlemle izlenir.
-- **H6.7-koordinasyon.** Herkes kendi doküman payını yazar; sen ölü link ve güncel-dışı ADR bırakılmadığını denetlersin.
+- **H6.7-koordinasyon.** Herkes kendi doküman payını yazar; sen ölü link ve güncel-dışı ADR bırakılmadığını denetlersin. **Kabul:** mdBook uyarısız derlenir, kırık link yok.
 
 ## H7 — Demo
 
-- **H7.1-pay.** Demo provasında sözleşme ayağı sende: bozulan uç olursa ilk müdahale senin.
+- **H7.1-pay.** Demo provasında sözleşme ayağı sende: bozulan uç olursa ilk müdahale senin. **Kabul:** prova sırasında sözleşme hatası çıkmaz.
 - **H7.3 Kapanış.** §16 Bitti tanımı kutuları + §18 Onay tablosunda 7 imza. **Kabul:** tüm kutular tikli.
 
 ## Risklerin

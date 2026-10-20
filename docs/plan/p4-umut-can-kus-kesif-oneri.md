@@ -29,8 +29,8 @@ Senin işin "yakınımda ne var" sorusunu milisaniyeler içinde cevaplamak. Coğ
 
 Bu hafta "çalışıyor" demek yetmez, ölçümle kanıtlarsın.
 
-- **H3.11 OSM/Overpass (P3 ile).** Senin payın: kategori eşleme + mesafe tutarlılığı (örnek mekanla başlar, kurallar yazılı). **Kabul:** örnekte doğru kategori; canlı veriye karşı doğrulama H6.11'de yapılır (H3.1 önceki haftalardan).
-- **H3.12 Martin/PMTiles.** Harita paketleri kendi sunucumuzdan üretilir (§4.3 Veri kaynakları); P7 tüketir. **Kabul:** paketler istemcide açılır.
+- **H3.11 OSM/Overpass (P3 ile).** Senin payın: kategori eşleme + mesafe tutarlılığı (örnek mekanla başlar, kurallar yazılı). **Kabul:** örnekte doğru kategori; canlı veriye karşı doğrulama H6.11'de yapılır.
+- **H3.12 Martin/PMTiles (P1 sunucu ile).** Paket üretimi P1'in H3.12-sunucu işinde; senin payın istemci tarafı: **statik örnek paket** ile harita katmanlarının açıldığını doğrula; sunucuda üretilen paketin canlı doğrulaması H6.11'de yapılır. **Kabul:** örnek paket istemcide açılır, katmanlar doğrulanır.
 - **H3.13 EXPLAIN + indeks raporu.** §7 Veri modelindeki kritik indeks listesi satır satır elden geçer. **Kabul:** rapor + < 300 ms kanıtı hazır. **Çıktı:** H6.9 optimizasyonu bu rapora dayanır.
 - **H3.8-pay.** Kendi keşif uçlarının Hurl kapsamı sende; başkasını beklemezsin. **Kabul:** yeşil.
 - **H3.9-katılım.** Keşif ayağının durumu toplantıda sende. **Kabul:** H3.13 raporu masada.
@@ -39,6 +39,7 @@ Bu hafta "çalışıyor" demek yetmez, ölçümle kanıtlarsın.
 
 - **H4.8 w6 kalibrasyonu.** `club_followers(user_id, created_at DESC)` indeksi (H3.7 verisiyle) + takip ağırlığının ayarı. **Kabul:** indeks var + örnek çıktıda w6 etkisi görünür.
 - **Liderlik:** Cuma provası yapılır (H4 çıkışı kanıtlanır) + H4 sonu 1 saat ara bakış (§6.2 Çalışma kuralları ritüeli) + P5'e devir notu yazarsın. Buddy P6'nın H4.7'si tıkanırsa ona öncelik verirsin.
+- **H4.14 Arama kalitesi regresyon testleri.** **Hedef:** Türkçe karakterli aramalar (İ/i, ğ, ü, ş) ve filtre kombinasyonları H2.16 uçlarında doğru sonuç versin (önceki haftadan). **Adımlar:** 1. Örnek veri setiyle Türkçe arama senaryoları yaz. 2. Filtre kombinasyonlarının (kategori + tarih + fiyat) kesişimini test et. 3. Hurl'a kalıcı regresyon olarak ekle. **Kabul:** test seti yeşil, yanlış eşleşme yok. **Çıktı:** H5.16 akış karışımı bu doğrulanmış aramaya dayanır.
 
 ## H5 — Karışım haftan
 
@@ -48,11 +49,12 @@ Bu hafta "çalışıyor" demek yetmez, ölçümle kanıtlarsın.
 ## H6 — Optimizasyon haftan
 
 - **H6.9 Keşif optimizasyonu.** H3.13 bulgularını kapatırsın. **Kabul:** < 300 ms, 100 bin kayıt, raporlu.
-- **H6.11 Coğrafi doğrulama + kategori eşleme.** shapely + OSM kategorileri + H3.11 kurallarının canlı veriye karşı doğrulaması. **Kabul:** eşleme tablosu dokümante.
+- **H6.11 Coğrafi doğrulama + kategori eşleme.** shapely + OSM kategorileri + H3.11 kurallarının canlı veriye karşı doğrulaması + sunucuda üretilen PMTiles paketinin canlı doğrulaması (P1'in H3.11-sunucu/H3.12-sunucu ortamı, önceki haftalardan). **Kabul:** eşleme tablosu dokümante, canlı paket istemcide açılır.
 - **H6.7-pay.** Keşif/öneri alanının ADR payını yazarsın.
 
 ## H7 — Prova
 
+**H7.6 Weights son hali + keşif demo veri kontrolü.** Demo öncesi `ranking_weights` son değerleri kilitlenir, keşif akışı demo verisiyle prova edilir. **Kabul:** öneri gerekçeleri demoda görünür.
 Keşif akışı provada sende (ara → filtrele → detay) + weights son gözden geçirmesi sende (H7.1 içinde).
 
 ## Risklerin

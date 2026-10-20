@@ -60,6 +60,7 @@ Teknik işin az, orkestrasyonun çok: 15 işlik haftayı sen yönetirsin.
 
 ## H7 — Demo
 
+**H7.7 Medya kayıt yedeği + oda son testi.** Demoda canlı bağlantı riskine karşı ekran kaydı ve oda açma/kapama son testi yapılır. **Kabul:** kayıt hazır + oda testi yeşil.
 Medya ayağı provada sende (H7.1); R12 gereği kayıt önceden hazırdır, canlı demoya güvenilmez.
 
 ## Risklerin

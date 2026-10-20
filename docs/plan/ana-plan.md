@@ -62,7 +62,7 @@ D1 Öneri ML 3. aşama (Faz 2'ydi) · D2 Gönderi fotoğrafı (metin çalışır
 - **H6 Sıkılaştırma (P6):** Eşitleme/çakışma, 8 E2E, perf, imza, güvenlik, yük+maliyet, docs finali. Çıkış: imzalı APK, 8 E2E yeşil, §11 Performans hedefleri tuttu (`just ci` + `just perf-apk`). Sıra: H6.1 → H6.3; H6.2 sürecinde; H6.4 en sonda (H6.2 sonrası). H6.5–H6.17 paralel.
 - **H7 Demo (P7):** Prova + kayıt + README + §16/§18 Onay tablosu kapanış. Çıkış: baştan sona demo + imzalı APK + güncel doküman (R12: kayıt hazır).
 
-## 6. Görev endeksi (ana kayıt: 103 ID)
+## 6. Görev endeksi (ana kayıt: 108 ID)
 
 ### H1
 
@@ -126,8 +126,8 @@ D1 Öneri ML 3. aşama (Faz 2'ydi) · D2 Gönderi fotoğrafı (metin çalışır
 | H3.8 | Hurl %60 kapsam (pytest `services/`+`domain/` %90 §12 Test stratejisi) | P1, P2, P3, P4, P5 |
 | H3.9 | H3-sonu değerlendirme | Tümü |
 | H3.10 | Normalize + dedup kuralları | P3 |
-| H3.11 | OSM/Overpass mekan çekme (osm2pgsql) | P3, P4 |
-| H3.12 | Martin/PMTiles doğrulama (Protomaps basemap) | P4 |
+| H3.11 | OSM/Overpass: sunucu ortamı (P1) + veri çekme/kategori (P3, P4) | P1, P3, P4 |
+| H3.12 | Martin/PMTiles: sunucuda kurulum+üretim (P1), istemci doğrulama (P4) | P1, P4 |
 | H3.13 | EXPLAIN + indeks raporu | P4 |
 | H3.14 | WS sözleşme testleri + tip dokümanı | P5 |
 | H3.15 | İstemci sözleşme provası | P6, P7 |
@@ -151,6 +151,7 @@ D1 Öneri ML 3. aşama (Faz 2'ydi) · D2 Gönderi fotoğrafı (metin çalışır
 | H4.11 | Kayıt/kapasite yarış testleri | P2 |
 | H4.12 | Adaptör fikstürleri + kota simülasyonu | P3 |
 | H4.13 | E2E senaryo yazımı (4 akış) | P7 |
+| H4.14 | Arama kalitesi regresyon testleri (Türkçe + filtre) | P4 |
 
 ### H5
 
@@ -201,6 +202,10 @@ D1 Öneri ML 3. aşama (Faz 2'ydi) · D2 Gönderi fotoğrafı (metin çalışır
 | H7.2 | Ekran kaydı + README finali | P7 |
 | H7.3 | §16 Bitti tanımı kutuları + §18 Onay tablosu imzalar | P1 |
 | H7.4 | Seed + demo veri seti | P3 |
+| H7.5 | Bilet/QR demo verisi doğrulama + yedek QR | P2 |
+| H7.6 | Weights son hali + keşif demo veri kontrolü | P4 |
+| H7.7 | Medya kayıt yedeği + oda son testi | P5 |
+| H7.8 | Güncelleme + çevrimdışı demo kontrolü | P6 |
 
 ## 7. Lider rotası
 
@@ -252,10 +257,9 @@ H1 P1 (kurulum + tebliğ + imzalar) · H2 P2 (sözleşme donması) · H3 P3 (ver
 | Scrapy 2.19, parsel + lxml 6.1 | `apps/pipeline/src/pipeline/sources/` | P3 | H2 |
 | Playwright (JS-render), feedparser + extruct | aynı dizin | P3 | H2, H5 |
 | rapidfuzz + coğrafi dedup, polars 2 | `.../normalize/`, `.../dedup/` | P3 | H3 |
-| shapely, osm2pgsql, Overpass/OSM | `.../geo/` + `venues` | P3, P4 | H3 |
+| shapely, osm2pgsql, Overpass/OSM | `.../geo/` + `venues` | P3, P4 (sunucu kurulumu: P1) | H3 |
 | faker (test verisi) | `apps/pipeline/tests/fixtures/` | P3 | H4 |
-| Nominatim 5.3.2 self-host, Martin + Protomaps basemap | `infra/compose*.yaml`, `martin/martin.yaml` | P4 (P1 destek) | H1, H3 |
-| livekit.yaml, Caddyfile, Headscale, `infra/docs/ports.md` | `infra/` | P1 (kurulum), P5 (port) | H1, H5 |
+| Nominatim 5.3.2 self-host, Martin + Protomaps basemap | `infra/compose*.yaml`, `martin/martin.yaml` | P4 (P1 destek) | H1, H3 || livekit.yaml, Caddyfile, Headscale, `infra/docs/ports.md` | `infra/` | P1 (kurulum), P5 (port) | H1, H5 |
 | Podman, `mise.toml`, `justfile`, oxker (`just services`) | kök | P1 | H1 |
 | adb + UI Automator (3 akış) | cihaz testleri | P7 | H6 |
 | Grafana + Loki, GlitchTip | izleme + hata takibi | P1 | H6 |

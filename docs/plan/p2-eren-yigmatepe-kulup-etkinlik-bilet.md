@@ -61,6 +61,7 @@ Bu hafta kulübün sosyal yüzünü bitiriyorsun: davetiye, kapı doğrulama, g�
 
 ## H7 — Demo
 
+**H7.5 Bilet/QR demo verisi doğrulama + yedek QR.** Demo öncesi biletli kullanıcı, kullanılmış/iptal bilet ve yedek QR çıktısı hazırlanır. **Kabul:** prova sırasında QR okutma zinciri çalışır; yedek QR basılı hazır.
 Kulüp→bilet→QR ayağı provada sende (H7.1). Bozulursa ilk müdahale sende.
 
 ## Risklerin

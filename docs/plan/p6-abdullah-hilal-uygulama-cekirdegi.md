@@ -57,6 +57,7 @@ Bu hafta kalite kapısının bekçisisin: eksik varsa H7'ye devretmezsin.
 
 ## H7 — Kapanış
 
+**H7.8 Güncelleme + çevrimdışı demo kontrolü.** Demo cihazında `plugin-updater` akışı ve çevrimdışı açılış (keşif + cüzdan) son kez denenir. **Kabul:** uçak modunda keşif ve bilet açılır, güncelleme kontrolü hata vermez.
 Kabuk/offline ayağı provada sende (H7.1). Rust 200 satırı aşıldıysa gerekçesi H7.3 kapanışından önce PR'da olur.
 
 ## Risklerin

@@ -36,7 +36,7 @@ Bu hafta robotlar gerçek sitelere çıkar, harita gerçek veriyle dolar. Hafta 
 - **H3.2 Pano v1.** Kaynak başına kayıt/kalite sayıları + `last_status` + beklenen/gerçekleşen denetimi (eksik kayıt loglanır, kayıp gizlenmez). **Kabul:** pano açılır.
 - **H3.8-pay.** Kendi admin uçlarının Hurl testleri; başkasını beklemezsin. **Kabul:** yeşil.
 - **H3.10 Dedup kuralları.** Eşikler yazılı belgede durur (benzerlik eşiği, mesafe toleransı) + polars tablo işleme (lazy frame §3.3 Veri hattı). **Kabul:** doküman + test.
-- **H3.11 OSM/Overpass (P4 ile).** `venues` mekân çekme + osm2pgsql aktarımı + shapely doğrulama; ağır sorgular kendi sunucumuzdan koşar, dışarıya yüklenilmez (§4.3 Veri kaynakları). **Kabul:** gri noktalar (etkinlik yapılabilir mekânlar §1.4) haritada görünür.
+- **H3.11 OSM/Overpass (P1 sunucu + P4 ile).** Senin payın: `venues` mekân verisini **örnek OSM kesiti/fikstür** üzerinden çekme + shapely doğrulama. Ağır sorgu ortamı P1'in H3.11-sunucu işinde kurulur; canlı sunucu sorgusu doğrulaması H6.11'de yapılır (H2.8/H2.14/H2.15 önceki haftadan). **Kabul:** fikstürden gri noktalar (etkinlik yapılabilir mekânlar §1.4) üretilir.
 - **Liderlik:** "Gerçek veri akıyor mu" senkronunu yönetirsin; H3.9 değerlendirmesini yönetip P4'e devir notu yazarsın.
 
 ## H4 — Sağlamlaştırma haftan
@@ -51,14 +51,14 @@ Bu hafta robotlar gerçek sitelere çıkar, harita gerçek veriyle dolar. Hafta 
 
 ## H6 — Gözlem haftan
 
-- **H6.7-pay.** `data-sources.md` finali (6 kaynak eksiksiz, ToS tarihleriyle).
-- **H6.8 Profil çıkarımı.** Faz 2'deki öğrenen katmanın girdisi; iş hattında çalışır ve dokümantelidir (kapanış değil, devir işi).
+- **H6.7-pay.** `data-sources.md` finali (6 kaynak eksiksiz, ToS tarihleriyle). **Kabul:** altı kaynağın da izin tarihi ve istek hızı yazılı.
+- **H6.8 Profil çıkarımı.** Faz 2'deki öğrenen katmanın girdisi; iş hattında çalışır ve dokümantelidir (kapanış değil, devir işi). **Kabul:** küçük örnek veriyle uçtan uca koşar.
 - **H6.10 Gözlemlenebilirlik.** `last_run_at`/`last_status` alanları, pano v2, işçi belleği (RSS) < 200 MB (§11 Performans hedefleri). **Kabul:** ölçüm raporlu.
 
 ## H7 — Veri kapanışı
 
 - **H7.4 Seed + demo veri.** `just seed` (Türkiye, 3 şehir §15 Komutlar) + prova senaryosuna özel set (kulüp, etkinlik, biletli kullanıcı). **Kabul:** temiz veritabanından prova 10 dakikada hazır.
-- **H7.1-pay.** Provada "gerçek veri" ayağı sende: kayıt yoksa ilk müdahale senin.
+- **H7.1-pay.** Provada "gerçek veri" ayağı sende: kayıt yoksa ilk müdahale senin. **Kabul:** provada haritada temiz veri görünür.
 
 ## Risklerin
 

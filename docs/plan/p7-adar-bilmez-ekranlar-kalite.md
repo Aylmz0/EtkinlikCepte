@@ -57,7 +57,7 @@ Bu hafta uygulamanın vitrini çıkar: harita, detay, cüzdan değil — harita,
 ## H7 — Demo (lider sensin)
 
 - **H7.2 Kayıt + README (koordine).** **Kabul:** ekran kaydı + güncel `README` + mdBook derlemesi (`book.toml` + SUMMARY §3.4 Araçlar).
-- **H7.1-prova.** Prova programı + rol dağılımı yaparsın (herkes kendi ayağının sahibi). R12 kuralı: kayıt önceden hazırdır, canlı demoya güvenilmez.
+- **H7.1-prova.** Prova programı + rol dağılımı yaparsın (herkes kendi ayağının sahibi). R12 kuralı: kayıt önceden hazırdır, canlı demoya güvenilmez. **Kabul:** prova baştan sona kesintisiz koşar.
 - **Kapanış notu:** 10 satır — çıkan/çıkmayan işler + Faz 2'ye devredenler.
 
 ## Risklerin
