@@ -1122,7 +1122,7 @@ build-apk → yalnızca main/release/*: tauri android build --apk
 - **Sunucu:** Tek VPS (Hetzner sınıfı), 4 çekirdek / 8 GB / 80 GB. Podman Compose.
 - **HTTPS:** Caddy otomatik Let's Encrypt.
 - **Adresler:** `api.projectx.app` + `app.projectx.app` (yer tutucu). APK aynı API'ye bağlanır.
-- **Medya portları:** LiveKit TCP 7880 + UDP 7881/7882 + **UDP 50000-50100** açık. Ayrıntı `infra/docs/ports.md`
+- **Medya portları:** LiveKit TCP 7880 + UDP 7881/7882 (UDP mux; tek UDP portu). Ayrıntı `infra/docs/ports.md`
 - **Erişim:** Headscale — deneme ve demo sunucularına port açmadan erişim.
 - **Gizli anahtarlar:** `.env` depoya girmez, SOPS veya Infisical ile şifrelenir.
 - **APK imzalama:** Sürüm anahtarı CI'da, parolası gizli.

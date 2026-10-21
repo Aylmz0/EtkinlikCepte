@@ -27,4 +27,4 @@ Geliştirme makinesinde aralık açılamadı: Windows 50000-50059'u rezerve ediy
 (`netsh int ipv4 show excludedportrange protocol=udp`), antivirüs de 50067-50072'yi tutuyordu.
 LiveKit `udp_port` ile tüm medyayı tek UDP portundan geçirir (`port_range_*` ayarlıysa
 `udp_port` yok sayılır). Tek node için yeterli ve güvenlik duvarında tek port açılır.
-`development.md` §13.2'deki 50000-50100 satırı P1 onayıyla güncellenmeli.
+`development.md` §13.2 bu kararla güncellendi.
