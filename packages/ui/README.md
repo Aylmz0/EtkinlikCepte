@@ -1,4 +1,7 @@
-# packages/ui — tasarım sistemi (§5, §3.1)
+# packages/ui — design system
 
-Sahiplik: P6 (§6). `components/ui/` shadcn kopyaları, `features/` bizimkiler.
-Kural: istek, jeton, rota bilgisi yok (§5.1).
+shadcn-svelte primitives live in `src/lib/components/ui/`; our composed
+components live in `src/lib/features/`. Tokens are the only source of visual
+values (`src/tokens.css`).
+
+`npm --prefix packages/ui run check` verifies the package.

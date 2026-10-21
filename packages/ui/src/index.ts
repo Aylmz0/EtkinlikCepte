@@ -7,3 +7,5 @@
  */
 
 export { cn } from './lib/utils.js';
+export { default as Button } from './lib/components/ui/button.svelte';
+export { default as Card } from './lib/components/ui/card.svelte';

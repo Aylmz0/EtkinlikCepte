@@ -14,6 +14,7 @@ import uuid
 from sqlalchemy import CHAR, TIMESTAMP, Enum, ForeignKey, Index, Integer, Text
 from sqlalchemy.orm import Mapped, mapped_column
 
+from app.domain.tickets import RegistrationStatus
 from app.repos.base import Base, uuid_pk
 
 
@@ -38,19 +39,6 @@ class EventStatus(enum.StrEnum):
     published = "published"
     cancelled = "cancelled"
     completed = "completed"
-
-
-class RegistrationStatus(enum.StrEnum):
-    """Ticket state machine (§4.2): reserved → pending_payment → paid → used."""
-
-    reserved = "reserved"
-    pending_payment = "pending_payment"
-    paid = "paid"
-    free_granted = "free_granted"
-    used = "used"
-    cancelled = "cancelled"
-    refunded = "refunded"
-    expired = "expired"
 
 
 class TicketKind(enum.StrEnum):
