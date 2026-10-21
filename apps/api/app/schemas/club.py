@@ -1,0 +1,60 @@
+"""Club schemas shared by the API contract (§7, §8).
+
+These models are the H1.8 draft: the router bodies land in H2.3, but the
+request/response shapes are frozen here so clients can generate types now.
+"""
+
+from __future__ import annotations
+
+import datetime
+import enum
+import uuid
+
+from pydantic import BaseModel, Field
+
+
+class ClubRole(enum.StrEnum):
+    """Membership role inside a club."""
+
+    owner = "owner"
+    admin = "admin"
+    moderator = "moderator"
+    member = "member"
+
+
+class ClubCreate(BaseModel):
+    """Payload for creating a club; the owner comes from the access token."""
+
+    name: str = Field(min_length=2, max_length=120)
+    slug: str = Field(pattern=r"^[a-z0-9]+(?:-[a-z0-9]+)*$", max_length=64)
+    description: str | None = Field(default=None, max_length=2000)
+    city: str | None = Field(default=None, max_length=80)
+
+
+class ClubUpdate(BaseModel):
+    """Partial club update; omitted fields stay unchanged."""
+
+    name: str | None = Field(default=None, min_length=2, max_length=120)
+    description: str | None = Field(default=None, max_length=2000)
+    city: str | None = Field(default=None, max_length=80)
+
+
+class ClubRead(BaseModel):
+    """Club representation returned by list and detail endpoints."""
+
+    id: uuid.UUID
+    name: str
+    slug: str
+    description: str | None = None
+    city: str | None = None
+    owner_id: uuid.UUID
+    created_at: datetime.datetime
+
+
+class ClubMemberRead(BaseModel):
+    """A club membership row with its role."""
+
+    club_id: uuid.UUID
+    user_id: uuid.UUID
+    role: ClubRole
+    joined_at: datetime.datetime
