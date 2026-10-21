@@ -1,0 +1,119 @@
+/**
+ * tokens.css — EtkinlikCepte Design System Tokens (§5, H1.13)
+ * Primary source of truth for color, spacing, radius, and domain-specific styling.
+ */
+
+@theme {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+
+  /* Specific UI Mockup Palette Tokens */
+  --color-coral: #f04438;
+  --color-coral-hover: #dc2626;
+  --color-teal-action: #00c4b4;
+  --color-teal-action-hover: #00a89a;
+  --color-warm-orange: #ea580c;
+  --color-chat-bubble: #e0ebf6;
+
+  /* Domain & Map Pins (§1.4) */
+  --color-map-event: #2563eb; /* Blue: Verified/scheduled event */
+  --color-map-venue: #64748b; /* Gray: Venue without active event */
+  --color-map-club: #16a34a; /* Green: Followed/own club event */
+
+  /* Radius Tokens */
+  --radius-sm: 0.5rem;
+  --radius-md: 0.75rem;
+  --radius-lg: 1rem;
+  --radius-xl: 1.25rem;
+  --radius-2xl: 1.5rem;
+  --radius-3xl: 2rem;
+}
+
+:root {
+  --radius: 1.25rem;
+
+  /* Warm soft beige canvas from UI mocks */
+  --background: #fbf7f2;
+  --foreground: #111827;
+
+  --card: #ffffff;
+  --card-foreground: #111827;
+
+  --popover: #ffffff;
+  --popover-foreground: #111827;
+
+  /* Coral-Red primary action button (#f04438) */
+  --primary: #f04438;
+  --primary-foreground: #ffffff;
+
+  --secondary: #00c4b4;
+  --secondary-foreground: #ffffff;
+
+  --muted: #f3ede4;
+  --muted-foreground: #6b7280;
+
+  --accent: #fdf3e7;
+  --accent-foreground: #ea580c;
+
+  --destructive: #ef4444;
+  --destructive-foreground: #ffffff;
+
+  --border: #f0e6da;
+  --input: #f8fafc;
+  --ring: #f04438;
+}
+
+.dark {
+  --background: #121214;
+  --foreground: #f9fafb;
+
+  --card: #1c1c1f;
+  --card-foreground: #f9fafb;
+
+  --popover: #1c1c1f;
+  --popover-foreground: #f9fafb;
+
+  --primary: #f04438;
+  --primary-foreground: #ffffff;
+
+  --secondary: #00c4b4;
+  --secondary-foreground: #ffffff;
+
+  --muted: #27272a;
+  --muted-foreground: #9ca3af;
+
+  --accent: #2e2621;
+  --accent-foreground: #fb923c;
+
+  --destructive: #ef4444;
+  --destructive-foreground: #ffffff;
+
+  --border: #2e2e33;
+  --input: #232328;
+  --ring: #f04438;
+}

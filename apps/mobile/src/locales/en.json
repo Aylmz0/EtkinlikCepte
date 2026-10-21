@@ -1,0 +1,32 @@
+{
+  "app": {
+    "name": "EtkinlikCepte",
+    "tagline": "University and City Events in Your Pocket"
+  },
+  "nav": {
+    "discover": "Discover",
+    "feed": "Feed",
+    "clubs": "Clubs",
+    "tickets": "Tickets",
+    "profile": "Profile",
+    "messages": "Messages",
+    "notifications": "Notifications"
+  },
+  "common": {
+    "loading": "Loading...",
+    "error": "An error occurred",
+    "retry": "Retry",
+    "save": "Save",
+    "cancel": "Cancel",
+    "back": "Back",
+    "search": "Search...",
+    "offline_badge": "Offline Mode"
+  },
+  "auth": {
+    "login": "Login",
+    "register": "Register",
+    "email": "Email",
+    "password": "Password",
+    "submit": "Continue"
+  }
+}
