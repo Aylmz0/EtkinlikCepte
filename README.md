@@ -8,7 +8,7 @@ Seven people, seven weeks (H1–H7); week-7 Friday demo runs end to end.
 ## Quickstart (~10 min)
 
 Prerequisites: `git`, `mise`, `just`, `podman`, `gh`. Tool versions live in
-`mise.toml` — install exactly those (`mise install`).
+`mise.toml` — install exactly those (`mise install`, including the `hurl` CLI).
 
 ```bash
 git clone <repo> && cd EtkinlikCepte
