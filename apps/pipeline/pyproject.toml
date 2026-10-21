@@ -16,6 +16,7 @@ dependencies = [
   "shapely",
   "polars==2.0.0",
   "faker",
+  "redis>=8.1.0",
 ]
 
 [dependency-groups]
@@ -23,3 +24,6 @@ dev = [
   "pytest",
   "ruff",
 ]
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
