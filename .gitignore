@@ -247,3 +247,7 @@ src-tauri/gen/
 *.key
 .env.*
 !.env.example
+
+test-results/
+playwright-report/
+playwright/.cache/

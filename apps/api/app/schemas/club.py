@@ -58,3 +58,10 @@ class ClubMemberRead(BaseModel):
     user_id: uuid.UUID
     role: ClubRole
     joined_at: datetime.datetime
+
+
+class ClubList(BaseModel):
+    """Cursor page of clubs; ``next_cursor`` is null on the last page."""
+
+    items: list[ClubRead]
+    next_cursor: str | None = None

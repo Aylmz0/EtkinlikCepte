@@ -56,6 +56,10 @@ hurl:
 perf-apk:
     npm --prefix apps/mobile run build -- --report 2>/dev/null || echo "H1.12 bekleniyor: mobile yok"
 
+# Playwright web E2E iskeleti (§12)
+e2e:
+    npx playwright test
+
 # tüm testler (§12; test yoksa 5 koduyla geçer — H2'de testler gelir)
 test:
     test -f apps/api/pyproject.toml && (cd apps/api && uv run pytest || test $? -eq 5) || echo "api testi yok"
