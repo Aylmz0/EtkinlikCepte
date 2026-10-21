@@ -2,9 +2,11 @@
 port: 7880
 rtc:
   tcp_port: 7881
+  # Tek UDP portu (UDP mux): port_range ayarlanırsa udp_port yok sayılır. Aralık bırakıldı çünkü
+  # Windows 50000-50059'u rezerve ediyor, antivirüs de 5006x kullanıyor (R9, infra/docs/ports.md).
   udp_port: 7882
-  port_range_start: 50000
-  port_range_end: 50100
+  # Düğüm IP'si compose'dan `--node-ip` bayrağıyla verilir (LIVEKIT_NODE_IP); bu yüzden dış IP keşfi kapalı.
+  use_external_ip: false
 keys:
   # Geliştirme anahtarı. Gerçek anahtar depoya girmez (SOPS/Infisical, §13.2).
   devkey: secret

@@ -11,8 +11,9 @@ services:
     ports:
       - "127.0.0.1:3000:3000"
   livekit:
+    # Telefonla yerel deneme için LIVEKIT_BIND/LIVEKIT_NODE_IP (infra/docs/ports.md, R9).
+    command: ["--config", "/etc/livekit.yaml", "--dev", "--node-ip", "${LIVEKIT_NODE_IP:-127.0.0.1}"]
     ports:
-      - "127.0.0.1:7880:7880"
-      - "127.0.0.1:7881:7881"
-      - "127.0.0.1:7882:7882/udp"
-      - "127.0.0.1:50000-50100:50000-50100/udp"
+      - "${LIVEKIT_BIND:-127.0.0.1}:7880:7880"
+      - "${LIVEKIT_BIND:-127.0.0.1}:7881:7881"
+      - "${LIVEKIT_BIND:-127.0.0.1}:7882:7882/udp"
