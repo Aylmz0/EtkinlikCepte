@@ -10,6 +10,9 @@ services:
   martin:
     ports:
       - "127.0.0.1:3000:3000"
+  nominatim:
+    ports:
+      - "127.0.0.1:8080:8080"
   livekit:
     # Telefonla yerel deneme için LIVEKIT_BIND/LIVEKIT_NODE_IP (infra/docs/ports.md, R9).
     command: ["--config", "/etc/livekit.yaml", "--dev", "--node-ip", "${LIVEKIT_NODE_IP:-127.0.0.1}"]
