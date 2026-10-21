@@ -50,7 +50,8 @@ seed:
 # API sözleşme testleri (§12)
 hurl:
     test -d apps/api/hurl || { echo "H1.5 bekleniyor: hurl dosyalari yok"; exit 1; }
-    hurl --test apps/api/hurl/*.hurl 2>/dev/null || echo "hurl kurulu degilse: https://hurl.dev"
+    command -v hurl >/dev/null || { echo "hurl yok: mise install"; exit 1; }
+    hurl --test apps/api/hurl/*.hurl
 
 # paket + APK boyutu raporu (§11)
 perf-apk:
