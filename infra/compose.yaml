@@ -53,14 +53,17 @@ services:
     command: ["--config", "/etc/livekit.yaml", "--dev"]
 
   nominatim:
-    # Veri içe aktarma bir kez çalışır (H1.17, P4). Ağır sorgular buradan (§4.3).
-    image: docker.io/mediagis/nominatim:5.3
+    # Veri içe aktarma bir kez çalışır (H1.17, P4). Ağır olduğu için varsayılan
+    # `just dev` kapsamında değil; `--profile nominatim` ile açılır.
+    image: docker.io/mediagis/nominatim:5.3.2
+    profiles: ["nominatim"]
     environment:
       PBF_URL: https://download.geofabrik.de/europe/turkey-latest.osm.pbf
-      REPLICATION_URL: https://planet.openstreetmap.org/replication/minute/
-      NOMINATIM_PASSWORD: nominatim
+      REPLICATION_URL: https://download.geofabrik.de/europe/turkey-updates/
+      NOMINATIM_PASSWORD: ${NOMINATIM_PASSWORD:-nominatim}
     volumes:
       - nominatim-data:/var/lib/postgresql/16/main
+    shm_size: 1g
 
 volumes:
   pgdata:

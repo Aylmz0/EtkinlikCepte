@@ -5,6 +5,7 @@
 | PostgreSQL | 5432 | Yalnızca localhost (dev) |
 | Valkey | 6379 | Yalnızca localhost (dev) |
 | Martin | 3000 | Yalnızca localhost (dev) |
+| Nominatim | 8080 | Yalnızca localhost (dev, `--profile nominatim`) |
 | Caddy | 80, 443 | Herkese |
 | LiveKit API/WS | 7880 TCP | Yalnızca localhost (dev) |
 | LiveKit RTC | 7881 TCP, 7882 UDP (tüm medya bu tek UDP portundan, UDP mux) | Yalnızca localhost (dev); sunucuda güvenlik grubunda açık |
