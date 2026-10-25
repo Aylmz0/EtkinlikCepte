@@ -5,9 +5,9 @@
   },
   "nav": {
     "discover": "Keşfet",
-    "feed": "Akış",
-    "clubs": "Kulüpler",
-    "tickets": "Biletler",
+    "feed": "Ara",
+    "clubs": "Mekanlar",
+    "tickets": "Kaydedilenler",
     "profile": "Profil",
     "messages": "Mesajlar",
     "notifications": "Bildirimler"
@@ -20,7 +20,12 @@
     "cancel": "İptal",
     "back": "Geri",
     "search": "Ara...",
-    "offline_badge": "Çevrimdışı Mod"
+    "offline_badge": "Çevrimdışı Mod",
+    "popular_badge": "POPÜLER",
+    "favorite": "Favori",
+    "like": "Beğen",
+    "today": "Bugün",
+    "view_all": "Tümünü gör"
   },
   "auth": {
     "login": "Giriş Yap",
@@ -28,5 +33,269 @@
     "email": "E-posta",
     "password": "Şifre",
     "submit": "Devam Et"
+  },
+  "home": {
+    "settings": "Ayarlar",
+    "continue_without_login": "Giriş yapmadan devam et"
+  },
+  "discover": {
+    "headline": "Yakındaki Etkinlikleri Keşfet",
+    "filter_tonight": "Bu gece",
+    "filter_weekend": "Hafta sonu",
+    "filter_this_week": "Bu hafta",
+    "filter_pick_date": "Tarih seç",
+    "popular_events": "Popüler Etkinlikler",
+    "no_results": "Bu filtrelerle etkinlik bulunamadı.",
+    "city_search_placeholder": "Şehir ara..."
+  },
+  "feed": {
+    "title": "Ara",
+    "search_placeholder": "Anahtar kelime ile ara...",
+    "filter": "Filtrele",
+    "recent": "Son İncelenenler",
+    "popular_events": "Popüler Etkinlikler"
+  },
+  "clubs": {
+    "title": "Mekanlar",
+    "nearby": "Yakınındaki Popüler Mekanlar",
+    "search_placeholder": "Mekanlarda ara...",
+    "featured": "Öne çıkan mekanlar",
+    "count_suffix": "mekan",
+    "add_favorite": "Favorilere ekle",
+    "status_open": "Açık",
+    "category_outdoor_theater": "Açık hava tiyatrosu",
+    "category_concert_hall": "Konser alanı",
+    "category_park_stage": "Park sahnesi",
+    "category_culture_art": "Kültür ve sanat"
+  },
+  "clubDetail": {
+    "about": "Kulüp Hakkında",
+    "chat": "Kulüp Sohbeti",
+    "followers": "Takipçiler",
+    "new_post": "Gönderi Paylaş",
+    "follow": "Takip Et",
+    "unfollow": "Takibi Bırak",
+    "following_since": "Takipte"
+  },
+  "savedTickets": {
+    "title": "Kaydedilenler",
+    "subtitle": "Favorileriniz ve Çevrimdışı Biletleriniz",
+    "empty": "Henüz kaydedilen etkinlik yok.",
+    "ticket_ready": "Bilet Hazır (QR)",
+    "details": "Detaylar",
+    "remove": "Kaydedilenlerden kaldır"
+  },
+  "profile": {
+    "change_avatar": "Profil fotoğrafını değiştir",
+    "user_name": "Kullanıcı Adı",
+    "edit_profile": "Profili Düzenle",
+    "stat_events": "Etkinlik",
+    "stat_clubs": "Kulüp",
+    "stat_points": "Puan",
+    "my_posts": "Paylaşımlarım",
+    "my_clubs": "Kulüplerim",
+    "my_clubs_subtitle": "Takip ettiğiniz kulüpler, üyeleri ve sohbetleri",
+    "my_clubs_empty": "Henüz katıldığınız bir kulüp yok.",
+    "chats": "Sohbetler",
+    "bio_label": "Hakkında",
+    "bio_placeholder": "Kendinden kısaca bahset...",
+    "username_label": "Kullanıcı Adı (@)",
+    "username_placeholder": "kullaniciadi",
+    "city_label": "Şehir",
+    "city_placeholder": "Şehir seç",
+    "website_label": "Web Sitesi / Instagram",
+    "website_placeholder": "https://...",
+    "interests_label": "İlgi Alanları"
+  },
+  "profilePosts": {
+    "title": "Paylaşımlarım",
+    "empty": "Henüz bir paylaşımınız yok."
+  },
+  "messages": {
+    "title": "Mesajlar",
+    "search_placeholder": "Sohbetlerden ara",
+    "new_chat": "Yeni Sohbet",
+    "new_chat_hint": "Sohbet etmek istediğin kişinin adını yaz, sohbeti başlatalım.",
+    "contact_name_label": "Kişi Adı",
+    "contact_name_placeholder": "Kiminle sohbet etmek istiyorsun?",
+    "continue": "Devam Et",
+    "empty_thread": "Henüz mesaj yok. İlk mesajı sen gönder!",
+    "delete_chat": "Sohbeti Sil"
+  },
+  "login": {
+    "heading": "Uygulamaya giriş için e-posta ve şifrenizi girin",
+    "email_placeholder": "E-posta adresinizi girin",
+    "password_placeholder": "Şifrenizi girin",
+    "forgot_password": "Şifrenizi mi unuttunuz?",
+    "no_account": "Hesabınız yok mu?"
+  },
+  "register": {
+    "heading": "Aramıza Katılın",
+    "full_name": "Ad Soyad",
+    "full_name_placeholder": "Adınızı ve soyadınızı girin",
+    "email_placeholder": "E-posta adresinizi girin",
+    "password_placeholder": "Şifrenizi girin",
+    "password_confirm": "Şifre Tekrarı",
+    "password_confirm_placeholder": "Şifrenizi tekrar girin",
+    "has_account": "Zaten hesabınız var mı?"
+  },
+  "settings": {
+    "title": "Ayarlar",
+    "profile_info": "Profil Bilgileri",
+    "change_password": "Şifre Değiştir",
+    "notifications": "Bildirimler",
+    "chats": "Sohbetler",
+    "appearance": "Görünüm",
+    "appearance_light": "Açık",
+    "appearance_dark": "Koyu",
+    "language": "Uygulama Dili",
+    "language_tr": "Türkçe",
+    "language_en": "English",
+    "device_permissions": "Cihaz İzinleri",
+    "privacy": "Gizlilik",
+    "about": "Hakkında",
+    "close_account": "Hesabı Kapat",
+    "logout": "Çıkış Yap"
+  },
+  "settingsFollowing": {
+    "title": "Takip Edilenler",
+    "follow": "Takip Et",
+    "unfollow": "Takibi Bırak",
+    "empty": "Henüz takip ettiğiniz bir mekan yok."
+  },
+  "about": {
+    "title": "Hakkında",
+    "attribution_title": "Veri Atfı",
+    "attribution_body": "Harita verileri © OpenStreetMap katkıda bulunanlarına aittir ve Open Database License (ODbL) ile lisanslanmıştır. Mekan ve adres aramaları Nominatim üzerinden sağlanır.",
+    "open_source_title": "Açık Kaynak",
+    "open_source_body": "EtkinlikCepte, üniversite ve şehir etkinliklerini tek bir yerde toplayan bir topluluk projesidir."
+  },
+  "scanner": {
+    "title": "Kapıda Doğrulama",
+    "instructions": "Bileti doğrulamak için QR kodu çerçeve içine hizalayın.",
+    "manual_entry": "Kodu Elle Gir",
+    "back_to_scan": "Taramaya Dön",
+    "code_placeholder": "Bilet kodunu girin"
+  },
+  "invite": {
+    "heading": "Kulübe Davet Edildiniz",
+    "code_label": "Davet kodu",
+    "body": "Bu daveti kabul ederseniz kulübün gönderilerini ve etkinliklerini akışınızda görmeye başlarsınız.",
+    "decline": "Reddet",
+    "accept": "Kabul Et"
+  },
+  "clubFollowers": {
+    "title": "Takipçiler"
+  },
+  "clubChat": {
+    "title": "Kulüp Sohbeti",
+    "placeholder": "Mesaj yazın...",
+    "send": "Gönder"
+  },
+  "newPost": {
+    "title": "Gönderi Oluştur",
+    "placeholder": "Kulüp takipçilerinle paylaşmak istediğin bir şey yaz...",
+    "photo_hint": "En fazla 4 fotoğraf eklenebilir, video desteklenmez.",
+    "submit": "Paylaş"
+  },
+  "channelChat": {
+    "placeholder": "Mesaj yazın...",
+    "send": "Gönder",
+    "start_call": "Canlı görüşme başlat"
+  },
+  "room": {
+    "mic": "Mikrofon",
+    "camera": "Kamera",
+    "leave": "Ayrıl",
+    "event_connecting": "Katılımcılar bağlanıyor…",
+    "calling": "Aranıyor…"
+  },
+  "eventDetail": {
+    "about": "Etkinlik Hakkında",
+    "back": "Geri",
+    "share": "Paylaş",
+    "message_organizer": "Mesaj Gönder"
+  },
+  "notifications": {
+    "title": "Bildirimler"
+  },
+  "filters": {
+    "title": "Filtreler",
+    "category": "Kategori",
+    "category_concert": "Konser",
+    "category_festival": "Festival",
+    "category_sport": "Spor",
+    "category_art": "Sanat",
+    "price": "Fiyat Aralığı",
+    "price_free": "Ücretsiz",
+    "price_paid": "Ücretli",
+    "price_any": "Fark etmez",
+    "location": "Şehir",
+    "location_placeholder": "Şehir seç",
+    "location_any": "Tüm Şehirler",
+    "date": "Tarih",
+    "date_placeholder": "Tarih seç",
+    "clear": "Temizle",
+    "apply": "Filtreleri Uygula"
+  },
+  "changePassword": {
+    "title": "Şifre Değiştir",
+    "current": "Mevcut Şifre",
+    "new": "Yeni Şifre",
+    "confirm": "Yeni Şifre (Tekrar)",
+    "submit": "Şifreyi Güncelle"
+  },
+  "createEvent": {
+    "tile": "Etkinlik Oluştur",
+    "title": "Etkinlik Oluştur",
+    "image_label": "Etkinlik Görseli",
+    "name_label": "Etkinlik Adı",
+    "name_placeholder": "Etkinliğin adını yaz",
+    "venue_label": "Mekan",
+    "venue_placeholder": "Mekan adını yaz",
+    "location_label": "Şehir",
+    "category_label": "Kategori",
+    "price_label": "Fiyat",
+    "date_label": "Tarih",
+    "time_label": "Saat",
+    "description_label": "Açıklama",
+    "description_placeholder": "Etkinlik hakkında birkaç cümle yaz...",
+    "submit": "Etkinliği Yayınla"
+  },
+  "createClub": {
+    "tile": "Kulüp Oluştur",
+    "title": "Kulüp Oluştur",
+    "image_label": "Kulüp Görseli",
+    "name_label": "Kulüp Adı",
+    "name_placeholder": "Kulübün adını yaz",
+    "address_label": "Adres",
+    "address_placeholder": "Cadde, mahalle...",
+    "location_label": "Şehir",
+    "category_label": "Kategori",
+    "description_label": "Kulüp Hakkında",
+    "description_placeholder": "Kulübünüzü birkaç cümleyle tanıtın...",
+    "submit": "Kulübü Yayınla"
+  },
+  "chatSettings": {
+    "title": "Sohbet Ayarları",
+    "background_label": "Sohbet Arka Planı",
+    "bg_default": "Varsayılan",
+    "bg_mint": "Nane",
+    "bg_sunset": "Gün Batımı",
+    "bg_midnight": "Gece Yarısı",
+    "font_size_label": "Yazı Tipi Boyutu",
+    "font_small": "Küçük",
+    "font_medium": "Orta",
+    "font_large": "Büyük",
+    "disappearing_label": "Geçici Süreli Mesajlar",
+    "disappearing_hint": "Etkinleştirildiğinde yeni mesajlar bir süre sonra kaybolur."
+  },
+  "forgotPassword": {
+    "title": "Şifremi Unuttum",
+    "heading": "E-posta adresinizi girin, şifrenizi sıfırlamanız için bir bağlantı gönderelim.",
+    "submit": "Sıfırlama Bağlantısı Gönder",
+    "success_heading": "Bağlantı Gönderildi",
+    "success_body": "Şifrenizi sıfırlamak için bir bağlantı şu adrese gönderildi: ",
+    "back_to_login": "Giriş Ekranına Dön"
   }
 }

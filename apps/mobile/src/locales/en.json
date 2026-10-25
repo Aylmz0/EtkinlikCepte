@@ -5,9 +5,9 @@
   },
   "nav": {
     "discover": "Discover",
-    "feed": "Feed",
-    "clubs": "Clubs",
-    "tickets": "Tickets",
+    "feed": "Search",
+    "clubs": "Venues",
+    "tickets": "Saved",
     "profile": "Profile",
     "messages": "Messages",
     "notifications": "Notifications"
@@ -20,7 +20,12 @@
     "cancel": "Cancel",
     "back": "Back",
     "search": "Search...",
-    "offline_badge": "Offline Mode"
+    "offline_badge": "Offline Mode",
+    "popular_badge": "POPULAR",
+    "favorite": "Favorite",
+    "like": "Like",
+    "today": "Today",
+    "view_all": "View all"
   },
   "auth": {
     "login": "Login",
@@ -28,5 +33,269 @@
     "email": "Email",
     "password": "Password",
     "submit": "Continue"
+  },
+  "home": {
+    "settings": "Settings",
+    "continue_without_login": "Continue without logging in"
+  },
+  "discover": {
+    "headline": "Discover Events Near You",
+    "filter_tonight": "Tonight",
+    "filter_weekend": "Weekend",
+    "filter_this_week": "This week",
+    "filter_pick_date": "Pick a date",
+    "popular_events": "Popular Events",
+    "no_results": "No events match these filters.",
+    "city_search_placeholder": "Search city..."
+  },
+  "feed": {
+    "title": "Search",
+    "search_placeholder": "Search by keyword...",
+    "filter": "Filter",
+    "recent": "Recently Viewed",
+    "popular_events": "Popular Events"
+  },
+  "clubs": {
+    "title": "Venues",
+    "nearby": "Popular Venues Nearby",
+    "search_placeholder": "Search venues...",
+    "featured": "Featured venues",
+    "count_suffix": "venues",
+    "add_favorite": "Add to favorites",
+    "status_open": "Open",
+    "category_outdoor_theater": "Open-air theater",
+    "category_concert_hall": "Concert hall",
+    "category_park_stage": "Park stage",
+    "category_culture_art": "Culture & art"
+  },
+  "clubDetail": {
+    "about": "About This Venue",
+    "chat": "Venue Chat",
+    "followers": "Followers",
+    "new_post": "Share a Post",
+    "follow": "Follow",
+    "unfollow": "Unfollow",
+    "following_since": "Following since"
+  },
+  "savedTickets": {
+    "title": "Saved",
+    "subtitle": "Your Favorites and Offline Tickets",
+    "empty": "No saved events yet.",
+    "ticket_ready": "Ticket Ready (QR)",
+    "details": "Details",
+    "remove": "Remove from saved"
+  },
+  "profile": {
+    "change_avatar": "Change profile photo",
+    "user_name": "User Name",
+    "edit_profile": "Edit Profile",
+    "stat_events": "Events",
+    "stat_clubs": "Clubs",
+    "stat_points": "Points",
+    "my_posts": "My Posts",
+    "my_clubs": "My Clubs",
+    "my_clubs_subtitle": "Clubs you follow, their members, and chats",
+    "my_clubs_empty": "You haven't joined any club yet.",
+    "chats": "Chats",
+    "bio_label": "About",
+    "bio_placeholder": "Say a little about yourself...",
+    "username_label": "Username (@)",
+    "username_placeholder": "username",
+    "city_label": "City",
+    "city_placeholder": "Choose a city",
+    "website_label": "Website / Instagram",
+    "website_placeholder": "https://...",
+    "interests_label": "Interests"
+  },
+  "profilePosts": {
+    "title": "My Posts",
+    "empty": "You haven't shared anything yet."
+  },
+  "messages": {
+    "title": "Messages",
+    "search_placeholder": "Search conversations",
+    "new_chat": "New Chat",
+    "new_chat_hint": "Write the name of the person you want to chat with and let's start the conversation.",
+    "contact_name_label": "Contact Name",
+    "contact_name_placeholder": "Who do you want to chat with?",
+    "continue": "Continue",
+    "empty_thread": "No messages yet. Send the first one!",
+    "delete_chat": "Delete Chat"
+  },
+  "login": {
+    "heading": "Enter your email and password to sign in",
+    "email_placeholder": "Enter your email address",
+    "password_placeholder": "Enter your password",
+    "forgot_password": "Forgot your password?",
+    "no_account": "Don't have an account?"
+  },
+  "register": {
+    "heading": "Join Us",
+    "full_name": "Full Name",
+    "full_name_placeholder": "Enter your full name",
+    "email_placeholder": "Enter your email address",
+    "password_placeholder": "Enter your password",
+    "password_confirm": "Confirm Password",
+    "password_confirm_placeholder": "Re-enter your password",
+    "has_account": "Already have an account?"
+  },
+  "settings": {
+    "title": "Settings",
+    "profile_info": "Profile Information",
+    "change_password": "Change Password",
+    "notifications": "Notifications",
+    "chats": "Chats",
+    "appearance": "Appearance",
+    "appearance_light": "Light",
+    "appearance_dark": "Dark",
+    "language": "App Language",
+    "language_tr": "Türkçe",
+    "language_en": "English",
+    "device_permissions": "Device Permissions",
+    "privacy": "Privacy",
+    "about": "About",
+    "close_account": "Close Account",
+    "logout": "Log Out"
+  },
+  "settingsFollowing": {
+    "title": "Following",
+    "follow": "Follow",
+    "unfollow": "Unfollow",
+    "empty": "You're not following any venues yet."
+  },
+  "about": {
+    "title": "About",
+    "attribution_title": "Data Attribution",
+    "attribution_body": "Map data © OpenStreetMap contributors, licensed under the Open Database License (ODbL). Venue and address search is provided via Nominatim.",
+    "open_source_title": "Open Source",
+    "open_source_body": "EtkinlikCepte is a community project bringing university and city events together in one place."
+  },
+  "scanner": {
+    "title": "Door Check-in",
+    "instructions": "Align the QR code within the frame to verify the ticket.",
+    "manual_entry": "Enter Code Manually",
+    "back_to_scan": "Back to Scanning",
+    "code_placeholder": "Enter ticket code"
+  },
+  "invite": {
+    "heading": "You've Been Invited to a Club",
+    "code_label": "Invite code",
+    "body": "If you accept this invite, the club's posts and events will start appearing in your feed.",
+    "decline": "Decline",
+    "accept": "Accept"
+  },
+  "clubFollowers": {
+    "title": "Followers"
+  },
+  "clubChat": {
+    "title": "Venue Chat",
+    "placeholder": "Type a message...",
+    "send": "Send"
+  },
+  "newPost": {
+    "title": "Create Post",
+    "placeholder": "Write something to share with your followers...",
+    "photo_hint": "Up to 4 photos allowed, video isn't supported.",
+    "submit": "Share"
+  },
+  "channelChat": {
+    "placeholder": "Type a message...",
+    "send": "Send",
+    "start_call": "Start live call"
+  },
+  "room": {
+    "mic": "Microphone",
+    "camera": "Camera",
+    "leave": "Leave",
+    "event_connecting": "Participants connecting…",
+    "calling": "Calling…"
+  },
+  "eventDetail": {
+    "about": "About This Event",
+    "back": "Back",
+    "share": "Share",
+    "message_organizer": "Message Organizer"
+  },
+  "notifications": {
+    "title": "Notifications"
+  },
+  "filters": {
+    "title": "Filters",
+    "category": "Category",
+    "category_concert": "Concert",
+    "category_festival": "Festival",
+    "category_sport": "Sport",
+    "category_art": "Art",
+    "price": "Price Range",
+    "price_free": "Free",
+    "price_paid": "Paid",
+    "price_any": "Any",
+    "location": "City",
+    "location_placeholder": "Choose a city",
+    "location_any": "All Cities",
+    "date": "Date",
+    "date_placeholder": "Pick a date",
+    "clear": "Clear",
+    "apply": "Apply Filters"
+  },
+  "changePassword": {
+    "title": "Change Password",
+    "current": "Current Password",
+    "new": "New Password",
+    "confirm": "Confirm New Password",
+    "submit": "Update Password"
+  },
+  "createEvent": {
+    "tile": "Create Event",
+    "title": "Create Event",
+    "image_label": "Event Image",
+    "name_label": "Event Name",
+    "name_placeholder": "Write the event's name",
+    "venue_label": "Venue",
+    "venue_placeholder": "Write the venue's name",
+    "location_label": "City",
+    "category_label": "Category",
+    "price_label": "Price",
+    "date_label": "Date",
+    "time_label": "Time",
+    "description_label": "Description",
+    "description_placeholder": "Write a few sentences about the event...",
+    "submit": "Publish Event"
+  },
+  "createClub": {
+    "tile": "Create Club",
+    "title": "Create Club",
+    "image_label": "Club Image",
+    "name_label": "Club Name",
+    "name_placeholder": "Write the club's name",
+    "address_label": "Address",
+    "address_placeholder": "Street, neighborhood...",
+    "location_label": "City",
+    "category_label": "Category",
+    "description_label": "About This Club",
+    "description_placeholder": "Introduce your club in a few sentences...",
+    "submit": "Publish Club"
+  },
+  "chatSettings": {
+    "title": "Chat Settings",
+    "background_label": "Chat Background",
+    "bg_default": "Default",
+    "bg_mint": "Mint",
+    "bg_sunset": "Sunset",
+    "bg_midnight": "Midnight",
+    "font_size_label": "Font Size",
+    "font_small": "Small",
+    "font_medium": "Medium",
+    "font_large": "Large",
+    "disappearing_label": "Disappearing Messages",
+    "disappearing_hint": "When enabled, new messages disappear after a while."
+  },
+  "forgotPassword": {
+    "title": "Forgot Password",
+    "heading": "Enter your email address and we'll send you a link to reset your password.",
+    "submit": "Send Reset Link",
+    "success_heading": "Link Sent",
+    "success_body": "A password reset link was sent to: ",
+    "back_to_login": "Back to Login"
   }
 }
