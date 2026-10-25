@@ -1,8 +1,4 @@
-"""RFC 9457 problem-details helpers (§8.1 rule 5).
-
-Every error response uses content type application/problem+json with a
-machine-readable type and a human-readable title.
-"""
+"""RFC 9457 problem-details helpers and the API error type (§8.1 rule 5)."""
 
 from __future__ import annotations
 
@@ -26,3 +22,16 @@ def problem(status: int, title: str, detail: str, type_: str = "about:blank") ->
         content={"type": type_, "title": title, "status": status, "detail": detail},
         media_type="application/problem+json",
     )
+
+
+class ApiError(Exception):
+    """Carries an RFC 9457 problem through the service layer."""
+
+    def __init__(
+        self, status_code: int, title: str, detail: str, type_: str = "about:blank"
+    ) -> None:
+        self.status_code = status_code
+        self.title = title
+        self.detail = detail
+        self.type_ = type_
+        super().__init__(detail)
