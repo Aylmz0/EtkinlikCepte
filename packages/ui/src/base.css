@@ -1,6 +1,12 @@
 @import 'tailwindcss';
 @import './tokens.css';
 
+/* Make every `dark:` utility follow the app's own `.dark` class toggle
+   (Settings → Görünüm) instead of Tailwind v4's default OS/browser
+   `prefers-color-scheme` media query — otherwise a device in system dark
+   mode forces dark styling regardless of what the user picked in-app. */
+@custom-variant dark (&:where(.dark, .dark *));
+
 @layer base {
   * {
     @apply border-border;
@@ -11,5 +17,45 @@
       'rlig' 1,
       'calt' 1;
     -webkit-tap-highlight-color: transparent;
+  }
+}
+
+/* Shared app canvas: cream-to-soft-gray-to-cream wash, smooth linear blend
+   (not Tailwind's fixed-50%-stop `via-`, so the transition reads evenly
+   instead of banding at the midpoint). */
+.app-canvas {
+  background-image: linear-gradient(
+    to bottom,
+    rgba(255, 242, 230, 0.8) 0%,
+    rgba(234, 234, 234, 0.7) 50%,
+    rgba(255, 234, 216, 0.8) 100%
+  );
+}
+.dark .app-canvas {
+  background-image: linear-gradient(to bottom, #121214, #18181b);
+}
+
+/* Soft cross-fade between routes (§ screen transitions). No-op where the
+   View Transitions API isn't supported — SvelteKit's onNavigate guards the call. */
+@supports (view-transition-name: root) {
+  ::view-transition-old(root) {
+    animation: ec-fade-out 150ms ease-out both;
+  }
+  ::view-transition-new(root) {
+    animation: ec-fade-in 180ms ease-in both;
+  }
+}
+
+@keyframes ec-fade-out {
+  to {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+}
+
+@keyframes ec-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
   }
 }
