@@ -34,8 +34,10 @@ android-release:
 # openapi.json -> tipler + doğrulama şemaları (§8)
 api-types:
     test -f apps/api/pyproject.toml || { echo "H1.2 bekleniyor: apps/api yok"; exit 1; }
-    (cd apps/api && uv run python -c "import app.main" 2>/dev/null || true)
-    npx --prefix apps/mobile @hey-api/openapi-ts 2>/dev/null || echo "H2.12 bekleniyor: istemci uretimi"
+    (cd apps/api && uv run python ../../scripts/export_openapi.py)
+    rm -rf packages/api-client/src
+    npx openapi-ts -i packages/api-client/openapi.json -o packages/api-client/src -p @hey-api/typescript zod
+    printf "\nexport * from './zod.gen';\n" >> packages/api-client/src/index.ts
 
 # alembic upgrade head
 migrate:
