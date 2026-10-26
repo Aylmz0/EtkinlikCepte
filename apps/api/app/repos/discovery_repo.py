@@ -18,6 +18,7 @@ MAX_CANDIDATES = 200
 MAX_VENUES = 500
 STATEMENT_TIMEOUT_MS = 300
 
+
 def tr_fold(value: str) -> str:
     """Fold Turkish characters to ASCII lowercase for Python-side matching."""
     return value.translate(str.maketrans("İIıÇçŞşĞğÜüÖö", "iiiccssgguuoo")).lower().strip()
