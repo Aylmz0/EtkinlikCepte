@@ -26,6 +26,9 @@ class Settings:
     database_url: str = "postgresql://projectx:projectx@localhost:5432/projectx"
     valkey_url: str = "redis://localhost:6379/0"
     log_level: str = "INFO"
+    jwt_secret: str = "dev-only-change-me-use-32-bytes-minimum"
+    access_token_ttl_minutes: int = 15
+    refresh_token_ttl_days: int = 30
 
 
 def load_settings() -> Settings:
@@ -41,6 +44,9 @@ def load_settings() -> Settings:
         database_url=_env("DATABASE_URL", Settings.database_url),
         valkey_url=_env("VALKEY_URL", Settings.valkey_url),
         log_level=_env("LOG_LEVEL", Settings.log_level),
+        jwt_secret=_env("JWT_SECRET", Settings.jwt_secret),
+        access_token_ttl_minutes=int(_env("ACCESS_TOKEN_TTL_MINUTES", "15")),
+        refresh_token_ttl_days=int(_env("REFRESH_TOKEN_TTL_DAYS", "30")),
     )
 
 

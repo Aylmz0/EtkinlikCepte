@@ -13,7 +13,7 @@ from fastapi import FastAPI
 from fastapi.responses import ORJSONResponse
 
 from app.core.config import settings
-from app.core.errors import problem
+from app.core.errors import ApiError, problem
 from app.core.logging import configure_logging, get_logger
 from app.routers import admin, auth, channels, clubs, discover, events, media
 from app.schemas import HealthResponse
@@ -34,6 +34,9 @@ async def lifespan(app: FastAPI) -> AsyncIterator[None]:
     configure_logging(settings.log_level)
     log.info("startup", version=settings.app_version)
     yield
+    from app.core.db import dispose_engine
+
+    await dispose_engine()
     log.info("shutdown")
 
 
@@ -54,6 +57,11 @@ def create_app() -> FastAPI:
     def health() -> HealthResponse:
         """Liveness probe; no dependency checks yet (H1.2 skeleton)."""
         return HealthResponse(version=settings.app_version)
+
+    @app.exception_handler(ApiError)
+    async def api_error_handler(request, exc: ApiError):  # type: ignore[no-untyped-def]
+        """Render service errors as RFC 9457 problem details."""
+        return problem(exc.status_code, exc.title, exc.detail, exc.type_)
 
     @app.exception_handler(Exception)
     async def unhandled_exception(request, exc: Exception):  # type: ignore[no-untyped-def]
