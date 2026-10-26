@@ -205,6 +205,60 @@ export const zEventList = z.object({
 });
 
 /**
+ * EventOut
+ * An event shown in discovery and recommendations.
+ */
+export const zEventOut = z.object({
+    id: z.uuid(),
+    title: z.string(),
+    category: z.optional(z.union([
+        z.string(),
+        z.null()
+    ])),
+    starts_at: z.iso.datetime(),
+    ends_at: z.optional(z.union([
+        z.iso.datetime(),
+        z.null()
+    ])),
+    venue_id: z.optional(z.union([
+        z.uuid(),
+        z.null()
+    ])),
+    venue_name: z.optional(z.union([
+        z.string(),
+        z.null()
+    ])),
+    club_id: z.optional(z.union([
+        z.uuid(),
+        z.null()
+    ])),
+    club_name: z.optional(z.union([
+        z.string(),
+        z.null()
+    ])),
+    lat: z.number(),
+    lng: z.number(),
+    distance_m: z.optional(z.union([
+        z.number(),
+        z.null()
+    ])),
+    price_minor: z.optional(z.union([
+        z.int(),
+        z.null()
+    ])),
+    currency: z.optional(z.string()).default('TRY')
+});
+
+/**
+ * EventListResponse
+ * Event result page.
+ */
+export const zEventListResponse = z.object({
+    count: z.int(),
+    items: z.array(zEventOut)
+});
+
+/**
  * ValidationError
  */
 export const zValidationError = z.object({
@@ -276,6 +330,55 @@ export const zProfileUpdate = z.object({
         z.string().length(3),
         z.null()
     ]))
+});
+
+/**
+ * RankingWeights
+ * Transparent recommendation weights (loaded from ranking_weights).
+ */
+export const zRankingWeights = z.object({
+    w1_distance: z.optional(z.number().gte(0)).default(0.3),
+    w2_category: z.optional(z.number().gte(0)).default(0.2),
+    w3_freshness: z.optional(z.number().gte(0)).default(0.1),
+    w4_popularity: z.optional(z.number().gte(0)).default(0.15),
+    w5_price: z.optional(z.number().gte(0)).default(0.1),
+    w6_club_follow: z.optional(z.number().gte(0)).default(0.15)
+});
+
+/**
+ * ScoreFactor
+ * One explainable contribution to a recommendation score.
+ */
+export const zScoreFactor = z.object({
+    key: z.string(),
+    label: z.string(),
+    raw: z.number(),
+    normalized: z.number(),
+    weight: z.number(),
+    contribution: z.number()
+});
+
+/**
+ * RecommendationOut
+ * An event with its score and human-readable reason.
+ */
+export const zRecommendationOut = z.object({
+    event: zEventOut,
+    score: z.number(),
+    reason: z.string(),
+    factors: z.array(zScoreFactor)
+});
+
+/**
+ * RecommendationsResponse
+ * Recommendation page with the weights used.
+ */
+export const zRecommendationsResponse = z.object({
+    count: z.int(),
+    candidate_count: z.int(),
+    weights: zRankingWeights,
+    generated_at: z.iso.datetime(),
+    items: z.array(zRecommendationOut)
 });
 
 /**
@@ -370,6 +473,38 @@ export const zTokenPair = z.object({
     refresh_token: z.string(),
     token_type: z.optional(z.string()).default('bearer'),
     expires_in: z.int()
+});
+
+/**
+ * VenueOut
+ * A venue inside a map bounding box.
+ */
+export const zVenueOut = z.object({
+    id: z.uuid(),
+    name: z.string(),
+    category: z.optional(z.union([
+        z.string(),
+        z.null()
+    ])),
+    address: z.optional(z.union([
+        z.string(),
+        z.null()
+    ])),
+    city: z.optional(z.union([
+        z.string(),
+        z.null()
+    ])),
+    lat: z.number(),
+    lng: z.number()
+});
+
+/**
+ * VenueListResponse
+ * Venue result page.
+ */
+export const zVenueListResponse = z.object({
+    count: z.int(),
+    items: z.array(zVenueOut)
 });
 
 export const zHealthHealthGetData = z.object({
@@ -564,6 +699,82 @@ export const zGetEventV1EventsEventIdGetData = z.object({
  * Successful Response
  */
 export const zGetEventV1EventsEventIdGetResponse = zEventRead;
+
+export const zDiscoverVenuesV1DiscoverVenuesGetData = z.object({
+    body: z.optional(z.never()),
+    path: z.optional(z.never()),
+    query: z.object({
+        category: z.optional(z.union([
+            z.string(),
+            z.null()
+        ])),
+        bbox: z.string()
+    })
+});
+
+/**
+ * Successful Response
+ */
+export const zDiscoverVenuesV1DiscoverVenuesGetResponse = zVenueListResponse;
+
+export const zDiscoverEventsV1DiscoverEventsGetData = z.object({
+    body: z.optional(z.never()),
+    path: z.optional(z.never()),
+    query: z.object({
+        lat: z.number().gte(-90).lte(90),
+        lng: z.number().gte(-180).lte(180),
+        radius: z.optional(z.int().gt(0).lte(50000)).default(10000),
+        category: z.optional(z.union([
+            z.string(),
+            z.null()
+        ])),
+        when: z.optional(z.union([
+            z.enum([
+                'today',
+                'tomorrow',
+                'weekend',
+                'week'
+            ]),
+            z.null()
+        ])),
+        price: z.optional(z.union([
+            z.enum([
+                'free',
+                'paid',
+                'low',
+                'mid',
+                'high'
+            ]),
+            z.null()
+        ])),
+        q: z.optional(z.union([
+            z.string().min(2).max(80),
+            z.null()
+        ])),
+        limit: z.optional(z.int().gte(1).lte(200)).default(50)
+    })
+});
+
+/**
+ * Successful Response
+ */
+export const zDiscoverEventsV1DiscoverEventsGetResponse = zEventListResponse;
+
+export const zDiscoverRecommendationsV1DiscoverRecommendationsGetData = z.object({
+    body: z.optional(z.never()),
+    path: z.optional(z.never()),
+    query: z.object({
+        lat: z.number().gte(-90).lte(90),
+        lng: z.number().gte(-180).lte(180),
+        radius: z.optional(z.int().gt(0).lte(50000)).default(10000),
+        limit: z.optional(z.int().gte(1).lte(50)).default(20)
+    })
+});
+
+/**
+ * Successful Response
+ */
+export const zDiscoverRecommendationsV1DiscoverRecommendationsGetResponse = zRecommendationsResponse;
 
 export const zListSourcesV1AdminSourcesGetData = z.object({
     body: z.optional(z.never()),

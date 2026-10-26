@@ -182,6 +182,84 @@ export type EventList = {
 };
 
 /**
+ * EventListResponse
+ * Event result page.
+ */
+export type EventListResponse = {
+    /**
+     * Count
+     */
+    count: number;
+    /**
+     * Items
+     */
+    items: Array<EventOut>;
+};
+
+/**
+ * EventOut
+ * An event shown in discovery and recommendations.
+ */
+export type EventOut = {
+    /**
+     * Id
+     */
+    id: string;
+    /**
+     * Title
+     */
+    title: string;
+    /**
+     * Category
+     */
+    category?: string | null;
+    /**
+     * Starts At
+     */
+    starts_at: string;
+    /**
+     * Ends At
+     */
+    ends_at?: string | null;
+    /**
+     * Venue Id
+     */
+    venue_id?: string | null;
+    /**
+     * Venue Name
+     */
+    venue_name?: string | null;
+    /**
+     * Club Id
+     */
+    club_id?: string | null;
+    /**
+     * Club Name
+     */
+    club_name?: string | null;
+    /**
+     * Lat
+     */
+    lat: number;
+    /**
+     * Lng
+     */
+    lng: number;
+    /**
+     * Distance M
+     */
+    distance_m?: number | null;
+    /**
+     * Price Minor
+     */
+    price_minor?: number | null;
+    /**
+     * Currency
+     */
+    currency?: string;
+};
+
+/**
  * EventRead
  * Event representation returned by list and detail endpoints.
  */
@@ -311,6 +389,81 @@ export type ProfileUpdate = {
 };
 
 /**
+ * RankingWeights
+ * Transparent recommendation weights (loaded from ranking_weights).
+ */
+export type RankingWeights = {
+    /**
+     * W1 Distance
+     */
+    w1_distance?: number;
+    /**
+     * W2 Category
+     */
+    w2_category?: number;
+    /**
+     * W3 Freshness
+     */
+    w3_freshness?: number;
+    /**
+     * W4 Popularity
+     */
+    w4_popularity?: number;
+    /**
+     * W5 Price
+     */
+    w5_price?: number;
+    /**
+     * W6 Club Follow
+     */
+    w6_club_follow?: number;
+};
+
+/**
+ * RecommendationOut
+ * An event with its score and human-readable reason.
+ */
+export type RecommendationOut = {
+    event: EventOut;
+    /**
+     * Score
+     */
+    score: number;
+    /**
+     * Reason
+     */
+    reason: string;
+    /**
+     * Factors
+     */
+    factors: Array<ScoreFactor>;
+};
+
+/**
+ * RecommendationsResponse
+ * Recommendation page with the weights used.
+ */
+export type RecommendationsResponse = {
+    /**
+     * Count
+     */
+    count: number;
+    /**
+     * Candidate Count
+     */
+    candidate_count: number;
+    weights: RankingWeights;
+    /**
+     * Generated At
+     */
+    generated_at: string;
+    /**
+     * Items
+     */
+    items: Array<RecommendationOut>;
+};
+
+/**
  * RefreshIn
  * Refresh/logout payload carrying the opaque refresh token.
  */
@@ -338,6 +491,37 @@ export type RegisterIn = {
      * Display Name
      */
     display_name: string;
+};
+
+/**
+ * ScoreFactor
+ * One explainable contribution to a recommendation score.
+ */
+export type ScoreFactor = {
+    /**
+     * Key
+     */
+    key: string;
+    /**
+     * Label
+     */
+    label: string;
+    /**
+     * Raw
+     */
+    raw: number;
+    /**
+     * Normalized
+     */
+    normalized: number;
+    /**
+     * Weight
+     */
+    weight: number;
+    /**
+     * Contribution
+     */
+    contribution: number;
 };
 
 /**
@@ -510,6 +694,56 @@ export type ValidationError = {
     ctx?: {
         [key: string]: unknown;
     };
+};
+
+/**
+ * VenueListResponse
+ * Venue result page.
+ */
+export type VenueListResponse = {
+    /**
+     * Count
+     */
+    count: number;
+    /**
+     * Items
+     */
+    items: Array<VenueOut>;
+};
+
+/**
+ * VenueOut
+ * A venue inside a map bounding box.
+ */
+export type VenueOut = {
+    /**
+     * Id
+     */
+    id: string;
+    /**
+     * Name
+     */
+    name: string;
+    /**
+     * Category
+     */
+    category?: string | null;
+    /**
+     * Address
+     */
+    address?: string | null;
+    /**
+     * City
+     */
+    city?: string | null;
+    /**
+     * Lat
+     */
+    lat: number;
+    /**
+     * Lng
+     */
+    lng: number;
 };
 
 export type HealthHealthGetData = {
@@ -902,6 +1136,141 @@ export type GetEventV1EventsEventIdGetResponses = {
 };
 
 export type GetEventV1EventsEventIdGetResponse = GetEventV1EventsEventIdGetResponses[keyof GetEventV1EventsEventIdGetResponses];
+
+export type DiscoverVenuesV1DiscoverVenuesGetData = {
+    body?: never;
+    path?: never;
+    query: {
+        /**
+         * Category
+         */
+        category?: string | null;
+        /**
+         * Bbox
+         * minLng,minLat,maxLng,maxLat (WGS84)
+         */
+        bbox: string;
+    };
+    url: '/v1/discover/venues';
+};
+
+export type DiscoverVenuesV1DiscoverVenuesGetErrors = {
+    /**
+     * Validation Error
+     */
+    422: HttpValidationError;
+};
+
+export type DiscoverVenuesV1DiscoverVenuesGetError = DiscoverVenuesV1DiscoverVenuesGetErrors[keyof DiscoverVenuesV1DiscoverVenuesGetErrors];
+
+export type DiscoverVenuesV1DiscoverVenuesGetResponses = {
+    /**
+     * Successful Response
+     */
+    200: VenueListResponse;
+};
+
+export type DiscoverVenuesV1DiscoverVenuesGetResponse = DiscoverVenuesV1DiscoverVenuesGetResponses[keyof DiscoverVenuesV1DiscoverVenuesGetResponses];
+
+export type DiscoverEventsV1DiscoverEventsGetData = {
+    body?: never;
+    path?: never;
+    query: {
+        /**
+         * Lat
+         */
+        lat: number;
+        /**
+         * Lng
+         */
+        lng: number;
+        /**
+         * Radius
+         */
+        radius?: number;
+        /**
+         * Category
+         */
+        category?: string | null;
+        /**
+         * When
+         */
+        when?: ('today' | 'tomorrow' | 'weekend' | 'week') | null;
+        /**
+         * Price
+         */
+        price?: ('free' | 'paid' | 'low' | 'mid' | 'high') | null;
+        /**
+         * Q
+         */
+        q?: string | null;
+        /**
+         * Limit
+         */
+        limit?: number;
+    };
+    url: '/v1/discover/events';
+};
+
+export type DiscoverEventsV1DiscoverEventsGetErrors = {
+    /**
+     * Validation Error
+     */
+    422: HttpValidationError;
+};
+
+export type DiscoverEventsV1DiscoverEventsGetError = DiscoverEventsV1DiscoverEventsGetErrors[keyof DiscoverEventsV1DiscoverEventsGetErrors];
+
+export type DiscoverEventsV1DiscoverEventsGetResponses = {
+    /**
+     * Successful Response
+     */
+    200: EventListResponse;
+};
+
+export type DiscoverEventsV1DiscoverEventsGetResponse = DiscoverEventsV1DiscoverEventsGetResponses[keyof DiscoverEventsV1DiscoverEventsGetResponses];
+
+export type DiscoverRecommendationsV1DiscoverRecommendationsGetData = {
+    body?: never;
+    path?: never;
+    query: {
+        /**
+         * Lat
+         */
+        lat: number;
+        /**
+         * Lng
+         */
+        lng: number;
+        /**
+         * Radius
+         */
+        radius?: number;
+        /**
+         * Limit
+         */
+        limit?: number;
+    };
+    url: '/v1/discover/recommendations';
+};
+
+export type DiscoverRecommendationsV1DiscoverRecommendationsGetErrors = {
+    /**
+     * Validation Error
+     */
+    422: HttpValidationError;
+};
+
+export type DiscoverRecommendationsV1DiscoverRecommendationsGetError = DiscoverRecommendationsV1DiscoverRecommendationsGetErrors[keyof DiscoverRecommendationsV1DiscoverRecommendationsGetErrors];
+
+export type DiscoverRecommendationsV1DiscoverRecommendationsGetResponses = {
+    /**
+     * Successful Response
+     */
+    200: RecommendationsResponse;
+};
+
+export type DiscoverRecommendationsV1DiscoverRecommendationsGetResponse = DiscoverRecommendationsV1DiscoverRecommendationsGetResponses[keyof DiscoverRecommendationsV1DiscoverRecommendationsGetResponses];
 
 export type ListSourcesV1AdminSourcesGetData = {
     body?: never;
