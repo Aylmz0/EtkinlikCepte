@@ -48,6 +48,50 @@ export type ClubCreate = {
 };
 
 /**
+ * ClubInvitationCreate
+ * Create a redeemable club invitation.
+ */
+export type ClubInvitationCreate = {
+    /**
+     * Email
+     */
+    email?: string | null;
+    role?: ClubRole;
+    /**
+     * Expires In Days
+     */
+    expires_in_days?: number;
+};
+
+/**
+ * ClubInvitationRead
+ * Invitation state returned to the creator.
+ */
+export type ClubInvitationRead = {
+    /**
+     * Id
+     */
+    id: string;
+    /**
+     * Club Id
+     */
+    club_id: string;
+    /**
+     * Code
+     */
+    code: string;
+    role: ClubRole;
+    /**
+     * Expires At
+     */
+    expires_at?: string | null;
+    /**
+     * Accepted By
+     */
+    accepted_by?: string | null;
+};
+
+/**
  * ClubList
  * Cursor page of clubs; ``next_cursor`` is null on the last page.
  */
@@ -60,6 +104,18 @@ export type ClubList = {
      * Next Cursor
      */
     next_cursor?: string | null;
+};
+
+/**
+ * ClubMemberAdd
+ * Add a user to a club with an explicit role.
+ */
+export type ClubMemberAdd = {
+    /**
+     * User Id
+     */
+    user_id: string;
+    role?: ClubRole;
 };
 
 /**
@@ -124,10 +180,71 @@ export type ClubRead = {
 export type ClubRole = 'owner' | 'admin' | 'moderator' | 'member';
 
 /**
+ * ClubUpdate
+ * Partial club update; omitted fields stay unchanged.
+ */
+export type ClubUpdate = {
+    /**
+     * Name
+     */
+    name?: string | null;
+    /**
+     * Description
+     */
+    description?: string | null;
+    /**
+     * City
+     */
+    city?: string | null;
+};
+
+/**
+ * DeviceCreate
+ * Register this device for presence/version tracking.
+ */
+export type DeviceCreate = {
+    /**
+     * Platform
+     */
+    platform: string;
+    /**
+     * App Version
+     */
+    app_version: string;
+};
+
+/**
+ * DeviceRead
+ * Registered device.
+ */
+export type DeviceRead = {
+    /**
+     * Id
+     */
+    id: string;
+    /**
+     * Platform
+     */
+    platform?: string | null;
+    /**
+     * App Version
+     */
+    app_version?: string | null;
+    /**
+     * Last Seen
+     */
+    last_seen?: string | null;
+};
+
+/**
  * EventCreate
  * Payload for creating a club event.
  */
 export type EventCreate = {
+    /**
+     * Club Id
+     */
+    club_id: string;
     /**
      * Title
      */
@@ -314,6 +431,49 @@ export type EventRead = {
 export type EventStatus = 'draft' | 'published' | 'cancelled' | 'completed';
 
 /**
+ * EventUpdate
+ * Partial event update.
+ */
+export type EventUpdate = {
+    /**
+     * Title
+     */
+    title?: string | null;
+    /**
+     * Description
+     */
+    description?: string | null;
+    /**
+     * Category
+     */
+    category?: string | null;
+    /**
+     * Venue Id
+     */
+    venue_id?: string | null;
+    /**
+     * Starts At
+     */
+    starts_at?: string | null;
+    /**
+     * Ends At
+     */
+    ends_at?: string | null;
+    /**
+     * Is Online
+     */
+    is_online?: boolean | null;
+    /**
+     * Online Url
+     */
+    online_url?: string | null;
+    /**
+     * Capacity
+     */
+    capacity?: number | null;
+};
+
+/**
  * HTTPValidationError
  */
 export type HttpValidationError = {
@@ -351,6 +511,43 @@ export type LoginIn = {
      * Password
      */
     password: string;
+};
+
+/**
+ * NotificationRead
+ * In-app notification row.
+ */
+export type NotificationRead = {
+    /**
+     * Id
+     */
+    id: string;
+    /**
+     * Kind
+     */
+    kind?: string | null;
+    /**
+     * Title
+     */
+    title?: string | null;
+    /**
+     * Body
+     */
+    body?: string | null;
+    /**
+     * Data
+     */
+    data?: {
+        [key: string]: unknown;
+    } | null;
+    /**
+     * Read At
+     */
+    read_at?: string | null;
+    /**
+     * Created At
+     */
+    created_at: string;
 };
 
 /**
@@ -494,6 +691,87 @@ export type RegisterIn = {
 };
 
 /**
+ * RegistrationCreate
+ * Register for one ticket type; quantity > 1 is a group ticket.
+ */
+export type RegistrationCreate = {
+    /**
+     * Ticket Id
+     */
+    ticket_id: string;
+    /**
+     * Quantity
+     */
+    quantity?: number;
+};
+
+/**
+ * RegistrationRead
+ * Registration state returned to the buyer.
+ */
+export type RegistrationRead = {
+    /**
+     * Id
+     */
+    id: string;
+    /**
+     * Event Id
+     */
+    event_id: string;
+    /**
+     * User Id
+     */
+    user_id: string;
+    /**
+     * Ticket Id
+     */
+    ticket_id: string;
+    /**
+     * Quantity
+     */
+    quantity: number;
+    /**
+     * Status
+     */
+    status: string;
+    /**
+     * Amount Minor
+     */
+    amount_minor?: number | null;
+    /**
+     * Reserved Until
+     */
+    reserved_until?: string | null;
+    /**
+     * Qr Token
+     */
+    qr_token?: string | null;
+    /**
+     * Checked In At
+     */
+    checked_in_at?: string | null;
+};
+
+/**
+ * RoomToken
+ * Connection details for a LiveKit room.
+ */
+export type RoomToken = {
+    /**
+     * Url
+     */
+    url: string;
+    /**
+     * Token
+     */
+    token: string;
+    /**
+     * Room
+     */
+    room: string;
+};
+
+/**
  * ScoreFactor
  * One explainable contribution to a recommendation score.
  */
@@ -596,6 +874,84 @@ export type SourceConfigUpdate = {
      * User Agent
      */
     user_agent?: string | null;
+};
+
+/**
+ * TicketCreate
+ * Create a ticket type for an event.
+ */
+export type TicketCreate = {
+    /**
+     * Name
+     */
+    name: string;
+    /**
+     * Price Minor
+     */
+    price_minor?: number;
+    /**
+     * Currency
+     */
+    currency?: string;
+    /**
+     * Quantity
+     */
+    quantity: number;
+    /**
+     * Sales Start
+     */
+    sales_start?: string | null;
+    /**
+     * Sales End
+     */
+    sales_end?: string | null;
+};
+
+/**
+ * TicketRead
+ * Ticket type returned to clients.
+ */
+export type TicketRead = {
+    /**
+     * Id
+     */
+    id: string;
+    /**
+     * Event Id
+     */
+    event_id: string;
+    /**
+     * Name
+     */
+    name: string;
+    /**
+     * Price Minor
+     */
+    price_minor: number;
+    /**
+     * Currency
+     */
+    currency: string;
+    /**
+     * Quantity
+     */
+    quantity: number;
+    /**
+     * Sold Count
+     */
+    sold_count: number;
+    /**
+     * Kind
+     */
+    kind: string;
+    /**
+     * Sales Start
+     */
+    sales_start?: string | null;
+    /**
+     * Sales End
+     */
+    sales_end?: string | null;
 };
 
 /**
@@ -929,10 +1285,6 @@ export type ListClubsV1ClubsGetData = {
     path?: never;
     query?: {
         /**
-         * Cursor
-         */
-        cursor?: string | null;
-        /**
          * Limit
          */
         limit?: number;
@@ -1013,49 +1365,138 @@ export type GetClubV1ClubsClubIdGetResponses = {
 
 export type GetClubV1ClubsClubIdGetResponse = GetClubV1ClubsClubIdGetResponses[keyof GetClubV1ClubsClubIdGetResponses];
 
-export type JoinClubV1ClubsClubIdMembersPostData = {
-    body?: never;
+export type UpdateClubV1ClubsClubIdPatchData = {
+    body: ClubUpdate;
     path: {
         /**
          * Club Id
          */
         club_id: string;
     };
-    query: {
-        /**
-         * User Id
-         */
-        user_id: string;
-    };
-    url: '/v1/clubs/{club_id}/members';
+    query?: never;
+    url: '/v1/clubs/{club_id}';
 };
 
-export type JoinClubV1ClubsClubIdMembersPostErrors = {
+export type UpdateClubV1ClubsClubIdPatchErrors = {
     /**
      * Validation Error
      */
     422: HttpValidationError;
 };
 
-export type JoinClubV1ClubsClubIdMembersPostError = JoinClubV1ClubsClubIdMembersPostErrors[keyof JoinClubV1ClubsClubIdMembersPostErrors];
+export type UpdateClubV1ClubsClubIdPatchError = UpdateClubV1ClubsClubIdPatchErrors[keyof UpdateClubV1ClubsClubIdPatchErrors];
 
-export type JoinClubV1ClubsClubIdMembersPostResponses = {
+export type UpdateClubV1ClubsClubIdPatchResponses = {
+    /**
+     * Successful Response
+     */
+    200: ClubRead;
+};
+
+export type UpdateClubV1ClubsClubIdPatchResponse = UpdateClubV1ClubsClubIdPatchResponses[keyof UpdateClubV1ClubsClubIdPatchResponses];
+
+export type AddMemberV1ClubsClubIdMembersPostData = {
+    body: ClubMemberAdd;
+    path: {
+        /**
+         * Club Id
+         */
+        club_id: string;
+    };
+    query?: never;
+    url: '/v1/clubs/{club_id}/members';
+};
+
+export type AddMemberV1ClubsClubIdMembersPostErrors = {
+    /**
+     * Validation Error
+     */
+    422: HttpValidationError;
+};
+
+export type AddMemberV1ClubsClubIdMembersPostError = AddMemberV1ClubsClubIdMembersPostErrors[keyof AddMemberV1ClubsClubIdMembersPostErrors];
+
+export type AddMemberV1ClubsClubIdMembersPostResponses = {
     /**
      * Successful Response
      */
     200: ClubMemberRead;
 };
 
-export type JoinClubV1ClubsClubIdMembersPostResponse = JoinClubV1ClubsClubIdMembersPostResponses[keyof JoinClubV1ClubsClubIdMembersPostResponses];
+export type AddMemberV1ClubsClubIdMembersPostResponse = AddMemberV1ClubsClubIdMembersPostResponses[keyof AddMemberV1ClubsClubIdMembersPostResponses];
+
+export type RemoveMemberV1ClubsClubIdMembersUserIdDeleteData = {
+    body?: never;
+    path: {
+        /**
+         * Club Id
+         */
+        club_id: string;
+        /**
+         * User Id
+         */
+        user_id: string;
+    };
+    query?: never;
+    url: '/v1/clubs/{club_id}/members/{user_id}';
+};
+
+export type RemoveMemberV1ClubsClubIdMembersUserIdDeleteErrors = {
+    /**
+     * Validation Error
+     */
+    422: HttpValidationError;
+};
+
+export type RemoveMemberV1ClubsClubIdMembersUserIdDeleteError = RemoveMemberV1ClubsClubIdMembersUserIdDeleteErrors[keyof RemoveMemberV1ClubsClubIdMembersUserIdDeleteErrors];
+
+export type RemoveMemberV1ClubsClubIdMembersUserIdDeleteResponses = {
+    /**
+     * Successful Response
+     */
+    204: void;
+};
+
+export type RemoveMemberV1ClubsClubIdMembersUserIdDeleteResponse = RemoveMemberV1ClubsClubIdMembersUserIdDeleteResponses[keyof RemoveMemberV1ClubsClubIdMembersUserIdDeleteResponses];
+
+export type CreateInvitationV1ClubsClubIdInvitationsPostData = {
+    body: ClubInvitationCreate;
+    path: {
+        /**
+         * Club Id
+         */
+        club_id: string;
+    };
+    query?: never;
+    url: '/v1/clubs/{club_id}/invitations';
+};
+
+export type CreateInvitationV1ClubsClubIdInvitationsPostErrors = {
+    /**
+     * Validation Error
+     */
+    422: HttpValidationError;
+};
+
+export type CreateInvitationV1ClubsClubIdInvitationsPostError = CreateInvitationV1ClubsClubIdInvitationsPostErrors[keyof CreateInvitationV1ClubsClubIdInvitationsPostErrors];
+
+export type CreateInvitationV1ClubsClubIdInvitationsPostResponses = {
+    /**
+     * Successful Response
+     */
+    201: ClubInvitationRead;
+};
+
+export type CreateInvitationV1ClubsClubIdInvitationsPostResponse = CreateInvitationV1ClubsClubIdInvitationsPostResponses[keyof CreateInvitationV1ClubsClubIdInvitationsPostResponses];
 
 export type ListEventsV1EventsGetData = {
     body?: never;
     path?: never;
     query?: {
         /**
-         * Cursor
+         * Club Id
          */
-        cursor?: string | null;
+        club_id?: string | null;
         /**
          * Limit
          */
@@ -1136,6 +1577,311 @@ export type GetEventV1EventsEventIdGetResponses = {
 };
 
 export type GetEventV1EventsEventIdGetResponse = GetEventV1EventsEventIdGetResponses[keyof GetEventV1EventsEventIdGetResponses];
+
+export type UpdateEventV1EventsEventIdPatchData = {
+    body: EventUpdate;
+    path: {
+        /**
+         * Event Id
+         */
+        event_id: string;
+    };
+    query?: never;
+    url: '/v1/events/{event_id}';
+};
+
+export type UpdateEventV1EventsEventIdPatchErrors = {
+    /**
+     * Validation Error
+     */
+    422: HttpValidationError;
+};
+
+export type UpdateEventV1EventsEventIdPatchError = UpdateEventV1EventsEventIdPatchErrors[keyof UpdateEventV1EventsEventIdPatchErrors];
+
+export type UpdateEventV1EventsEventIdPatchResponses = {
+    /**
+     * Successful Response
+     */
+    200: EventRead;
+};
+
+export type UpdateEventV1EventsEventIdPatchResponse = UpdateEventV1EventsEventIdPatchResponses[keyof UpdateEventV1EventsEventIdPatchResponses];
+
+export type PublishEventV1EventsEventIdPublishPostData = {
+    body?: never;
+    path: {
+        /**
+         * Event Id
+         */
+        event_id: string;
+    };
+    query?: never;
+    url: '/v1/events/{event_id}/publish';
+};
+
+export type PublishEventV1EventsEventIdPublishPostErrors = {
+    /**
+     * Validation Error
+     */
+    422: HttpValidationError;
+};
+
+export type PublishEventV1EventsEventIdPublishPostError = PublishEventV1EventsEventIdPublishPostErrors[keyof PublishEventV1EventsEventIdPublishPostErrors];
+
+export type PublishEventV1EventsEventIdPublishPostResponses = {
+    /**
+     * Successful Response
+     */
+    200: EventRead;
+};
+
+export type PublishEventV1EventsEventIdPublishPostResponse = PublishEventV1EventsEventIdPublishPostResponses[keyof PublishEventV1EventsEventIdPublishPostResponses];
+
+export type CancelEventV1EventsEventIdCancelPostData = {
+    body?: never;
+    path: {
+        /**
+         * Event Id
+         */
+        event_id: string;
+    };
+    query?: never;
+    url: '/v1/events/{event_id}/cancel';
+};
+
+export type CancelEventV1EventsEventIdCancelPostErrors = {
+    /**
+     * Validation Error
+     */
+    422: HttpValidationError;
+};
+
+export type CancelEventV1EventsEventIdCancelPostError = CancelEventV1EventsEventIdCancelPostErrors[keyof CancelEventV1EventsEventIdCancelPostErrors];
+
+export type CancelEventV1EventsEventIdCancelPostResponses = {
+    /**
+     * Successful Response
+     */
+    200: EventRead;
+};
+
+export type CancelEventV1EventsEventIdCancelPostResponse = CancelEventV1EventsEventIdCancelPostResponses[keyof CancelEventV1EventsEventIdCancelPostResponses];
+
+export type ListTicketsV1EventsEventIdTicketsGetData = {
+    body?: never;
+    path: {
+        /**
+         * Event Id
+         */
+        event_id: string;
+    };
+    query?: never;
+    url: '/v1/events/{event_id}/tickets';
+};
+
+export type ListTicketsV1EventsEventIdTicketsGetErrors = {
+    /**
+     * Validation Error
+     */
+    422: HttpValidationError;
+};
+
+export type ListTicketsV1EventsEventIdTicketsGetError = ListTicketsV1EventsEventIdTicketsGetErrors[keyof ListTicketsV1EventsEventIdTicketsGetErrors];
+
+export type ListTicketsV1EventsEventIdTicketsGetResponses = {
+    /**
+     * Response List Tickets V1 Events  Event Id  Tickets Get
+     * Successful Response
+     */
+    200: Array<TicketRead>;
+};
+
+export type ListTicketsV1EventsEventIdTicketsGetResponse = ListTicketsV1EventsEventIdTicketsGetResponses[keyof ListTicketsV1EventsEventIdTicketsGetResponses];
+
+export type CreateTicketV1EventsEventIdTicketsPostData = {
+    body: TicketCreate;
+    path: {
+        /**
+         * Event Id
+         */
+        event_id: string;
+    };
+    query?: never;
+    url: '/v1/events/{event_id}/tickets';
+};
+
+export type CreateTicketV1EventsEventIdTicketsPostErrors = {
+    /**
+     * Validation Error
+     */
+    422: HttpValidationError;
+};
+
+export type CreateTicketV1EventsEventIdTicketsPostError = CreateTicketV1EventsEventIdTicketsPostErrors[keyof CreateTicketV1EventsEventIdTicketsPostErrors];
+
+export type CreateTicketV1EventsEventIdTicketsPostResponses = {
+    /**
+     * Successful Response
+     */
+    201: TicketRead;
+};
+
+export type CreateTicketV1EventsEventIdTicketsPostResponse = CreateTicketV1EventsEventIdTicketsPostResponses[keyof CreateTicketV1EventsEventIdTicketsPostResponses];
+
+export type RegisterV1EventsEventIdRegisterPostData = {
+    body: RegistrationCreate;
+    path: {
+        /**
+         * Event Id
+         */
+        event_id: string;
+    };
+    query?: never;
+    url: '/v1/events/{event_id}/register';
+};
+
+export type RegisterV1EventsEventIdRegisterPostErrors = {
+    /**
+     * Validation Error
+     */
+    422: HttpValidationError;
+};
+
+export type RegisterV1EventsEventIdRegisterPostError = RegisterV1EventsEventIdRegisterPostErrors[keyof RegisterV1EventsEventIdRegisterPostErrors];
+
+export type RegisterV1EventsEventIdRegisterPostResponses = {
+    /**
+     * Successful Response
+     */
+    200: RegistrationRead;
+};
+
+export type RegisterV1EventsEventIdRegisterPostResponse = RegisterV1EventsEventIdRegisterPostResponses[keyof RegisterV1EventsEventIdRegisterPostResponses];
+
+export type RedeemV1InvitationsCodeRedeemPostData = {
+    body?: never;
+    path: {
+        /**
+         * Code
+         */
+        code: string;
+    };
+    query?: never;
+    url: '/v1/invitations/{code}/redeem';
+};
+
+export type RedeemV1InvitationsCodeRedeemPostErrors = {
+    /**
+     * Validation Error
+     */
+    422: HttpValidationError;
+};
+
+export type RedeemV1InvitationsCodeRedeemPostError = RedeemV1InvitationsCodeRedeemPostErrors[keyof RedeemV1InvitationsCodeRedeemPostErrors];
+
+export type RedeemV1InvitationsCodeRedeemPostResponses = {
+    /**
+     * Successful Response
+     */
+    200: ClubMemberRead;
+};
+
+export type RedeemV1InvitationsCodeRedeemPostResponse = RedeemV1InvitationsCodeRedeemPostResponses[keyof RedeemV1InvitationsCodeRedeemPostResponses];
+
+export type CancelRegistrationV1RegistrationsRegistrationIdDeleteData = {
+    body?: never;
+    path: {
+        /**
+         * Registration Id
+         */
+        registration_id: string;
+    };
+    query?: never;
+    url: '/v1/registrations/{registration_id}';
+};
+
+export type CancelRegistrationV1RegistrationsRegistrationIdDeleteErrors = {
+    /**
+     * Validation Error
+     */
+    422: HttpValidationError;
+};
+
+export type CancelRegistrationV1RegistrationsRegistrationIdDeleteError = CancelRegistrationV1RegistrationsRegistrationIdDeleteErrors[keyof CancelRegistrationV1RegistrationsRegistrationIdDeleteErrors];
+
+export type CancelRegistrationV1RegistrationsRegistrationIdDeleteResponses = {
+    /**
+     * Response Cancel Registration V1 Registrations  Registration Id  Delete
+     * Successful Response
+     */
+    200: {
+        [key: string]: string;
+    };
+};
+
+export type CancelRegistrationV1RegistrationsRegistrationIdDeleteResponse = CancelRegistrationV1RegistrationsRegistrationIdDeleteResponses[keyof CancelRegistrationV1RegistrationsRegistrationIdDeleteResponses];
+
+export type QrCodeV1RegistrationsRegistrationIdQrGetData = {
+    body?: never;
+    path: {
+        /**
+         * Registration Id
+         */
+        registration_id: string;
+    };
+    query?: never;
+    url: '/v1/registrations/{registration_id}/qr';
+};
+
+export type QrCodeV1RegistrationsRegistrationIdQrGetErrors = {
+    /**
+     * Validation Error
+     */
+    422: HttpValidationError;
+};
+
+export type QrCodeV1RegistrationsRegistrationIdQrGetError = QrCodeV1RegistrationsRegistrationIdQrGetErrors[keyof QrCodeV1RegistrationsRegistrationIdQrGetErrors];
+
+export type QrCodeV1RegistrationsRegistrationIdQrGetResponses = {
+    /**
+     * Successful Response
+     */
+    200: unknown;
+};
+
+export type CheckInV1RegistrationsRegistrationIdCheckinPostData = {
+    body?: never;
+    path: {
+        /**
+         * Registration Id
+         */
+        registration_id: string;
+    };
+    query?: never;
+    url: '/v1/registrations/{registration_id}/checkin';
+};
+
+export type CheckInV1RegistrationsRegistrationIdCheckinPostErrors = {
+    /**
+     * Validation Error
+     */
+    422: HttpValidationError;
+};
+
+export type CheckInV1RegistrationsRegistrationIdCheckinPostError = CheckInV1RegistrationsRegistrationIdCheckinPostErrors[keyof CheckInV1RegistrationsRegistrationIdCheckinPostErrors];
+
+export type CheckInV1RegistrationsRegistrationIdCheckinPostResponses = {
+    /**
+     * Response Check In V1 Registrations  Registration Id  Checkin Post
+     * Successful Response
+     */
+    200: {
+        [key: string]: string;
+    };
+};
+
+export type CheckInV1RegistrationsRegistrationIdCheckinPostResponse = CheckInV1RegistrationsRegistrationIdCheckinPostResponses[keyof CheckInV1RegistrationsRegistrationIdCheckinPostResponses];
 
 export type DiscoverVenuesV1DiscoverVenuesGetData = {
     body?: never;
@@ -1271,6 +2017,182 @@ export type DiscoverRecommendationsV1DiscoverRecommendationsGetResponses = {
 };
 
 export type DiscoverRecommendationsV1DiscoverRecommendationsGetResponse = DiscoverRecommendationsV1DiscoverRecommendationsGetResponses[keyof DiscoverRecommendationsV1DiscoverRecommendationsGetResponses];
+
+export type RegisterDeviceV1DevicesPostData = {
+    body: DeviceCreate;
+    path?: never;
+    query?: never;
+    url: '/v1/devices';
+};
+
+export type RegisterDeviceV1DevicesPostErrors = {
+    /**
+     * Validation Error
+     */
+    422: HttpValidationError;
+};
+
+export type RegisterDeviceV1DevicesPostError = RegisterDeviceV1DevicesPostErrors[keyof RegisterDeviceV1DevicesPostErrors];
+
+export type RegisterDeviceV1DevicesPostResponses = {
+    /**
+     * Successful Response
+     */
+    201: DeviceRead;
+};
+
+export type RegisterDeviceV1DevicesPostResponse = RegisterDeviceV1DevicesPostResponses[keyof RegisterDeviceV1DevicesPostResponses];
+
+export type UnregisterDeviceV1DevicesDeviceIdDeleteData = {
+    body?: never;
+    path: {
+        /**
+         * Device Id
+         */
+        device_id: string;
+    };
+    query?: never;
+    url: '/v1/devices/{device_id}';
+};
+
+export type UnregisterDeviceV1DevicesDeviceIdDeleteErrors = {
+    /**
+     * Validation Error
+     */
+    422: HttpValidationError;
+};
+
+export type UnregisterDeviceV1DevicesDeviceIdDeleteError = UnregisterDeviceV1DevicesDeviceIdDeleteErrors[keyof UnregisterDeviceV1DevicesDeviceIdDeleteErrors];
+
+export type UnregisterDeviceV1DevicesDeviceIdDeleteResponses = {
+    /**
+     * Successful Response
+     */
+    204: void;
+};
+
+export type UnregisterDeviceV1DevicesDeviceIdDeleteResponse = UnregisterDeviceV1DevicesDeviceIdDeleteResponses[keyof UnregisterDeviceV1DevicesDeviceIdDeleteResponses];
+
+export type ListNotificationsV1NotificationsGetData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * Limit
+         */
+        limit?: number;
+    };
+    url: '/v1/notifications';
+};
+
+export type ListNotificationsV1NotificationsGetErrors = {
+    /**
+     * Validation Error
+     */
+    422: HttpValidationError;
+};
+
+export type ListNotificationsV1NotificationsGetError = ListNotificationsV1NotificationsGetErrors[keyof ListNotificationsV1NotificationsGetErrors];
+
+export type ListNotificationsV1NotificationsGetResponses = {
+    /**
+     * Response List Notifications V1 Notifications Get
+     * Successful Response
+     */
+    200: Array<NotificationRead>;
+};
+
+export type ListNotificationsV1NotificationsGetResponse = ListNotificationsV1NotificationsGetResponses[keyof ListNotificationsV1NotificationsGetResponses];
+
+export type MarkReadV1NotificationsNotificationIdReadPostData = {
+    body?: never;
+    path: {
+        /**
+         * Notification Id
+         */
+        notification_id: string;
+    };
+    query?: never;
+    url: '/v1/notifications/{notification_id}/read';
+};
+
+export type MarkReadV1NotificationsNotificationIdReadPostErrors = {
+    /**
+     * Validation Error
+     */
+    422: HttpValidationError;
+};
+
+export type MarkReadV1NotificationsNotificationIdReadPostError = MarkReadV1NotificationsNotificationIdReadPostErrors[keyof MarkReadV1NotificationsNotificationIdReadPostErrors];
+
+export type MarkReadV1NotificationsNotificationIdReadPostResponses = {
+    /**
+     * Successful Response
+     */
+    200: NotificationRead;
+};
+
+export type MarkReadV1NotificationsNotificationIdReadPostResponse = MarkReadV1NotificationsNotificationIdReadPostResponses[keyof MarkReadV1NotificationsNotificationIdReadPostResponses];
+
+export type EventRoomTokenV1EventsEventIdRoomTokenGetData = {
+    body?: never;
+    path: {
+        /**
+         * Event Id
+         */
+        event_id: string;
+    };
+    query?: never;
+    url: '/v1/events/{event_id}/room/token';
+};
+
+export type EventRoomTokenV1EventsEventIdRoomTokenGetErrors = {
+    /**
+     * Validation Error
+     */
+    422: HttpValidationError;
+};
+
+export type EventRoomTokenV1EventsEventIdRoomTokenGetError = EventRoomTokenV1EventsEventIdRoomTokenGetErrors[keyof EventRoomTokenV1EventsEventIdRoomTokenGetErrors];
+
+export type EventRoomTokenV1EventsEventIdRoomTokenGetResponses = {
+    /**
+     * Successful Response
+     */
+    200: RoomToken;
+};
+
+export type EventRoomTokenV1EventsEventIdRoomTokenGetResponse = EventRoomTokenV1EventsEventIdRoomTokenGetResponses[keyof EventRoomTokenV1EventsEventIdRoomTokenGetResponses];
+
+export type ChannelRoomTokenV1ChannelsChannelIdRoomTokenPostData = {
+    body?: never;
+    path: {
+        /**
+         * Channel Id
+         */
+        channel_id: string;
+    };
+    query?: never;
+    url: '/v1/channels/{channel_id}/room/token';
+};
+
+export type ChannelRoomTokenV1ChannelsChannelIdRoomTokenPostErrors = {
+    /**
+     * Validation Error
+     */
+    422: HttpValidationError;
+};
+
+export type ChannelRoomTokenV1ChannelsChannelIdRoomTokenPostError = ChannelRoomTokenV1ChannelsChannelIdRoomTokenPostErrors[keyof ChannelRoomTokenV1ChannelsChannelIdRoomTokenPostErrors];
+
+export type ChannelRoomTokenV1ChannelsChannelIdRoomTokenPostResponses = {
+    /**
+     * Successful Response
+     */
+    200: RoomToken;
+};
+
+export type ChannelRoomTokenV1ChannelsChannelIdRoomTokenPostResponse = ChannelRoomTokenV1ChannelsChannelIdRoomTokenPostResponses[keyof ChannelRoomTokenV1ChannelsChannelIdRoomTokenPostResponses];
 
 export type ListSourcesV1AdminSourcesGetData = {
     body?: never;
