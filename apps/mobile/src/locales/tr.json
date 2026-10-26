@@ -127,7 +127,8 @@
     "email_placeholder": "E-posta adresinizi girin",
     "password_placeholder": "Şifrenizi girin",
     "forgot_password": "Şifrenizi mi unuttunuz?",
-    "no_account": "Hesabınız yok mu?"
+    "no_account": "Hesabınız yok mu?",
+    "failed": "Giriş yapılamadı. Bilgileri kontrol edin."
   },
   "register": {
     "heading": "Aramıza Katılın",
@@ -137,7 +138,9 @@
     "password_placeholder": "Şifrenizi girin",
     "password_confirm": "Şifre Tekrarı",
     "password_confirm_placeholder": "Şifrenizi tekrar girin",
-    "has_account": "Zaten hesabınız var mı?"
+    "has_account": "Zaten hesabınız var mı?",
+    "failed": "Kayıt oluşturulamadı. Tekrar deneyin.",
+    "password_mismatch": "Şifreler eşleşmiyor."
   },
   "settings": {
     "title": "Ayarlar",

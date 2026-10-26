@@ -127,7 +127,8 @@
     "email_placeholder": "Enter your email address",
     "password_placeholder": "Enter your password",
     "forgot_password": "Forgot your password?",
-    "no_account": "Don't have an account?"
+    "no_account": "Don't have an account?",
+    "failed": "Could not sign in. Check your details."
   },
   "register": {
     "heading": "Join Us",
@@ -137,7 +138,9 @@
     "password_placeholder": "Enter your password",
     "password_confirm": "Confirm Password",
     "password_confirm_placeholder": "Re-enter your password",
-    "has_account": "Already have an account?"
+    "has_account": "Already have an account?",
+    "failed": "Could not create the account. Try again.",
+    "password_mismatch": "Passwords do not match."
   },
   "settings": {
     "title": "Settings",
