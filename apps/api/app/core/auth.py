@@ -16,6 +16,20 @@ from app.repos.users import UserRepository, get_user_repo
 _bearer = HTTPBearer(auto_error=False)
 
 
+async def get_optional_user(
+    credentials: Annotated[HTTPAuthorizationCredentials | None, Depends(_bearer)],
+    repo: Annotated[UserRepository, Depends(get_user_repo)],
+) -> User | None:
+    """Resolve a Bearer token when present; anonymous requests return None."""
+    if credentials is None:
+        return None
+    try:
+        user_id: uuid.UUID = decode_access_token(credentials.credentials)
+    except ApiError:
+        return None
+    return await repo.get_by_id(user_id)
+
+
 async def get_current_user(
     credentials: Annotated[HTTPAuthorizationCredentials | None, Depends(_bearer)],
     repo: Annotated[UserRepository, Depends(get_user_repo)],
