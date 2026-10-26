@@ -10,6 +10,7 @@ from collections.abc import AsyncIterator
 from contextlib import asynccontextmanager
 
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import ORJSONResponse
 
 from app.core.config import settings
@@ -65,6 +66,21 @@ def create_app() -> FastAPI:
         version=settings.app_version,
         default_response_class=ORJSONResponse,
         lifespan=lifespan,
+    )
+    # Tauri WebView origins differ by platform; the deployed web origin is
+    # included for the preview. Keep the list explicit instead of "*".
+    app.add_middleware(
+        CORSMiddleware,
+        allow_origins=[
+            "tauri://localhost",
+            "http://tauri.localhost",
+            "https://tauri.localhost",
+            "http://localhost:5173",
+            "https://etkinlikcepte.yilmazcs.xyz",
+        ],
+        allow_credentials=True,
+        allow_methods=["*"],
+        allow_headers=["*"],
     )
 
     @app.get("/health", tags=["system"], response_model=HealthResponse)
