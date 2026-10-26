@@ -10,7 +10,7 @@ import datetime
 import enum
 import uuid
 
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, ConfigDict, Field
 
 
 class ClubRole(enum.StrEnum):
@@ -42,6 +42,8 @@ class ClubUpdate(BaseModel):
 class ClubRead(BaseModel):
     """Club representation returned by list and detail endpoints."""
 
+    model_config = ConfigDict(from_attributes=True)
+
     id: uuid.UUID
     name: str
     slug: str
@@ -65,3 +67,37 @@ class ClubList(BaseModel):
 
     items: list[ClubRead]
     next_cursor: str | None = None
+
+
+class ClubMemberAdd(BaseModel):
+    """Add a user to a club with an explicit role."""
+
+    user_id: uuid.UUID
+    role: ClubRole = ClubRole.member
+
+
+class ClubInvitationCreate(BaseModel):
+    """Create a redeemable club invitation."""
+
+    email: str | None = Field(default=None, max_length=255)
+    role: ClubRole = ClubRole.member
+    expires_in_days: int = Field(default=7, ge=1, le=90)
+
+
+class ClubInvitationRead(BaseModel):
+    """Invitation state returned to the creator."""
+
+    id: uuid.UUID
+    club_id: uuid.UUID
+    code: str
+    role: ClubRole
+    expires_at: datetime.datetime | None = None
+    accepted_by: uuid.UUID | None = None
+
+
+class InvitationRedeem(BaseModel):
+    """Redeem response: the new membership."""
+
+    club_id: uuid.UUID
+    user_id: uuid.UUID
+    role: ClubRole
