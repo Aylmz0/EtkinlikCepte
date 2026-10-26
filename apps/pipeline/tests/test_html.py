@@ -1,7 +1,6 @@
 """HTML adapter fixture tests: faker-generated pages, offline (R11)."""
 
 from faker import Faker
-
 from pipeline.sources.html import TARGETS, parse_html
 
 fake = Faker("tr_TR")
