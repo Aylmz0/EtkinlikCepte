@@ -61,6 +61,49 @@ export const zClubCreate = z.object({
 });
 
 /**
+ * ClubRole
+ * Membership role inside a club.
+ */
+export const zClubRole = z.enum([
+    'owner',
+    'admin',
+    'moderator',
+    'member'
+]);
+
+/**
+ * ClubInvitationCreate
+ * Create a redeemable club invitation.
+ */
+export const zClubInvitationCreate = z.object({
+    email: z.optional(z.union([
+        z.string().max(255),
+        z.null()
+    ])),
+    role: z.optional(zClubRole),
+    expires_in_days: z.optional(z.int().gte(1).lte(90)).default(7)
+});
+
+/**
+ * ClubInvitationRead
+ * Invitation state returned to the creator.
+ */
+export const zClubInvitationRead = z.object({
+    id: z.uuid(),
+    club_id: z.uuid(),
+    code: z.string(),
+    role: zClubRole,
+    expires_at: z.optional(z.union([
+        z.iso.datetime(),
+        z.null()
+    ])),
+    accepted_by: z.optional(z.union([
+        z.uuid(),
+        z.null()
+    ]))
+});
+
+/**
  * ClubRead
  * Club representation returned by list and detail endpoints.
  */
@@ -93,15 +136,13 @@ export const zClubList = z.object({
 });
 
 /**
- * ClubRole
- * Membership role inside a club.
+ * ClubMemberAdd
+ * Add a user to a club with an explicit role.
  */
-export const zClubRole = z.enum([
-    'owner',
-    'admin',
-    'moderator',
-    'member'
-]);
+export const zClubMemberAdd = z.object({
+    user_id: z.uuid(),
+    role: z.optional(zClubRole)
+});
 
 /**
  * ClubMemberRead
@@ -115,10 +156,59 @@ export const zClubMemberRead = z.object({
 });
 
 /**
+ * ClubUpdate
+ * Partial club update; omitted fields stay unchanged.
+ */
+export const zClubUpdate = z.object({
+    name: z.optional(z.union([
+        z.string().min(2).max(120),
+        z.null()
+    ])),
+    description: z.optional(z.union([
+        z.string().max(2000),
+        z.null()
+    ])),
+    city: z.optional(z.union([
+        z.string().max(80),
+        z.null()
+    ]))
+});
+
+/**
+ * DeviceCreate
+ * Register this device for presence/version tracking.
+ */
+export const zDeviceCreate = z.object({
+    platform: z.string().min(2).max(32),
+    app_version: z.string().min(1).max(32)
+});
+
+/**
+ * DeviceRead
+ * Registered device.
+ */
+export const zDeviceRead = z.object({
+    id: z.uuid(),
+    platform: z.optional(z.union([
+        z.string(),
+        z.null()
+    ])),
+    app_version: z.optional(z.union([
+        z.string(),
+        z.null()
+    ])),
+    last_seen: z.optional(z.union([
+        z.iso.datetime(),
+        z.null()
+    ]))
+});
+
+/**
  * EventCreate
  * Payload for creating a club event.
  */
 export const zEventCreate = z.object({
+    club_id: z.uuid(),
     title: z.string().min(2).max(200),
     description: z.optional(z.union([
         z.string().max(10000),
@@ -259,6 +349,49 @@ export const zEventListResponse = z.object({
 });
 
 /**
+ * EventUpdate
+ * Partial event update.
+ */
+export const zEventUpdate = z.object({
+    title: z.optional(z.union([
+        z.string().min(2).max(200),
+        z.null()
+    ])),
+    description: z.optional(z.union([
+        z.string().max(10000),
+        z.null()
+    ])),
+    category: z.optional(z.union([
+        z.string().max(80),
+        z.null()
+    ])),
+    venue_id: z.optional(z.union([
+        z.uuid(),
+        z.null()
+    ])),
+    starts_at: z.optional(z.union([
+        z.iso.datetime(),
+        z.null()
+    ])),
+    ends_at: z.optional(z.union([
+        z.iso.datetime(),
+        z.null()
+    ])),
+    is_online: z.optional(z.union([
+        z.boolean(),
+        z.null()
+    ])),
+    online_url: z.optional(z.union([
+        z.string().max(500),
+        z.null()
+    ])),
+    capacity: z.optional(z.union([
+        z.int().gte(1),
+        z.null()
+    ]))
+});
+
+/**
  * ValidationError
  */
 export const zValidationError = z.object({
@@ -295,6 +428,35 @@ export const zHealthResponse = z.object({
 export const zLoginIn = z.object({
     email: z.email(),
     password: z.string().min(1).max(128)
+});
+
+/**
+ * NotificationRead
+ * In-app notification row.
+ */
+export const zNotificationRead = z.object({
+    id: z.uuid(),
+    kind: z.optional(z.union([
+        z.string(),
+        z.null()
+    ])),
+    title: z.optional(z.union([
+        z.string(),
+        z.null()
+    ])),
+    body: z.optional(z.union([
+        z.string(),
+        z.null()
+    ])),
+    data: z.optional(z.union([
+        z.object({}),
+        z.null()
+    ])),
+    read_at: z.optional(z.union([
+        z.iso.datetime(),
+        z.null()
+    ])),
+    created_at: z.iso.datetime()
 });
 
 /**
@@ -400,6 +562,54 @@ export const zRegisterIn = z.object({
 });
 
 /**
+ * RegistrationCreate
+ * Register for one ticket type; quantity > 1 is a group ticket.
+ */
+export const zRegistrationCreate = z.object({
+    ticket_id: z.uuid(),
+    quantity: z.optional(z.int().gte(1).lte(10)).default(1)
+});
+
+/**
+ * RegistrationRead
+ * Registration state returned to the buyer.
+ */
+export const zRegistrationRead = z.object({
+    id: z.uuid(),
+    event_id: z.uuid(),
+    user_id: z.uuid(),
+    ticket_id: z.uuid(),
+    quantity: z.int(),
+    status: z.string(),
+    amount_minor: z.optional(z.union([
+        z.int(),
+        z.null()
+    ])),
+    reserved_until: z.optional(z.union([
+        z.iso.datetime(),
+        z.null()
+    ])),
+    qr_token: z.optional(z.union([
+        z.string(),
+        z.null()
+    ])),
+    checked_in_at: z.optional(z.union([
+        z.iso.datetime(),
+        z.null()
+    ]))
+});
+
+/**
+ * RoomToken
+ * Connection details for a LiveKit room.
+ */
+export const zRoomToken = z.object({
+    url: z.string(),
+    token: z.string(),
+    room: z.string()
+});
+
+/**
  * SourceConfigRead
  * A scraper source as shown to admins.
  */
@@ -460,6 +670,48 @@ export const zSourceConfigUpdate = z.object({
     ])),
     user_agent: z.optional(z.union([
         z.string(),
+        z.null()
+    ]))
+});
+
+/**
+ * TicketCreate
+ * Create a ticket type for an event.
+ */
+export const zTicketCreate = z.object({
+    name: z.string().min(1).max(80),
+    price_minor: z.optional(z.int().gte(0)).default(0),
+    currency: z.optional(z.string().length(3)).default('TRY'),
+    quantity: z.int().gte(1),
+    sales_start: z.optional(z.union([
+        z.iso.datetime(),
+        z.null()
+    ])),
+    sales_end: z.optional(z.union([
+        z.iso.datetime(),
+        z.null()
+    ]))
+});
+
+/**
+ * TicketRead
+ * Ticket type returned to clients.
+ */
+export const zTicketRead = z.object({
+    id: z.uuid(),
+    event_id: z.uuid(),
+    name: z.string(),
+    price_minor: z.int(),
+    currency: z.string(),
+    quantity: z.int(),
+    sold_count: z.int(),
+    kind: z.string(),
+    sales_start: z.optional(z.union([
+        z.iso.datetime(),
+        z.null()
+    ])),
+    sales_end: z.optional(z.union([
+        z.iso.datetime(),
         z.null()
     ]))
 });
@@ -607,11 +859,7 @@ export const zListClubsV1ClubsGetData = z.object({
     body: z.optional(z.never()),
     path: z.optional(z.never()),
     query: z.optional(z.object({
-        cursor: z.optional(z.union([
-            z.string(),
-            z.null()
-        ])),
-        limit: z.optional(z.int().gte(1).lte(100)).default(20)
+        limit: z.optional(z.int().gte(1).lte(100)).default(50)
     }))
 });
 
@@ -644,30 +892,68 @@ export const zGetClubV1ClubsClubIdGetData = z.object({
  */
 export const zGetClubV1ClubsClubIdGetResponse = zClubRead;
 
-export const zJoinClubV1ClubsClubIdMembersPostData = z.object({
-    body: z.optional(z.never()),
+export const zUpdateClubV1ClubsClubIdPatchData = z.object({
+    body: zClubUpdate,
     path: z.object({
         club_id: z.uuid()
     }),
-    query: z.object({
-        user_id: z.uuid()
-    })
+    query: z.optional(z.never())
 });
 
 /**
  * Successful Response
  */
-export const zJoinClubV1ClubsClubIdMembersPostResponse = zClubMemberRead;
+export const zUpdateClubV1ClubsClubIdPatchResponse = zClubRead;
+
+export const zAddMemberV1ClubsClubIdMembersPostData = z.object({
+    body: zClubMemberAdd,
+    path: z.object({
+        club_id: z.uuid()
+    }),
+    query: z.optional(z.never())
+});
+
+/**
+ * Successful Response
+ */
+export const zAddMemberV1ClubsClubIdMembersPostResponse = zClubMemberRead;
+
+export const zRemoveMemberV1ClubsClubIdMembersUserIdDeleteData = z.object({
+    body: z.optional(z.never()),
+    path: z.object({
+        club_id: z.uuid(),
+        user_id: z.uuid()
+    }),
+    query: z.optional(z.never())
+});
+
+/**
+ * Successful Response
+ */
+export const zRemoveMemberV1ClubsClubIdMembersUserIdDeleteResponse = z.void();
+
+export const zCreateInvitationV1ClubsClubIdInvitationsPostData = z.object({
+    body: zClubInvitationCreate,
+    path: z.object({
+        club_id: z.uuid()
+    }),
+    query: z.optional(z.never())
+});
+
+/**
+ * Successful Response
+ */
+export const zCreateInvitationV1ClubsClubIdInvitationsPostResponse = zClubInvitationRead;
 
 export const zListEventsV1EventsGetData = z.object({
     body: z.optional(z.never()),
     path: z.optional(z.never()),
     query: z.optional(z.object({
-        cursor: z.optional(z.union([
-            z.string(),
+        club_id: z.optional(z.union([
+            z.uuid(),
             z.null()
         ])),
-        limit: z.optional(z.int().gte(1).lte(100)).default(20)
+        limit: z.optional(z.int().gte(1).lte(100)).default(50)
     }))
 });
 
@@ -699,6 +985,134 @@ export const zGetEventV1EventsEventIdGetData = z.object({
  * Successful Response
  */
 export const zGetEventV1EventsEventIdGetResponse = zEventRead;
+
+export const zUpdateEventV1EventsEventIdPatchData = z.object({
+    body: zEventUpdate,
+    path: z.object({
+        event_id: z.uuid()
+    }),
+    query: z.optional(z.never())
+});
+
+/**
+ * Successful Response
+ */
+export const zUpdateEventV1EventsEventIdPatchResponse = zEventRead;
+
+export const zPublishEventV1EventsEventIdPublishPostData = z.object({
+    body: z.optional(z.never()),
+    path: z.object({
+        event_id: z.uuid()
+    }),
+    query: z.optional(z.never())
+});
+
+/**
+ * Successful Response
+ */
+export const zPublishEventV1EventsEventIdPublishPostResponse = zEventRead;
+
+export const zCancelEventV1EventsEventIdCancelPostData = z.object({
+    body: z.optional(z.never()),
+    path: z.object({
+        event_id: z.uuid()
+    }),
+    query: z.optional(z.never())
+});
+
+/**
+ * Successful Response
+ */
+export const zCancelEventV1EventsEventIdCancelPostResponse = zEventRead;
+
+export const zListTicketsV1EventsEventIdTicketsGetData = z.object({
+    body: z.optional(z.never()),
+    path: z.object({
+        event_id: z.uuid()
+    }),
+    query: z.optional(z.never())
+});
+
+/**
+ * Response List Tickets V1 Events  Event Id  Tickets Get
+ * Successful Response
+ */
+export const zListTicketsV1EventsEventIdTicketsGetResponse = z.array(zTicketRead);
+
+export const zCreateTicketV1EventsEventIdTicketsPostData = z.object({
+    body: zTicketCreate,
+    path: z.object({
+        event_id: z.uuid()
+    }),
+    query: z.optional(z.never())
+});
+
+/**
+ * Successful Response
+ */
+export const zCreateTicketV1EventsEventIdTicketsPostResponse = zTicketRead;
+
+export const zRegisterV1EventsEventIdRegisterPostData = z.object({
+    body: zRegistrationCreate,
+    path: z.object({
+        event_id: z.uuid()
+    }),
+    query: z.optional(z.never())
+});
+
+/**
+ * Successful Response
+ */
+export const zRegisterV1EventsEventIdRegisterPostResponse = zRegistrationRead;
+
+export const zRedeemV1InvitationsCodeRedeemPostData = z.object({
+    body: z.optional(z.never()),
+    path: z.object({
+        code: z.string()
+    }),
+    query: z.optional(z.never())
+});
+
+/**
+ * Successful Response
+ */
+export const zRedeemV1InvitationsCodeRedeemPostResponse = zClubMemberRead;
+
+export const zCancelRegistrationV1RegistrationsRegistrationIdDeleteData = z.object({
+    body: z.optional(z.never()),
+    path: z.object({
+        registration_id: z.uuid()
+    }),
+    query: z.optional(z.never())
+});
+
+/**
+ * Response Cancel Registration V1 Registrations  Registration Id  Delete
+ * Successful Response
+ */
+export const zCancelRegistrationV1RegistrationsRegistrationIdDeleteResponse = z.object({});
+
+export const zQrCodeV1RegistrationsRegistrationIdQrGetData = z.object({
+    body: z.optional(z.never()),
+    path: z.object({
+        registration_id: z.uuid()
+    }),
+    query: z.optional(z.never())
+});
+
+export const zCheckInV1RegistrationsRegistrationIdCheckinPostData = z.object({
+    body: z.optional(z.never()),
+    path: z.object({
+        registration_id: z.uuid()
+    }),
+    query: z.optional(z.never())
+});
+
+/**
+ * Response Check In V1 Registrations  Registration Id  Checkin Post
+ * Successful Response
+ */
+export const zCheckInV1RegistrationsRegistrationIdCheckinPostResponse = z.object({});
 
 export const zDiscoverVenuesV1DiscoverVenuesGetData = z.object({
     body: z.optional(z.never()),
@@ -775,6 +1189,83 @@ export const zDiscoverRecommendationsV1DiscoverRecommendationsGetData = z.object
  * Successful Response
  */
 export const zDiscoverRecommendationsV1DiscoverRecommendationsGetResponse = zRecommendationsResponse;
+
+export const zRegisterDeviceV1DevicesPostData = z.object({
+    body: zDeviceCreate,
+    path: z.optional(z.never()),
+    query: z.optional(z.never())
+});
+
+/**
+ * Successful Response
+ */
+export const zRegisterDeviceV1DevicesPostResponse = zDeviceRead;
+
+export const zUnregisterDeviceV1DevicesDeviceIdDeleteData = z.object({
+    body: z.optional(z.never()),
+    path: z.object({
+        device_id: z.uuid()
+    }),
+    query: z.optional(z.never())
+});
+
+/**
+ * Successful Response
+ */
+export const zUnregisterDeviceV1DevicesDeviceIdDeleteResponse = z.void();
+
+export const zListNotificationsV1NotificationsGetData = z.object({
+    body: z.optional(z.never()),
+    path: z.optional(z.never()),
+    query: z.optional(z.object({
+        limit: z.optional(z.int().gte(1).lte(100)).default(50)
+    }))
+});
+
+/**
+ * Response List Notifications V1 Notifications Get
+ * Successful Response
+ */
+export const zListNotificationsV1NotificationsGetResponse = z.array(zNotificationRead);
+
+export const zMarkReadV1NotificationsNotificationIdReadPostData = z.object({
+    body: z.optional(z.never()),
+    path: z.object({
+        notification_id: z.uuid()
+    }),
+    query: z.optional(z.never())
+});
+
+/**
+ * Successful Response
+ */
+export const zMarkReadV1NotificationsNotificationIdReadPostResponse = zNotificationRead;
+
+export const zEventRoomTokenV1EventsEventIdRoomTokenGetData = z.object({
+    body: z.optional(z.never()),
+    path: z.object({
+        event_id: z.uuid()
+    }),
+    query: z.optional(z.never())
+});
+
+/**
+ * Successful Response
+ */
+export const zEventRoomTokenV1EventsEventIdRoomTokenGetResponse = zRoomToken;
+
+export const zChannelRoomTokenV1ChannelsChannelIdRoomTokenPostData = z.object({
+    body: z.optional(z.never()),
+    path: z.object({
+        channel_id: z.uuid()
+    }),
+    query: z.optional(z.never())
+});
+
+/**
+ * Successful Response
+ */
+export const zChannelRoomTokenV1ChannelsChannelIdRoomTokenPostResponse = zRoomToken;
 
 export const zListSourcesV1AdminSourcesGetData = z.object({
     body: z.optional(z.never()),

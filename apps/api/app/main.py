@@ -15,7 +15,21 @@ from fastapi.responses import ORJSONResponse
 from app.core.config import settings
 from app.core.errors import ApiError, problem
 from app.core.logging import configure_logging, get_logger
-from app.routers import admin, auth, channels, clubs, discover, events, media
+from app.repos import models as _models  # noqa: F401  (register all tables)
+from app.routers import (
+    admin,
+    auth,
+    channels,
+    clubs,
+    devices,
+    discover,
+    events,
+    invitations,
+    media,
+    notifications,
+    registrations,
+    rooms,
+)
 from app.schemas import HealthResponse
 
 log = get_logger(__name__)
@@ -77,9 +91,14 @@ def create_app() -> FastAPI:
         auth.router,
         clubs.router,
         events.router,
+        invitations.router,
+        registrations.router,
         channels.router,
         discover.router,
         media.router,
+        devices.router,
+        notifications.router,
+        rooms.router,
         admin.router,
     ):
         app.include_router(router, prefix=settings.api_prefix)
