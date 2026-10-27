@@ -32,6 +32,7 @@ class Settings:
     livekit_url: str = "ws://localhost:7880"
     livekit_api_key: str = "devkey"
     livekit_api_secret: str = "secret"
+    web_dir: str = ""
 
 
 def load_settings() -> Settings:
@@ -53,6 +54,7 @@ def load_settings() -> Settings:
         livekit_url=_env("LIVEKIT_URL", Settings.livekit_url),
         livekit_api_key=_env("LIVEKIT_KEY", Settings.livekit_api_key),
         livekit_api_secret=_env("LIVEKIT_SECRET", Settings.livekit_api_secret),
+        web_dir=_env("WEB_DIR", Settings.web_dir),
     )
 
 
