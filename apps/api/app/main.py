@@ -8,10 +8,12 @@ from __future__ import annotations
 
 from collections.abc import AsyncIterator
 from contextlib import asynccontextmanager
+from pathlib import Path
 
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import ORJSONResponse
+from fastapi.responses import FileResponse, ORJSONResponse
+from fastapi.staticfiles import StaticFiles
 
 from app.core.config import settings
 from app.core.errors import ApiError, problem
@@ -102,6 +104,24 @@ def create_app() -> FastAPI:
         """
         log.error("unhandled", path=request.url.path, error=str(exc))
         return problem(500, "Internal Server Error", "Unexpected failure.")
+
+    web_dir = Path(settings.web_dir) if settings.web_dir else None
+    if web_dir is not None and web_dir.is_dir():
+        assets = web_dir / "_app"
+        if assets.is_dir():
+            app.mount("/_app", StaticFiles(directory=assets), name="web-assets")
+
+        @app.get("/{path:path}", include_in_schema=False)
+        async def web_app(path: str) -> FileResponse:
+            """Serve the static SPA, falling back to index.html for routes."""
+            candidate = (web_dir / path).resolve()
+            try:
+                candidate.relative_to(web_dir.resolve())
+            except ValueError:
+                return FileResponse(web_dir / "index.html")
+            if candidate.is_file():
+                return FileResponse(candidate)
+            return FileResponse(web_dir / "index.html")
 
     for router in (
         auth.router,
