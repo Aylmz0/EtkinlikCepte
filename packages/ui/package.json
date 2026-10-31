@@ -14,7 +14,8 @@
     "src"
   ],
   "scripts": {
-    "check": "svelte-check --tsconfig ./tsconfig.json"
+    "check": "svelte-check --tsconfig ./tsconfig.json",
+    "test": "vitest run"
   },
   "peerDependencies": {
     "svelte": "^5.0.0"
@@ -23,7 +24,8 @@
     "@sveltejs/vite-plugin-svelte": "^5.0.0",
     "svelte": "^5.0.0",
     "svelte-check": "^4.0.0",
-    "typescript": "^5.0.0"
+    "typescript": "^5.0.0",
+    "vitest": "^5.0.5"
   },
   "dependencies": {
     "@lucide/svelte": "^1.16.0",

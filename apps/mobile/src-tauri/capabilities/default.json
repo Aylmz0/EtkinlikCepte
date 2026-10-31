@@ -4,6 +4,7 @@
   "description": "Default permissions for EtkinlikCepte application",
   "windows": ["*"],
   "permissions": [
-    "core:default"
+    "core:default",
+    "sql:default"
   ]
 }

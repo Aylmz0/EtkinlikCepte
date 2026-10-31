@@ -9,6 +9,7 @@
     "e2e": "playwright test"
   },
   "devDependencies": {
+    "@hey-api/openapi-ts": "^0.80.0",
     "@playwright/test": "^1.55.0"
   }
 }

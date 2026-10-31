@@ -17,6 +17,7 @@
     "@etkinlikcepte/ui": "*",
     "@lucide/svelte": "^1.16.0",
     "@tauri-apps/api": "^2.2.0",
+    "@tauri-apps/plugin-sql": "^2.6.0",
     "svelte-sonner": "^0.3.28"
   },
   "devDependencies": {
