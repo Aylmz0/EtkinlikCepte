@@ -11,12 +11,14 @@ from contextlib import asynccontextmanager
 from pathlib import Path
 
 from fastapi import FastAPI
+from fastapi.exceptions import RequestValidationError
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse, ORJSONResponse
 from fastapi.staticfiles import StaticFiles
+from starlette.exceptions import HTTPException
 
 from app.core.config import settings
-from app.core.errors import ApiError, problem
+from app.core.errors import ApiError, http_error_handler, problem, validation_error_handler
 from app.core.logging import configure_logging, get_logger
 from app.repos import models as _models  # noqa: F401  (register all tables)
 from app.routers import (
@@ -89,6 +91,14 @@ def create_app() -> FastAPI:
     def health() -> HealthResponse:
         """Liveness probe; no dependency checks yet (H1.2 skeleton)."""
         return HealthResponse(version=settings.app_version)
+
+    @app.exception_handler(RequestValidationError)
+    async def on_validation_error(request, exc: RequestValidationError):  # type: ignore[no-untyped-def]
+        return await validation_error_handler(request, exc)
+
+    @app.exception_handler(HTTPException)
+    async def on_http_error(request, exc: HTTPException):  # type: ignore[no-untyped-def]
+        return await http_error_handler(request, exc)
 
     @app.exception_handler(ApiError)
     async def api_error_handler(request, exc: ApiError):  # type: ignore[no-untyped-def]

@@ -2,7 +2,12 @@
 
 from __future__ import annotations
 
+from http import HTTPStatus
+
+from fastapi import Request
+from fastapi.exceptions import RequestValidationError
 from fastapi.responses import JSONResponse
+from starlette.exceptions import HTTPException
 
 
 def problem(status: int, title: str, detail: str, type_: str = "about:blank") -> JSONResponse:
@@ -35,3 +40,17 @@ class ApiError(Exception):
         self.detail = detail
         self.type_ = type_
         super().__init__(detail)
+
+
+async def validation_error_handler(request: Request, exc: RequestValidationError) -> JSONResponse:
+    """Render FastAPI validation failures as RFC 9457 problem details."""
+    detail = "; ".join(
+        f"{'.'.join(str(part) for part in error['loc'])}: {error['msg']}" for error in exc.errors()
+    )
+    return problem(422, "Unprocessable Entity", detail or "Request validation failed.")
+
+
+async def http_error_handler(request: Request, exc: HTTPException) -> JSONResponse:
+    """Render Starlette/FastAPI HTTP errors as RFC 9457 problem details."""
+    title = HTTPStatus(exc.status_code).phrase
+    return problem(exc.status_code, title, str(exc.detail))
